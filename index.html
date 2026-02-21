@@ -3,207 +3,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alexander Otto — Strategist. Creator. Signal Engineer.</title>
-  <meta name="description" content="Alexander Otto — Strategist, creator, and signal engineer. Turning noise into meaning, complexity into direction, and direction into experiences people actually move through.">
+  <title>Alexander Otto</title>
+  <meta name="description" content="Alexander Otto — Strategist, creator, and signal engineer.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <canvas id="particle-canvas"></canvas>
 
+  <!-- Minimal Nav — appears on scroll -->
   <nav class="nav" id="nav">
-    <a href="#hero" class="nav-logo">AO</a>
-    <div class="nav-links">
-      <a href="#about">About</a>
-      <a href="#interests">Interests</a>
-      <a href="#thinking">Thinking</a>
-      <a href="#why">Why</a>
-      <a href="#contact">Contact</a>
-    </div>
+    <span class="nav-logo">AO</span>
   </nav>
 
+  <!-- Section Indicators — fixed left side -->
+  <div class="section-indicators" id="section-indicators">
+    <a href="#hero" class="indicator active" data-section="0">
+      <span class="indicator-num">01</span>
+      <span class="indicator-label">hero</span>
+    </a>
+    <a href="#signal" class="indicator" data-section="1">
+      <span class="indicator-num">02</span>
+      <span class="indicator-label">signal</span>
+    </a>
+    <a href="#about" class="indicator" data-section="2">
+      <span class="indicator-num">03</span>
+      <span class="indicator-label">about</span>
+    </a>
+    <a href="#work" class="indicator" data-section="3">
+      <span class="indicator-num">04</span>
+      <span class="indicator-label">work</span>
+    </a>
+    <a href="#gravity" class="indicator" data-section="4">
+      <span class="indicator-num">05</span>
+      <span class="indicator-label">gravity</span>
+    </a>
+    <a href="#thinking" class="indicator" data-section="5">
+      <span class="indicator-num">06</span>
+      <span class="indicator-label">thinking</span>
+    </a>
+    <a href="#aesthetic" class="indicator" data-section="6">
+      <span class="indicator-num">07</span>
+      <span class="indicator-label">aesthetic</span>
+    </a>
+    <a href="#why" class="indicator" data-section="7">
+      <span class="indicator-num">08</span>
+      <span class="indicator-label">why</span>
+    </a>
+    <a href="#contact" class="indicator" data-section="8">
+      <span class="indicator-num">09</span>
+      <span class="indicator-label">contact</span>
+    </a>
+  </div>
+
+  <canvas id="particle-canvas"></canvas>
+
   <main>
-    <!-- Hero -->
-    <section class="hero" id="hero">
-      <div class="hero-grid"></div>
-      <div class="hero-content">
-        <div class="hero-tag reveal">Strategist. Creator. Signal Engineer.</div>
-        <h1 class="hero-title">
-          <span class="reveal">Alexander</span>
-          <span class="reveal">Otto</span>
+
+    <!-- 01 — HERO -->
+    <section class="scene" id="hero">
+      <div class="hero-image-placeholder image-placeholder">
+        <span>IMAGE</span>
+      </div>
+      <div class="scene-content hero-content">
+        <h1 class="hero-name reveal">
+          <span>Alexander</span>
+          <span>Otto</span>
         </h1>
-        <p class="hero-subtitle reveal">Turning noise into meaning, complexity into direction, and direction into experiences people actually move through.</p>
-        <a href="#about" class="hero-cta reveal">
-          <span>Explore</span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10m0 0l4-4m-4 4L4 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        <p class="hero-tagline reveal">Strategist. Creator. Signal Engineer.</p>
       </div>
-      <div class="hero-orb"></div>
-      <div class="hero-orb hero-orb--2"></div>
+      <div class="scroll-hint reveal">
+        <div class="scroll-hint-line"></div>
+      </div>
     </section>
 
-    <!-- About -->
-    <section class="section" id="about">
-      <div class="container">
-        <div class="section-label reveal">01 / About</div>
-        <div class="about-grid">
-          <div class="about-text">
-            <h2 class="section-title reveal">Signal<br>Engineer</h2>
-            <p class="reveal">Alexander is a strategist–creator working at the edge of transformation, AI, and future systems. His focus is signal engineering: turning noise into meaning, complexity into direction, and direction into experiences people actually move through.</p>
-            <p class="reveal">He builds brands and digital ecosystems like living organisms: identity, language, interface, behavior, feedback loops. To him, a brand is not a logo—it is a reality tunnel. A set of cues that shapes what people notice, trust, ignore, and choose.</p>
-          </div>
-          <div class="about-visual reveal">
-            <div class="about-shape">
-              <div class="about-shape-inner"></div>
-            </div>
-          </div>
+    <!-- 02 — SIGNAL -->
+    <section class="scene" id="signal">
+      <div class="signal-image-placeholder image-placeholder">
+        <span>IMAGE</span>
+      </div>
+      <div class="scene-content signal-content">
+        <p class="statement reveal">Turning noise into meaning,<br>complexity into direction,<br>and direction into experiences<br>people actually move through.</p>
+      </div>
+    </section>
+
+    <!-- 03 — ABOUT -->
+    <section class="scene scene--split" id="about">
+      <div class="split-image">
+        <div class="image-placeholder">
+          <span>IMAGE</span>
         </div>
       </div>
-    </section>
-
-    <!-- Purpose -->
-    <section class="section section--dark" id="purpose">
-      <div class="container">
-        <div class="section-label reveal">02 / Purpose</div>
-        <h2 class="section-title reveal">What He Is<br>Here For</h2>
-        <p class="section-intro reveal">Alexander works with organizations that are evolving—rapidly or painfully—and helps them:</p>
-        <ul class="content-list">
-          <li class="reveal">Reframe what they think the problem is</li>
-          <li class="reveal">Simplify decision-making without losing depth</li>
-          <li class="reveal">Design systems that survive change</li>
-          <li class="reveal">Translate strategy into products, platforms, and communication that actually land</li>
-        </ul>
-        <p class="section-outro reveal">He treats transformation as architecture: not motivational slogans, but structure. Not "more content," but better intent. Not endless options, but clean constraints.</p>
+      <div class="split-text">
+        <span class="section-num reveal">03</span>
+        <h2 class="section-heading reveal">About</h2>
+        <p class="reveal">He builds brands and digital ecosystems like living organisms: identity, language, interface, behavior, feedback loops.</p>
+        <p class="reveal">A brand is not a logo — it is a reality tunnel. A set of cues that shapes what people notice, trust, ignore, and choose.</p>
       </div>
     </section>
 
-    <!-- The Gravity of His Interests -->
-    <section class="section" id="interests">
-      <div class="container">
-        <div class="section-label reveal">03 / Expertise</div>
-        <h2 class="section-title reveal">The Gravity of<br>His Interests</h2>
-        <p class="section-intro reveal">His curiosity pulls him toward threshold zones—places where the map ends and the pattern begins:</p>
-        <div class="interests-grid">
-          <div class="interest-card reveal">
-            <div class="interest-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a4 4 0 0 1 4 4c0 1.5-.8 2.8-2 3.5v1.5h-4V9.5A4 4 0 0 1 12 2z"/><path d="M10 11h4v2a2 2 0 0 1-4 0v-2z"/><path d="M8 22h8"/><path d="M10 22v-7"/><path d="M14 22v-7"/></svg>
-            </div>
+    <!-- 04 — WHAT HE DOES -->
+    <section class="scene" id="work">
+      <div class="scene-content work-content">
+        <span class="section-num reveal">04</span>
+        <h2 class="section-heading reveal">What He Does</h2>
+        <div class="work-items">
+          <p class="work-item reveal">Reframe what they think the problem is</p>
+          <p class="work-item reveal">Simplify decision-making without losing depth</p>
+          <p class="work-item reveal">Design systems that survive change</p>
+          <p class="work-item reveal">Translate strategy into platforms that land</p>
+        </div>
+        <p class="work-coda reveal">He treats transformation as architecture.</p>
+      </div>
+    </section>
+
+    <!-- 05 — GRAVITY -->
+    <section class="scene" id="gravity">
+      <div class="gravity-image-placeholder image-placeholder">
+        <span>IMAGE</span>
+      </div>
+      <div class="scene-content gravity-content">
+        <span class="section-num reveal">05</span>
+        <h2 class="section-heading section-heading--large reveal">The Gravity of<br>His Interests</h2>
+        <div class="gravity-items">
+          <div class="gravity-item reveal">
             <h3>AI as Amplification</h3>
-            <p>AI as an amplification layer for creativity, operations, and perception.</p>
+            <p>An amplification layer for creativity, operations, and perception.</p>
           </div>
-          <div class="interest-card reveal">
-            <div class="interest-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-            </div>
-            <h3>UAP & Reality</h3>
-            <p>UAP as a question about reality, evidence, narrative, and human limits.</p>
+          <div class="gravity-item reveal">
+            <h3>UAP &amp; Reality</h3>
+            <p>A question about reality, evidence, narrative, and human limits.</p>
           </div>
-          <div class="interest-card reveal">
-            <div class="interest-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            </div>
+          <div class="gravity-item reveal">
             <h3>Future Thinking</h3>
-            <p>Future thinking as a discipline of scenario, tension, and possibility.</p>
+            <p>A discipline of scenario, tension, and possibility.</p>
           </div>
-          <div class="interest-card reveal">
-            <div class="interest-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83"/></svg>
-            </div>
+          <div class="gravity-item reveal">
             <h3>Systems Psychology</h3>
-            <p>Systems psychology and self-reflection as tools for leadership and clarity.</p>
+            <p>Self-reflection as a tool for leadership and clarity.</p>
           </div>
         </div>
-        <p class="section-outro reveal">He studies frameworks that explain behavior, identity, and momentum—then uses them to design work that is both poetic and executable.</p>
       </div>
     </section>
 
-    <!-- How He Thinks -->
-    <section class="section section--dark" id="thinking">
-      <div class="container">
-        <div class="section-label reveal">04 / Process</div>
-        <h2 class="section-title reveal">How He<br>Thinks</h2>
-        <p class="section-intro reveal">Analytical, but not sterile. He blends:</p>
-        <div class="thinking-grid">
-          <div class="thinking-card reveal">
-            <span class="thinking-number">01</span>
-            <h3>Systems Thinking</h3>
+    <!-- 06 — HOW HE THINKS -->
+    <section class="scene" id="thinking">
+      <div class="scene-content thinking-content">
+        <div class="thinking-stack">
+          <div class="thinking-word reveal">
+            <h3>Systems</h3>
             <p>Cause, effect, loops, leverage.</p>
           </div>
-          <div class="thinking-card reveal">
-            <span class="thinking-number">02</span>
-            <h3>Creative Direction</h3>
+          <div class="thinking-word reveal">
+            <h3>Creative</h3>
             <p>Taste, coherence, narrative control.</p>
           </div>
-          <div class="thinking-card reveal">
-            <span class="thinking-number">03</span>
-            <h3>Future Design</h3>
+          <div class="thinking-word reveal">
+            <h3>Future</h3>
             <p>Scenarios, unknowns, strategic optionality.</p>
           </div>
         </div>
-        <p class="section-outro reveal">His default move is to look beneath the surface: What is the hidden constraint? What is the unspoken fear? What is the real incentive structure?</p>
       </div>
     </section>
 
-    <!-- Aesthetic of Work -->
-    <section class="section" id="aesthetic">
-      <div class="container container--narrow">
-        <div class="section-label reveal">05 / Aesthetic</div>
-        <h2 class="section-title reveal">Aesthetic<br>of Work</h2>
-        <p class="aesthetic-text reveal">Minimal, intentional, high-signal. He prefers frameworks over chaos, clarity over hype, and concepts that can be turned into repeatable systems.</p>
-        <p class="aesthetic-coda reveal">If it cannot be used, it is not finished.</p>
+    <!-- 07 — AESTHETIC -->
+    <section class="scene" id="aesthetic">
+      <div class="scene-content aesthetic-content">
+        <p class="statement statement--accent reveal">Minimal. Intentional.<br>High-signal.</p>
+        <p class="statement statement--sub reveal">If it cannot be used,<br>it is not finished.</p>
       </div>
     </section>
 
-    <!-- Why -->
-    <section class="section section--dark" id="why">
-      <div class="container container--narrow">
-        <div class="section-label reveal">06 / Why</div>
-        <h2 class="section-title section-title--large reveal">Why</h2>
-        <div class="why-text">
-          <p class="reveal">Because the world is changing faster than most organizations can metabolize. Because AI is rewriting workflows, identity, and value. Because reality itself is becoming negotiable.</p>
-          <p class="reveal">Alexander operates where the future is not a distant idea, but an everyday pressure. He helps people and companies build coherent direction inside uncertainty—without flattening the mystery.</p>
-        </div>
+    <!-- 08 — WHY -->
+    <section class="scene" id="why">
+      <div class="scene-content why-content">
+        <span class="section-num reveal">08</span>
+        <h2 class="section-heading reveal">Why</h2>
+        <p class="why-text reveal">Because the world is changing faster than most organizations can metabolize. Because AI is rewriting workflows, identity, and value. Because reality itself is becoming negotiable.</p>
+        <p class="why-text reveal">Alexander operates where the future is not a distant idea, but an everyday pressure. He helps people and companies build coherent direction inside uncertainty — without flattening the mystery.</p>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section class="section" id="contact">
-      <div class="container contact-container">
-        <div class="section-label reveal">07 / Contact</div>
-        <h2 class="section-title section-title--large reveal">Get In<br>Touch</h2>
-        <p class="contact-subtitle reveal">If you are building in the fog—new strategy, new structure, new story—Alexander is the kind of mind you bring in when you want clarity without losing depth.</p>
+    <!-- 09 — CONTACT -->
+    <section class="scene" id="contact">
+      <div class="contact-image-placeholder image-placeholder">
+        <span>IMAGE</span>
+      </div>
+      <div class="scene-content contact-content">
+        <h2 class="contact-heading reveal">Building<br>in the fog?</h2>
         <div class="contact-links reveal">
-          <a href="mailto:hello@alexanderotto.de" class="contact-link">
-            <span class="contact-link-label">Email</span>
-            <span class="contact-link-value">hello@alexanderotto.de</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 15L15 5m0 0H8m7 0v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" class="contact-link">
-            <span class="contact-link-label">LinkedIn</span>
-            <span class="contact-link-value">Connect with me</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 15L15 5m0 0H8m7 0v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="https://github.com" target="_blank" rel="noopener" class="contact-link">
-            <span class="contact-link-label">GitHub</span>
-            <span class="contact-link-value">View my work</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 15L15 5m0 0H8m7 0v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener" class="contact-link">
-            <span class="contact-link-label">X / Twitter</span>
-            <span class="contact-link-value">Follow along</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 15L15 5m0 0H8m7 0v7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
+          <a href="#" class="contact-link">Email</a>
+          <a href="#" class="contact-link" target="_blank" rel="noopener">LinkedIn</a>
         </div>
       </div>
+      <footer class="footer">
+        <span>&copy; 2026 Alexander Otto</span>
+      </footer>
     </section>
-  </main>
 
-  <footer class="footer">
-    <span>&copy; 2026 Alexander Otto</span>
-    <span>All rights reserved</span>
-  </footer>
+  </main>
 
   <script src="script.js"></script>
 </body>
