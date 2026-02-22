@@ -2255,7 +2255,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   text-align: center;
 }
 
-.contact-heading span { display: block; }
+.contact-heading span { display: block; margin-bottom: 0.1em; }
 .contact-heading {
   font-family: 'Tomorrow', var(--font);
   font-size: clamp(2rem, 5vw, 4.5rem);
