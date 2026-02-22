@@ -639,6 +639,30 @@
     yearType();
     showMilestones(d.year);
 
+    // Update mobile detail panel
+    var mYear = document.getElementById('tl-mobile-year');
+    var mTag = document.getElementById('tl-mobile-tag');
+    var mText = document.getElementById('tl-mobile-text');
+    var mMeta = document.getElementById('tl-mobile-meta');
+    if (mYear) {
+      mYear.textContent = '◈ ' + d.year + ' — ' + d.tag;
+      mTag.textContent = '';
+      mText.textContent = d.text;
+      mMeta.textContent = d.meta;
+    }
+
+    // Mobile: scroll timeline into view on first tap
+    if (changing && window.innerWidth <= 900) {
+      var tlEl = document.getElementById('tl-interactive');
+      if (tlEl) {
+        var nav = document.querySelector('.mobile-nav');
+        var navH = nav ? nav.offsetHeight : 0;
+        var rect = tlEl.getBoundingClientRect();
+        var targetY = window.scrollY + rect.bottom - window.innerHeight + navH + 20;
+        window.scrollTo({ top: targetY, behavior: 'smooth' });
+      }
+    }
+
     // Redraw mountain with animated glow
     startGlowAnimation(idx);
   }
