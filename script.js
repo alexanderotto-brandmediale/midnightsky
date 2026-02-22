@@ -838,18 +838,25 @@
       }
     }
 
+    var bigH = document.getElementById('cosmos-heading-big');
+    var smallH = document.getElementById('cosmos-heading-small');
+
     if (clicked && clicked !== focusedNode) {
       // Zoom in
       focusedNode = clicked;
       camTarget.x = clicked.x;
       camTarget.y = clicked.y;
       camTarget.zoom = 2.5;
+      if (bigH) bigH.classList.add('hidden');
+      if (smallH) smallH.classList.add('visible');
     } else {
       // Zoom out
       focusedNode = null;
       camTarget.x = w / (2 * dpr);
       camTarget.y = h / (2 * dpr);
       camTarget.zoom = 1;
+      if (bigH) bigH.classList.remove('hidden');
+      if (smallH) smallH.classList.remove('visible');
     }
   });
 
