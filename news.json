@@ -1,0 +1,15 @@
+{
+  "updated": "2026-02-22",
+  "headlines": [
+    { "date": "22.02.2026", "text": "The A.I. Disruption We've Been Waiting for Has Arrived", "source": "New York Times" },
+    { "date": "21.02.2026", "text": "What AI Is Really Coming For", "source": "Washington Post" },
+    { "date": "20.02.2026", "text": "Airbnb's Brian Chesky: Betting Big on AI Disruption", "source": "Technology Magazine" },
+    { "date": "19.02.2026", "text": "The Future of AI: How AI Is Changing the World", "source": "Built In" },
+    { "date": "18.02.2026", "text": "3 Conclusions From a Week of AI Disruption", "source": "Yahoo Finance" },
+    { "date": "18.02.2026", "text": "OpenAI Plans to Release an Open-Weight Language Model", "source": "The Verge" },
+    { "date": "17.02.2026", "text": "Google DeepMind's New AI Agent Can Operate Your Computer", "source": "MIT Technology Review" },
+    { "date": "17.02.2026", "text": "Europe's AI Factories: A Race Against Time", "source": "Financial Times" },
+    { "date": "16.02.2026", "text": "The 10 Jobs AI Will Replace First — And the Ones It Won't", "source": "The Guardian" },
+    { "date": "15.02.2026", "text": "Autonomous AI Agents Are About to Reshape Every Industry", "source": "Bloomberg" }
+  ]
+}
