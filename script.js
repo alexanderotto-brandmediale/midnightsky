@@ -980,11 +980,17 @@
   }
 
   items.forEach(function (item) {
-    item.addEventListener('mouseenter', function () {
+    item.addEventListener('mouseenter', function (e) {
       clearTimeout(typeTimer);
       fullText = item.dataset.hover;
       charIdx = 0;
       tooltipText.textContent = '';
+      tooltipTargetX = e.clientX + 20;
+      tooltipTargetY = e.clientY + 4;
+      tooltipX = tooltipTargetX;
+      tooltipY = tooltipTargetY;
+      tooltip.style.left = tooltipX + 'px';
+      tooltip.style.top = tooltipY + 'px';
       tooltip.classList.add('visible');
       tooltipVisible = true;
       typeWrite();
