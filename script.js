@@ -980,8 +980,8 @@
       tooltipText.textContent = '';
     });
     item.addEventListener('mousemove', function (e) {
-      tooltip.style.left = (e.clientX + 12) + 'px';
-      tooltip.style.top = (e.clientY + 12) + 'px';
+      tooltip.style.left = (e.clientX + 16) + 'px';
+      tooltip.style.top = (e.clientY + 4) + 'px';
     });
   });
 })();

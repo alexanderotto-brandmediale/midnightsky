@@ -1226,14 +1226,15 @@ a { color: inherit; text-decoration: none; }
   transition: opacity 0.4s ease;
 }
 
-/* HUD Hover Tooltip — raw text at cursor */
+/* HUD Hover Tooltip — text at cursor */
 .tl-hover-tooltip {
   position: fixed;
   z-index: 500;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.2s ease;
-  max-width: 260px;
+  transition: opacity 0.15s ease;
+  max-width: 220px;
+  transform: translate(0, 0);
 }
 .tl-hover-tooltip.visible {
   opacity: 1;
@@ -1242,14 +1243,25 @@ a { color: inherit; text-decoration: none; }
   background: none;
   border: none;
   padding: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.tl-hover-frame::before {
+  content: '—';
+  font-family: 'Geist', monospace;
+  font-size: 0.45rem;
+  color: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 .tl-hover-text {
   font-family: 'Geist', monospace;
-  font-size: 0.5rem;
+  font-size: 0.45rem;
   font-weight: 300;
-  line-height: 1.6;
-  letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.35);
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: rgba(255,255,255,0.4);
 }
 
 /* Sub Tracks */
@@ -1969,13 +1981,48 @@ a { color: inherit; text-decoration: none; }
   gap: 1.5rem;
   margin-top: 0.5rem;
 }
+/* Swipe Nav Bar */
+.swipe-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 2px;
+}
+.swipe-arrow {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.4);
+  font-size: 1.2rem;
+  font-family: var(--font);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.swipe-arrow:hover {
+  border-color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.04);
+}
+
 /* Swipe Dot Navigation */
 .swipe-dots {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0;
-  margin-top: 1.5rem;
   position: relative;
 }
 .swipe-dots::before {
@@ -1985,7 +2032,7 @@ a { color: inherit; text-decoration: none; }
   left: 0;
   right: 0;
   height: 1px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.08);
   transform: translateY(-50%);
 }
 .swipe-dot {
@@ -1993,8 +2040,8 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 0.8rem;
+  gap: 0.35rem;
+  padding: 0.4rem 0.6rem;
   cursor: pointer;
   z-index: 1;
 }
@@ -2002,23 +2049,24 @@ a { color: inherit; text-decoration: none; }
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
   background: transparent;
   transition: all 0.3s ease;
 }
 .swipe-dot.active .swipe-dot-circle {
-  border-color: rgba(255,255,255,0.6);
-  box-shadow: 0 0 8px rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.1);
 }
 .swipe-dot-label {
   font-family: 'Geist', monospace;
-  font-size: 0.35rem;
+  font-size: 0.38rem;
   letter-spacing: 0.2em;
-  color: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.15);
   transition: color 0.3s;
 }
 .swipe-dot.active .swipe-dot-label {
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.6);
 }
 
 /* Hide custom cursor on touch/mobile */
