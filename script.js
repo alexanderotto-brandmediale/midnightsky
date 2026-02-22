@@ -1013,7 +1013,7 @@
       }
 
       // Node label
-      var fontSize = (isFocused ? 13 : (isHovered ? 11 : 10)) * cam.zoom * dpr;
+      var fontSize = (isFocused ? 15 : (isHovered ? 14 : 13)) * cam.zoom * dpr;
       ctx.font = (isFocused || isHovered ? '500 ' : '300 ') + fontSize + 'px Geist, monospace';
       ctx.fillStyle = isGrey ? 'rgba(249,248,242,' + (nodeOp * 0.5) + ')' : (isHovered && !focusedNode ? 'rgba(249,248,242,1)' : 'rgba(249,248,242,' + nodeOp + ')');
       ctx.textAlign = 'center';
