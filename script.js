@@ -549,6 +549,296 @@
   });
 })();
 
+/* ── Cosmos Sphere — Interest Gravity Visualization ── */
+(function () {
+  var canvas = document.getElementById('cosmos-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var tooltip = document.getElementById('cosmos-tooltip');
+  var section = document.getElementById('gravity');
+  var isVisible = false, animId;
+  var w, h, cx, cy, radius;
+  var mx = -999, my = -999;
+  var hoveredNode = null;
+  var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+
+  // Interest fields — nodes on the sphere
+  var fields = [
+    { label: 'AI as\nAmplification', angle: 0.3, r: 0.72, sub: ['LLMs', 'Agents', 'Prompt Design', 'Human×Machine', 'Workflow Automation'], desc: 'Creative partner, operational multiplier, perceptual lens.' },
+    { label: 'UAP &\nReality', angle: 1.1, r: 0.65, sub: ['Epistemology', 'Perception', 'Evidence', 'Narrative', 'Wonder'], desc: 'When the data doesn\'t fit the model. Where epistemology meets wonder.' },
+    { label: 'Future\nThinking', angle: 2.0, r: 0.78, sub: ['Scenarios', 'Weak Signals', 'Tensions', 'Optionality', 'Resilience'], desc: 'Not prediction — preparation. Scenario thinking as design discipline.' },
+    { label: 'Systems\nPsychology', angle: 2.9, r: 0.70, sub: ['Adler', 'Behavioral Design', 'Leadership', 'Drift', 'Self-Awareness'], desc: 'Why people do what they do — and why organizations drift.' },
+    { label: 'Brand\nStrategy', angle: 3.7, r: 0.75, sub: ['Positioning', 'Tonality', 'Experience', 'Coherence', 'Differentiation'], desc: 'Brands as systems of meaning. Coherence across every touchpoint.' },
+    { label: 'Music &\nCreativity', angle: 4.5, r: 0.68, sub: ['Piano', 'Production', 'Synthesis', 'Flow State', 'Expression'], desc: 'Creativity as counterweight. Where structure meets improvisation.' },
+    { label: 'Physics &\nOrigin', angle: 5.3, r: 0.73, sub: ['Cosmology', 'Astronomy', 'Emergence', 'Complexity', 'Patterns'], desc: 'The big questions. From quantum to cosmic scale.' }
+  ];
+
+  // Flowing particles along curved paths
+  var streams = [];
+  var STREAM_COUNT = 80;
+  var dots = [];
+  var DOT_COUNT = 200;
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    w = canvas.width = rect.width * dpr;
+    h = canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+    cx = w / 2;
+    cy = h / 2;
+    radius = Math.min(w, h) * 0.42;
+    initStreams();
+    initDots();
+    computeNodePositions();
+  }
+
+  function computeNodePositions() {
+    fields.forEach(function (f) {
+      var a = f.angle;
+      var r = f.r * radius;
+      f.x = cx + Math.cos(a) * r;
+      f.y = cy + Math.sin(a) * r;
+      // Sub-topics orbit around node
+      f.subPos = f.sub.map(function (s, i) {
+        var sa = a + (i - 2) * 0.35;
+        var sr = r + 30 + i * 12;
+        return { label: s, x: cx + Math.cos(sa) * sr, y: cy + Math.sin(sa) * sr };
+      });
+    });
+  }
+
+  function initStreams() {
+    streams = [];
+    for (var i = 0; i < STREAM_COUNT; i++) {
+      var baseAngle = Math.random() * Math.PI * 2;
+      var pts = [];
+      var numPts = 40 + Math.floor(Math.random() * 30);
+      var r0 = radius * (0.15 + Math.random() * 0.8);
+      var drift = (Math.random() - 0.5) * 0.03;
+      for (var j = 0; j < numPts; j++) {
+        var t = j / numPts;
+        var a = baseAngle + t * (1.5 + Math.random() * 2) + Math.sin(t * 4) * 0.3;
+        var r = r0 + Math.sin(t * Math.PI) * radius * 0.3 + Math.sin(t * 7) * 15;
+        var distFromCenter = Math.sqrt(Math.pow(Math.cos(a) * r, 2) + Math.pow(Math.sin(a) * r, 2));
+        if (distFromCenter > radius) r = radius * radius / distFromCenter; // keep in sphere
+        pts.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
+      }
+      streams.push({
+        pts: pts,
+        offset: Math.random() * 100,
+        speed: 0.2 + Math.random() * 0.4,
+        opacity: 0.03 + Math.random() * 0.06,
+        width: 0.3 + Math.random() * 0.8,
+        hue: Math.random() > 0.7 ? 'coral' : (Math.random() > 0.5 ? 'lavender' : 'white')
+      });
+    }
+  }
+
+  function initDots() {
+    dots = [];
+    for (var i = 0; i < DOT_COUNT; i++) {
+      var a = Math.random() * Math.PI * 2;
+      var r = Math.random() * radius;
+      dots.push({
+        x: cx + Math.cos(a) * r,
+        y: cy + Math.sin(a) * r,
+        r: 0.3 + Math.random() * 1.2,
+        opacity: 0.1 + Math.random() * 0.4,
+        pulse: Math.random() * Math.PI * 2,
+        speed: 0.005 + Math.random() * 0.02
+      });
+    }
+  }
+
+  var time = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    time += 0.01;
+
+    // Sphere boundary — subtle circle
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(123,140,255,0.06)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Flowing streams
+    for (var s = 0; s < streams.length; s++) {
+      var st = streams[s];
+      var pts = st.pts;
+      var off = (time * st.speed * 60 + st.offset) % pts.length;
+
+      var col;
+      if (st.hue === 'coral') col = '255,87,90';
+      else if (st.hue === 'lavender') col = '123,140,255';
+      else col = '249,248,242';
+
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(' + col + ',' + st.opacity + ')';
+      ctx.lineWidth = st.width;
+
+      var started = false;
+      for (var p = 0; p < pts.length; p++) {
+        var idx = Math.floor((p + off) % pts.length);
+        var pt = pts[idx];
+        // Fade at edges of stream
+        var fade = Math.sin((p / pts.length) * Math.PI);
+        if (!started) { ctx.moveTo(pt.x, pt.y); started = true; }
+        else ctx.lineTo(pt.x, pt.y);
+      }
+      ctx.stroke();
+    }
+
+    // Scattered dots — pulsing
+    for (var d = 0; d < dots.length; d++) {
+      var dot = dots[d];
+      dot.pulse += dot.speed;
+      var po = dot.opacity * (0.5 + 0.5 * Math.sin(dot.pulse));
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, dot.r * dpr, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(249,248,242,' + po + ')';
+      ctx.fill();
+    }
+
+    // Connection lines between nodes — filigree
+    ctx.lineWidth = 0.5;
+    for (var i = 0; i < fields.length; i++) {
+      for (var j = i + 1; j < fields.length; j++) {
+        var fi = fields[i], fj = fields[j];
+        var dist = Math.sqrt(Math.pow(fi.x - fj.x, 2) + Math.pow(fi.y - fj.y, 2));
+        if (dist < radius * 1.2) {
+          var op = 0.04 * (1 - dist / (radius * 1.2));
+          ctx.beginPath();
+          ctx.moveTo(fi.x, fi.y);
+          // Curved connection through center
+          var mx2 = cx + (fi.x + fj.x - 2 * cx) * 0.3;
+          var my2 = cy + (fi.y + fj.y - 2 * cy) * 0.3;
+          ctx.quadraticCurveTo(mx2, my2, fj.x, fj.y);
+          ctx.strokeStyle = 'rgba(123,140,255,' + op + ')';
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Node rendering
+    hoveredNode = null;
+    for (var n = 0; n < fields.length; n++) {
+      var f = fields[n];
+      var dx = mx * dpr - f.x;
+      var dy = my * dpr - f.y;
+      var isHover = Math.sqrt(dx * dx + dy * dy) < 40 * dpr;
+      if (isHover) hoveredNode = f;
+
+      var nodeR = isHover ? 5 * dpr : 3 * dpr;
+      var nodeOp = isHover ? 0.9 : 0.5;
+
+      // Node glow
+      if (isHover) {
+        var grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, 50 * dpr);
+        grad.addColorStop(0, 'rgba(255,87,90,0.15)');
+        grad.addColorStop(1, 'rgba(255,87,90,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, 50 * dpr, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Node dot
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, nodeR, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,87,90,' + nodeOp + ')';
+      ctx.fill();
+
+      // Node ring
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, nodeR + 4 * dpr, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,87,90,' + (nodeOp * 0.3) + ')';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+
+      // Node label
+      var labelOp = isHover ? 0.9 : 0.25;
+      ctx.font = (isHover ? '500 ' : '300 ') + (10 * dpr) + 'px Geist, monospace';
+      ctx.fillStyle = 'rgba(249,248,242,' + labelOp + ')';
+      ctx.textAlign = 'center';
+      var lines = f.label.split('\n');
+      for (var l = 0; l < lines.length; l++) {
+        ctx.fillText(lines[l], f.x, f.y - 15 * dpr + l * 12 * dpr - (lines.length - 1) * 6 * dpr);
+      }
+
+      // Sub-topics on hover
+      if (isHover) {
+        for (var si = 0; si < f.subPos.length; si++) {
+          var sp = f.subPos[si];
+          // Line from node to sub
+          ctx.beginPath();
+          ctx.moveTo(f.x, f.y);
+          ctx.lineTo(sp.x, sp.y);
+          ctx.strokeStyle = 'rgba(123,140,255,0.12)';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+
+          // Sub dot
+          ctx.beginPath();
+          ctx.arc(sp.x, sp.y, 1.5 * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(123,140,255,0.6)';
+          ctx.fill();
+
+          // Sub label
+          ctx.font = '300 ' + (8 * dpr) + 'px Geist, monospace';
+          ctx.fillStyle = 'rgba(123,140,255,0.5)';
+          ctx.textAlign = 'center';
+          ctx.fillText(sp.label, sp.x, sp.y - 6 * dpr);
+        }
+      }
+    }
+
+    // Tooltip
+    if (hoveredNode && tooltip) {
+      tooltip.innerHTML = '<strong>' + hoveredNode.label.replace('\n', ' ') + '</strong>' + hoveredNode.desc;
+      tooltip.classList.add('visible');
+      var tx = (hoveredNode.x / dpr) + 20;
+      var ty = (hoveredNode.y / dpr) - 40;
+      if (tx + 220 > canvas.parentElement.offsetWidth) tx = (hoveredNode.x / dpr) - 240;
+      tooltip.style.left = tx + 'px';
+      tooltip.style.top = ty + 'px';
+    } else if (tooltip) {
+      tooltip.classList.remove('visible');
+    }
+
+    if (isVisible) animId = requestAnimationFrame(draw);
+  }
+
+  // Mouse tracking
+  canvas.addEventListener('mousemove', function (e) {
+    var rect = canvas.getBoundingClientRect();
+    mx = e.clientX - rect.left;
+    my = e.clientY - rect.top;
+  });
+  canvas.addEventListener('mouseleave', function () {
+    mx = -999; my = -999;
+  });
+
+  // Visibility observer
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !isVisible) {
+        isVisible = true;
+        resize();
+        draw();
+      } else if (!entry.isIntersecting && isVisible) {
+        isVisible = false;
+        cancelAnimationFrame(animId);
+      }
+    });
+  }, { threshold: 0.2 });
+  obs.observe(section);
+
+  window.addEventListener('resize', function () { if (isVisible) resize(); });
+})();
+
 /* ── HUD Interactive Timeline ─────────────────────── */
 (function () {
   var container = document.getElementById('tl-points');
