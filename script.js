@@ -124,7 +124,7 @@
   const wordDirection = document.getElementById('word-direction');
   
   const PARTICLE_COUNT = 500;
-  const ACCENT = [255, 87, 90]; // #FF575A
+  const ACCENT = [245, 166, 35]; // #F5A623
   const GRID_COLS = 25;
   const GRID_ROWS = 20;
   
