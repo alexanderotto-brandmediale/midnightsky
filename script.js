@@ -62,16 +62,9 @@
       'knowledge distillation', 'quantization', 'model merging', 'prompt engineering'
     ],
     mid: [
-      'AI TRANSFORMS ENTERPRISE', 'AGENTS REPLACE WORKFLOWS', 'THE MODEL IS THE PRODUCT',
-      'AUTOMATION AT SCALE', 'HUMAN-AI COLLABORATION', 'REAL-TIME INTELLIGENCE',
-      'EVERY COMPANY BECOMES AI', 'DATA IS THE NEW OIL', 'COMPUTE IS THE NEW GOLD',
-      'FROM TOOLS TO PARTNERS', 'STRATEGY MEETS ALGORITHM', 'DIGITAL-FIRST ECONOMY',
-      'THE AGE OF AGENTS', 'INTELLIGENCE ON DEMAND', 'DISRUPTION IS THE NORM',
-      'BRAND IN THE AGE OF AI', 'CONTENT AT MACHINE SPEED', 'DECISION ENGINES',
-      'THE END OF TEMPLATES', 'PERSONALIZATION AT SCALE', 'ZERO-SHOT EVERYTHING',
-      'VOICE-FIRST INTERFACES', 'AMBIENT COMPUTING', 'SPATIAL INTELLIGENCE',
-      'POST-SEARCH ERA', 'CONVERSATIONAL COMMERCE', 'AI-NATIVE ORGANIZATIONS',
-      'PREDICTIVE EVERYTHING', 'SYNTHETIC MEDIA', 'AUTONOMOUS OPERATIONS'
+      'AI TRANSFORMS ENTERPRISE', 'AGENTS REPLACE WORKFLOWS', 'THE AGE OF AGENTS',
+      'AUTOMATION AT SCALE', 'REAL-TIME INTELLIGENCE', 'DIGITAL-FIRST ECONOMY',
+      'EVERY COMPANY BECOMES AI', 'STRATEGY MEETS ALGORITHM', 'DISRUPTION IS THE NORM'
     ],
     flash: [
       'TRANSFORMATION', 'DISRUPTION', 'INTELLIGENCE', 'AUTONOMOUS', 'EMERGENCE',
@@ -80,13 +73,52 @@
     ]
   };
 
+  // Live news headlines
+  var newsHeadlines = [];
+  function fetchNews() {
+    var topics = ['technology', 'business', 'science'];
+    var topic = topics[Math.floor(Math.random() * topics.length)];
+    var url = 'https://news.google.com/rss/topics/' +
+      (topic === 'technology' ? 'CAAqJggKIiBDQkFTRWdvSUwyMHZNRGRqTVhZU0FtUmxHZ0pFUlNnQVAB' :
+       topic === 'business' ? 'CAAqJggKIiBDQkFTRWdvSUwyMHZNRGx6TVdZU0FtUmxHZ0pFUlNnQVAB' :
+       'CAAqJggKIiBDQkFTRWdvSUwyMHZNRFp0Y1RjU0FtUmxHZ0pFUlNnQVAB') +
+      '?hl=de&gl=DE&ceid=DE:de';
+    fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(url))
+      .then(function (r) { return r.text(); })
+      .then(function (xml) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(xml, 'text/xml');
+        var items = doc.querySelectorAll('item');
+        var results = [];
+        items.forEach(function (item, i) {
+          if (i >= 15) return;
+          var title = item.querySelector('title');
+          var pubDate = item.querySelector('pubDate');
+          if (title) {
+            var dateStr = '';
+            if (pubDate) {
+              var d = new Date(pubDate.textContent);
+              dateStr = d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+            }
+            results.push(dateStr + ' — ' + title.textContent.replace(/ - .*$/, ''));
+          }
+        });
+        if (results.length) newsHeadlines = results;
+      })
+      .catch(function () {});
+  }
+  fetchNews();
+  setInterval(fetchNews, 5 * 60 * 1000); // Refresh every 5 min
+
   // Particles
   var deepLayer = [];
   var midLayer = [];
+  var newsLayer = [];
   var flashLayer = [];
   var synapses = [];
   var DEEP_COUNT = 120;
-  var MID_COUNT = 25;
+  var MID_COUNT = 12;
+  var NEWS_COUNT = 15;
   var FLASH_MAX = 3;
 
   function resize() {
@@ -125,11 +157,27 @@
         text: randomWord(layerWords.mid),
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: -0.08 - Math.random() * 0.12,
-        size: 11 + Math.random() * 8,
-        opacity: 0.025 + Math.random() * 0.02,
-        rot: (Math.random() - 0.5) * 0.08
+        vx: (Math.random() - 0.5) * 0.12,
+        vy: -0.06 - Math.random() * 0.08,
+        size: 10 + Math.random() * 5,
+        opacity: 0.02 + Math.random() * 0.015,
+        rot: (Math.random() - 0.5) * 0.05
+      });
+    }
+  }
+
+  function createNews() {
+    newsLayer = [];
+    for (var i = 0; i < NEWS_COUNT; i++) {
+      newsLayer.push({
+        text: '',
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.08,
+        vy: -0.04 - Math.random() * 0.06,
+        size: 11 + Math.random() * 4,
+        opacity: 0.04 + Math.random() * 0.03,
+        rot: (Math.random() - 0.5) * 0.02
       });
     }
   }
@@ -230,6 +278,31 @@
       ctx.restore();
     }
 
+    // News layer (real headlines)
+    if (newsHeadlines.length) {
+      for (var n = 0; n < newsLayer.length; n++) {
+        var nl = newsLayer[n];
+        if (!nl.text) nl.text = newsHeadlines[n % newsHeadlines.length];
+        nl.x += nl.vx;
+        nl.y += nl.vy;
+        if (nl.y < -30) {
+          nl.y = h + 30;
+          nl.x = Math.random() * w;
+          nl.text = newsHeadlines[Math.floor(Math.random() * newsHeadlines.length)];
+        }
+        if (nl.x < -400) nl.x = w + 100;
+        if (nl.x > w + 400) nl.x = -400;
+
+        ctx.save();
+        ctx.translate(nl.x, (nl.y - parallax * 0.4 + h) % h);
+        ctx.rotate(nl.rot);
+        ctx.font = '300 ' + nl.size + 'px Geist, monospace';
+        ctx.fillStyle = 'rgba(255,255,255,' + nl.opacity + ')';
+        ctx.fillText(nl.text, 0, 0);
+        ctx.restore();
+      }
+    }
+
     // Flash layer
     for (var f = flashLayer.length - 1; f >= 0; f--) {
       var fl = flashLayer[f];
@@ -258,6 +331,7 @@
     resize();
     createDeep();
     createMid();
+    createNews();
     flashLayer = [];
   }
 
