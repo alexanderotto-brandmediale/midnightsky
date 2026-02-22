@@ -780,7 +780,6 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   margin-bottom: 2rem;
   position: relative;
-  animation: glitch-text 4s infinite;
 }
 
 .hero-name span {
@@ -788,58 +787,77 @@ a { color: inherit; text-decoration: none; }
   position: relative;
 }
 
-.hero-name::before,
-.hero-name::after {
+.hero-name span::before,
+.hero-name span::after {
+  display: block;
   content: attr(data-text);
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
+  color: var(--white);
+  background: transparent;
+  overflow: hidden;
   pointer-events: none;
 }
 
-.hero-name::before {
-  color: var(--secondary);
-  clip-path: inset(0 0 65% 0);
-  animation: glitch-shift-1 4s infinite;
+.hero-name span::before {
+  left: -2px;
+  text-shadow: 2px 0 #7B8CFF;
+  animation: glitch-c1 2s infinite linear alternate-reverse;
 }
 
-.hero-name::after {
-  color: #7B8CFF;
-  clip-path: inset(65% 0 0 0);
-  animation: glitch-shift-2 4s infinite;
+.hero-name span::after {
+  left: 3px;
+  text-shadow: -3px 0 var(--secondary);
+  animation: glitch-c2 1s infinite linear alternate-reverse;
 }
 
-@keyframes glitch-shift-1 {
-  0%, 90%, 100% { transform: translate(0); opacity: 0; }
-  92% { transform: translate(-3px, -2px); opacity: 0.7; }
-  93% { transform: translate(2px, 1px); opacity: 0.5; }
-  94% { transform: translate(-1px, 2px); opacity: 0.8; }
-  95% { transform: translate(0); opacity: 0; }
+@keyframes glitch-c1 {
+  0% { clip-path: inset(20% 0 60% 0); }
+  5% { clip-path: inset(70% 0 5% 0); }
+  10% { clip-path: inset(10% 0 75% 0); }
+  15% { clip-path: inset(85% 0 2% 0); }
+  20% { clip-path: inset(45% 0 40% 0); }
+  25% { clip-path: inset(5% 0 80% 0); }
+  30% { clip-path: inset(60% 0 15% 0); }
+  35% { clip-path: inset(30% 0 50% 0); }
+  40% { clip-path: inset(90% 0 1% 0); }
+  45% { clip-path: inset(15% 0 70% 0); }
+  50% { clip-path: inset(55% 0 25% 0); }
+  55% { clip-path: inset(8% 0 85% 0); }
+  60% { clip-path: inset(75% 0 10% 0); }
+  65% { clip-path: inset(40% 0 45% 0); }
+  70% { clip-path: inset(95% 0 0% 0); }
+  75% { clip-path: inset(25% 0 60% 0); }
+  80% { clip-path: inset(65% 0 20% 0); }
+  85% { clip-path: inset(3% 0 90% 0); }
+  90% { clip-path: inset(50% 0 35% 0); }
+  95% { clip-path: inset(80% 0 8% 0); }
+  100% { clip-path: inset(35% 0 55% 0); }
 }
 
-@keyframes glitch-shift-2 {
-  0%, 88%, 100% { transform: translate(0); opacity: 0; }
-  90% { transform: translate(3px, 1px); opacity: 0.6; }
-  91% { transform: translate(-2px, -1px); opacity: 0.7; }
-  92% { transform: translate(1px, -2px); opacity: 0.5; }
-  93% { transform: translate(0); opacity: 0; }
-}
-
-@keyframes glitch-text {
-  0%, 88%, 96%, 100% { text-shadow: none; }
-  90% { text-shadow: -2px 0 var(--secondary), 2px 0 #7B8CFF; }
-  91% { text-shadow: 2px 0 #340A22, -1px 0 #152C3A; }
-  92% { text-shadow: -1px 0 var(--secondary), 1px 0 #7B8CFF, 0 2px #340A22; }
-  93% { text-shadow: none; }
-  94% { text-shadow: 1px 0 var(--secondary), -2px 0 #152C3A; }
-  95% { text-shadow: none; }
+@keyframes glitch-c2 {
+  0% { clip-path: inset(65% 0 10% 0); }
+  5% { clip-path: inset(15% 0 70% 0); }
+  10% { clip-path: inset(80% 0 5% 0); }
+  15% { clip-path: inset(35% 0 50% 0); }
+  20% { clip-path: inset(5% 0 85% 0); }
+  25% { clip-path: inset(55% 0 25% 0); }
+  30% { clip-path: inset(90% 0 2% 0); }
+  35% { clip-path: inset(20% 0 65% 0); }
+  40% { clip-path: inset(70% 0 15% 0); }
+  45% { clip-path: inset(40% 0 45% 0); }
+  50% { clip-path: inset(10% 0 80% 0); }
+  55% { clip-path: inset(75% 0 8% 0); }
+  60% { clip-path: inset(30% 0 55% 0); }
+  65% { clip-path: inset(85% 0 3% 0); }
+  70% { clip-path: inset(50% 0 35% 0); }
+  75% { clip-path: inset(95% 0 1% 0); }
+  80% { clip-path: inset(45% 0 40% 0); }
+  85% { clip-path: inset(60% 0 20% 0); }
+  90% { clip-path: inset(8% 0 88% 0); }
+  95% { clip-path: inset(25% 0 60% 0); }
+  100% { clip-path: inset(72% 0 12% 0); }
 }
 
 .hero-verb {
