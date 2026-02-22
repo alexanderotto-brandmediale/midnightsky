@@ -2748,38 +2748,40 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
 /* ── Currently Widget ──────────────────────────────── */
 .currently-widget {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  align-items: center;
+  gap: 0.6rem;
   z-index: 50;
   pointer-events: none;
   opacity: 0;
   transition: opacity 1s ease;
 }
 .currently-widget.visible { opacity: 1; }
+.currently-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
 .currently-label {
   font-family: 'Geist', monospace;
-  font-size: 0.45rem;
-  letter-spacing: 0.3em;
-  color: rgba(255,87,90,0.4);
+  font-size: 0.4rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,87,90,0.35);
   text-transform: uppercase;
 }
-.currently-type {
-  font-family: 'Tomorrow', var(--font);
+.currently-sep {
+  color: rgba(249,248,242,0.1);
   font-size: 0.5rem;
-  letter-spacing: 0.2em;
-  color: rgba(249,248,242,0.3);
-  text-transform: uppercase;
 }
 .currently-value {
   font-family: 'Geist', sans-serif;
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   font-weight: 300;
-  color: rgba(249,248,242,0.5);
-  max-width: 180px;
-  line-height: 1.4;
+  color: rgba(249,248,242,0.4);
+  line-height: 1;
 }
 
 /* ── RGB Glitch Reveal ─────────────────────────────── */

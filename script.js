@@ -3102,40 +3102,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /* ── Feature: Currently Reading/Listening Widget ──── */
 (function () {
   var widget = document.getElementById('currently-widget');
-  var typeEl = document.getElementById('currently-type');
-  var valueEl = document.getElementById('currently-value');
-  if (!widget || !typeEl || !valueEl) return;
-
-  var items = [
-    { type: 'READING', value: 'Superintelligence — Nick Bostrom' },
-    { type: 'READING', value: 'The Master and His Emissary — Iain McGilchrist' },
-    { type: 'LISTENING', value: 'M83 — Oblivion Soundtrack' },
-    { type: 'THINKING', value: 'How do you encode values into systems that surpass understanding?' },
-    { type: 'READING', value: 'Antifragile — Nassim Taleb' },
-    { type: 'LISTENING', value: 'Brian Eno — Music for Installations' },
-    { type: 'EXPLORING', value: 'The alignment problem as philosophy, not engineering' },
-    { type: 'READING', value: 'Finite and Infinite Games — James P. Carse' }
-  ];
-
-  var current = Math.floor(Math.random() * items.length);
-
-  function show() {
-    var item = items[current];
-    typeEl.textContent = item.type;
-    valueEl.textContent = item.value;
-    widget.classList.add('visible');
-  }
-
-  function cycle() {
-    widget.classList.remove('visible');
-    setTimeout(function () {
-      current = (current + 1) % items.length;
-      show();
-    }, 1000);
-  }
-
-  setTimeout(show, 3000);
-  setInterval(cycle, 12000);
+  if (!widget) return;
+  setTimeout(function () { widget.classList.add('visible'); }, 3000);
 })();
 
 /* ── Feature: RGB Glitch Reveal ────────────────────── */
