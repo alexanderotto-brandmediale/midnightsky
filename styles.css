@@ -1666,6 +1666,9 @@ a { color: inherit; text-decoration: none; }
 .bg-layer-item--bright video {
   opacity: 0.4;
 }
+.bg-layer-item--dark video {
+  opacity: 0.08;
+}
 .bg-layer-item::after {
   content: '';
   position: absolute;
