@@ -1336,6 +1336,9 @@ a { color: inherit; text-decoration: none; }
   object-fit: cover;
   opacity: 0.2;
 }
+.video-bg--bright video {
+  opacity: 0.4;
+}
 .video-bg::after {
   content: '';
   position: absolute;
