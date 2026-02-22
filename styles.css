@@ -448,6 +448,28 @@ a { color: inherit; text-decoration: none; }
   border-color: rgba(255,87,90,0.3);
   background: rgba(255,87,90,0.05);
 }
+.numpad-label {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Geist', monospace;
+  font-size: 0.4rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(249,248,242,0.25);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.numpad-key {
+  position: relative;
+}
+.numpad-key:hover .numpad-label {
+  opacity: 1;
+}
 
 .indicator {
   display: flex;
