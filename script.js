@@ -3160,3 +3160,68 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     return sum / (dataArray.length * 255);
   };
 })();
+
+/* ── Feature: Ambient Mode ─────────────────────────── */
+(function () {
+  var btn = document.getElementById('ambient-toggle');
+  var overlay = document.getElementById('ambient-overlay');
+  if (!btn || !overlay) return;
+
+  var isAmbient = false;
+  var bgItems = document.querySelectorAll('.bg-layer-item video');
+  var currentVideo = 0;
+  var cycleTimer = null;
+
+  function activateAmbient() {
+    isAmbient = true;
+    document.body.classList.add('ambient-mode');
+    btn.classList.add('active');
+    overlay.classList.add('active');
+    playSfx('nav');
+
+    // Start all videos, cycle through them
+    bgItems.forEach(function (v) { v.pause(); v.style.opacity = '0'; });
+    currentVideo = 0;
+    showNextVideo();
+    cycleTimer = setInterval(showNextVideo, 15000);
+
+    // Click overlay to exit
+    overlay.addEventListener('click', deactivateAmbient, { once: true });
+  }
+
+  function deactivateAmbient() {
+    isAmbient = false;
+    document.body.classList.remove('ambient-mode');
+    btn.classList.remove('active');
+    overlay.classList.remove('active');
+    playSfx('nav');
+    if (cycleTimer) { clearInterval(cycleTimer); cycleTimer = null; }
+    // Restore video states
+    bgItems.forEach(function (v) { v.style.opacity = ''; v.pause(); });
+  }
+
+  function showNextVideo() {
+    bgItems.forEach(function (v, i) {
+      if (i === currentVideo) {
+        v.style.transition = 'opacity 3s ease';
+        v.style.opacity = '0.35';
+        v.play();
+      } else {
+        v.style.transition = 'opacity 3s ease';
+        v.style.opacity = '0';
+        setTimeout(function () { v.pause(); }, 3000);
+      }
+    });
+    currentVideo = (currentVideo + 1) % bgItems.length;
+  }
+
+  btn.addEventListener('click', function () {
+    if (isAmbient) deactivateAmbient();
+    else activateAmbient();
+  });
+
+  // ESC to exit
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && isAmbient) deactivateAmbient();
+  });
+})();

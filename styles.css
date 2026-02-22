@@ -2815,3 +2815,103 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   .section-number-overlay { right: 1rem; font-size: clamp(4rem, 20vw, 8rem); }
   .currently-widget { display: none; }
 }
+
+/* ── Ambient Mode ──────────────────────────────────── */
+.ambient-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 60;
+  background: none;
+  border: 1px solid rgba(249,248,242,0.08);
+  color: rgba(249,248,242,0.25);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+  border-radius: 0;
+}
+.ambient-toggle:hover {
+  color: #FF575A;
+  border-color: rgba(255,87,90,0.3);
+}
+.ambient-toggle.active {
+  color: #FF575A;
+  border-color: rgba(255,87,90,0.4);
+  box-shadow: 0 0 12px rgba(255,87,90,0.1);
+}
+.ambient-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0A0A0A;
+  z-index: 55;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.5s ease;
+}
+.ambient-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Hide all UI in ambient mode */
+body.ambient-mode .nav,
+body.ambient-mode .hamburger,
+body.ambient-mode .nav-numpad,
+body.ambient-mode .side-data,
+body.ambient-mode .currently-widget,
+body.ambient-mode main,
+body.ambient-mode .cursor-dot,
+body.ambient-mode .cursor-ring {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 1.5s ease;
+}
+body.ambient-mode .bg-layer {
+  z-index: 56;
+}
+body.ambient-mode .bg-layer-item {
+  opacity: 1 !important;
+}
+body.ambient-mode .bg-layer-item video {
+  opacity: 0.35 !important;
+}
+body.ambient-mode #starfield-canvas {
+  z-index: 57;
+  opacity: 0.8;
+}
+body.ambient-mode .ambient-toggle {
+  z-index: 60;
+}
+
+/* Ambient hint */
+.ambient-hint {
+  position: fixed;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  font-family: 'Tomorrow', var(--font);
+  font-size: 0.5rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(249,248,242,0);
+  z-index: 58;
+  pointer-events: none;
+  transition: color 2s ease;
+}
+body.ambient-mode .ambient-hint {
+  color: rgba(249,248,242,0.12);
+  animation: ambient-breathe 6s ease-in-out infinite;
+}
+@keyframes ambient-breathe {
+  0%,100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@media (pointer: coarse) {
+  .ambient-toggle { bottom: 5rem; right: 1rem; }
+}
