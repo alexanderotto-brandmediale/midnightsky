@@ -858,13 +858,27 @@
   });
 })();
 
-/* ── Smooth Anchor Scroll ─────────────────────────── */
+/* ── Smooth Anchor Scroll + URL Hash ───────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   anchor.addEventListener('click', function (e) {
-    var target = document.querySelector(this.getAttribute('href'));
+    var href = this.getAttribute('href');
+    var target = document.querySelector(href);
     if (target) {
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.pushState(null, '', href);
     }
   });
 });
+
+// Jump to hash on page load
+(function () {
+  if (window.location.hash) {
+    var target = document.querySelector(window.location.hash);
+    if (target) {
+      setTimeout(function () {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 500);
+    }
+  }
+})();
