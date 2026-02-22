@@ -951,7 +951,7 @@ a { color: inherit; text-decoration: none; }
 
 .tl-line {
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 0;
   right: 0;
   height: 1px;
@@ -960,7 +960,7 @@ a { color: inherit; text-decoration: none; }
 
 .tl-point {
   position: absolute;
-  top: 50%;
+  top: 30%;
   transform: translate(-50%, -50%);
   cursor: pointer;
   z-index: 5;
