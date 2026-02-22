@@ -964,10 +964,13 @@
       ctx.textAlign = 'center';
       ctx.fillText(isFocused ? nd.full : nd.label, sc.x, sc.y - ringR - 6 * cam.zoom * dpr);
 
-      // Sub-topics when focused
+      // Sub-topics when focused — staggered fade-in
       if (isFocused) {
+        var elapsed = (performance.now() - (nd._focusTime || 0)) / 1000;
         for (var s = 0; s < nd.sub.length; s++) {
           var sub = nd.sub[s];
+          var subDelay = 0.3 + s * 0.12;
+          var subAlpha = Math.min(1, Math.max(0, (elapsed - subDelay) / 0.4));
           var sx = nd.x + sub.ox * 1.8;
           var sy = nd.y + sub.oy * 1.8;
           var ss = toScreen(sx, sy);
@@ -976,19 +979,19 @@
           ctx.beginPath();
           ctx.moveTo(sc.x, sc.y);
           ctx.lineTo(ss.x, ss.y);
-          ctx.strokeStyle = 'rgba(249,248,242,0.08)';
+          ctx.strokeStyle = 'rgba(249,248,242,' + (0.08 * subAlpha) + ')';
           ctx.lineWidth = 0.5 * cam.zoom * dpr;
           ctx.stroke();
 
           // Sub dot
           ctx.beginPath();
           ctx.arc(ss.x, ss.y, 1.5 * cam.zoom * dpr, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(249,248,242,0.5)';
+          ctx.fillStyle = 'rgba(249,248,242,' + (0.5 * subAlpha) + ')';
           ctx.fill();
 
           // Sub label
           ctx.font = '300 ' + (9 * cam.zoom * dpr) + 'px Geist, monospace';
-          ctx.fillStyle = 'rgba(249,248,242,0.4)';
+          ctx.fillStyle = 'rgba(249,248,242,' + (0.4 * subAlpha) + ')';
           ctx.textAlign = 'center';
           ctx.fillText(sub.label, ss.x, ss.y - 8 * cam.zoom * dpr);
         }
@@ -1041,6 +1044,7 @@
     if (clicked && clicked !== focusedNode) {
       // Zoom in
       focusedNode = clicked;
+      focusedNode._focusTime = performance.now();
       camTarget.x = clicked.x;
       camTarget.y = clicked.y;
       camTarget.zoom = 2.5;
@@ -1064,7 +1068,9 @@
   // Hover cursor
   canvas.addEventListener('mousemove', function (e) {
     var rect = canvas.getBoundingClientRect();
-    var world = toWorld(e.clientX - rect.left, e.clientY - rect.top);
+    mx = e.clientX - rect.left;
+    my = e.clientY - rect.top;
+    var world = toWorld(mx, my);
     var onNode = false;
     for (var i = 0; i < nodes.length; i++) {
       var dx = world.x - nodes[i].x;
