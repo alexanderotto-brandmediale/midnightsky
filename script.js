@@ -2773,8 +2773,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   var c = document.getElementById('eq-canvas');
   if (!c) return;
   var ctx = c.getContext('2d');
-  var w = 120, h = 80;
-  var cols = 12, rows = 8;
+  var w = 72, h = 72;
+  var cols = 8, rows = 8;
   var gapX = w / (cols + 1), gapY = h / (rows + 1);
   var levels = [];
   var targets = [];
