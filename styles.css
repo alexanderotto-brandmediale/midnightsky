@@ -2697,6 +2697,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   .thinking-header .section-heading > span { display: block; }
   .thinking-header .section-heading > span > .letter { display: inline-block; }
   .thinking-header .micro-label { display: none !important; }
+  .contact-links { display: grid !important; grid-template-columns: 1fr 1fr; gap: 1.5rem !important; flex-direction: unset !important; }
   .tab-nav-wrapper { display: flex; align-items: center; gap: 0; }
   .tab-arrow {
     background: none; border: none; color: rgba(255,87,90,0.7);
