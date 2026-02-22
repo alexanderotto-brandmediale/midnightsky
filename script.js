@@ -1532,6 +1532,20 @@ function playSfx(name) {
     var bigH = document.getElementById('cosmos-heading-big');
     var smallH = document.getElementById('cosmos-heading-small');
 
+    // Fade heading on scroll into section
+    if (bigH && !focusedNode) {
+      var gravSec = document.getElementById('gravity');
+      if (gravSec) {
+        var rect = gravSec.getBoundingClientRect();
+        var scrollPct = -rect.top / (rect.height * 0.3);
+        if (scrollPct > 0.3) {
+          bigH.classList.add('fade-scroll');
+        } else {
+          bigH.classList.remove('fade-scroll');
+        }
+      }
+    }
+
     if (clicked && clicked !== focusedNode) {
       // Zoom in
       focusedNode = clicked;

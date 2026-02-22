@@ -1792,6 +1792,8 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
 }
 
 .cosmos-layout { align-items: center; position: relative; padding: 0 !important; width: 100vw !important; max-width: none !important; height: 100vh; margin-left: calc(-50vw + 50%); }
+#cosmos-heading-big { transition: opacity 1s ease, transform 1s ease; }
+#cosmos-heading-big.fade-scroll { opacity: 0; transform: translateY(-30px); pointer-events: none; }
 .cosmos-wrapper {
   position: absolute;
   inset: 0;
