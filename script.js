@@ -858,20 +858,49 @@
   });
 })();
 
-/* ── Lazy Video: pause when off-screen ─────────────── */
+/* ── Fixed BG Layer: crossfade on scroll ───────────── */
 (function () {
-  var videos = document.querySelectorAll('.video-bg video');
-  if (!videos.length) return;
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.play();
-      } else {
-        entry.target.pause();
+  var items = document.querySelectorAll('.bg-layer-item');
+  if (!items.length) return;
+  
+  // Map sections to bg items
+  var bgMap = {};
+  items.forEach(function (item) {
+    bgMap[item.dataset.bgFor] = item;
+  });
+  
+  var sections = document.querySelectorAll('.scene');
+  var currentBg = null;
+  
+  function updateBg() {
+    var scrollY = window.scrollY + window.innerHeight * 0.4;
+    var activeSectionId = null;
+    
+    sections.forEach(function (s) {
+      if (s.offsetTop <= scrollY) {
+        activeSectionId = s.id;
       }
     });
-  }, { threshold: 0.05 });
-  videos.forEach(function (v) { observer.observe(v); });
+    
+    // Find matching bg or fall back to hero
+    var targetBg = bgMap[activeSectionId] || bgMap['hero'];
+    
+    if (targetBg !== currentBg) {
+      items.forEach(function (item) {
+        var isTarget = item === targetBg;
+        item.classList.toggle('active', isTarget);
+        // Pause/play videos
+        var vid = item.querySelector('video');
+        if (vid) {
+          if (isTarget) vid.play(); else vid.pause();
+        }
+      });
+      currentBg = targetBg;
+    }
+  }
+  
+  window.addEventListener('scroll', updateBg, { passive: true });
+  updateBg();
 })();
 
 /* ── Smooth Anchor Scroll + URL Hash ───────────────── */

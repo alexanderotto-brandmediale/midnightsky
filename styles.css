@@ -1319,25 +1319,37 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Video Background ─────────────────────────────── */
-.video-bg {
+/* ── Fixed Background Layer ────────────────────────── */
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-layer-item {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  overflow: hidden;
   opacity: 0;
-  transition: opacity 2.5s ease;
+  transition: opacity 1.5s ease;
 }
-.video-bg.visible {
+.bg-layer-item.active {
   opacity: 1;
 }
-.video-bg video {
+.bg-layer-item video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0.2;
 }
-.video-bg--bright video {
+.bg-layer-item--bright video {
   opacity: 0.4;
+}
+.bg-layer-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.6) 100%);
 }
 .video-bg::after {
   content: '';
