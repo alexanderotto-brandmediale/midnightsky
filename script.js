@@ -3102,8 +3102,16 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
 /* ── Feature: Currently Reading/Listening Widget ──── */
 (function () {
   var widget = document.getElementById('currently-widget');
-  if (!widget) return;
+  var hero = document.getElementById('hero');
+  if (!widget || !hero) return;
   setTimeout(function () { widget.classList.add('visible'); }, 3000);
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) widget.classList.add('visible');
+      else widget.classList.remove('visible');
+    });
+  }, { threshold: 0.3 });
+  io.observe(hero);
 })();
 
 /* ── Feature: RGB Glitch Reveal ────────────────────── */
