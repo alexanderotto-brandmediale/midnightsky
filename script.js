@@ -833,10 +833,7 @@
 
   var currentMilestones = [];
   function showMilestones(year) {
-    if (bgYear) {
-      bgYear.textContent = year;
-      bgYear.classList.add('visible');
-    }
+    // big bg year removed
     if (!milestonesEl) return;
     milestonesEl.classList.add('visible');
     // Clear old
@@ -863,7 +860,7 @@
   }
 
   function hideMilestones() {
-    if (bgYear) bgYear.classList.remove('visible');
+    // bg year hidden
     if (milestonesEl) milestonesEl.classList.remove('visible');
     currentMilestones.forEach(function (el) { el.classList.remove('visible'); });
   }
