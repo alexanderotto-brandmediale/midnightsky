@@ -1721,3 +1721,9 @@ a { color: inherit; text-decoration: none; }
     align-items: center;
   }
 }
+
+/* Hide custom cursor on touch/mobile */
+@media (pointer: coarse) {
+  body, a, button, .tl-point, .indicator, .contact-link { cursor: auto !important; }
+  .cursor-dot, .cursor-ring { display: none !important; }
+}
