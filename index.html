@@ -7,7 +7,8 @@
   <meta name="description" content="Alexander Otto — Strategist, creator, and signal engineer.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -57,7 +58,7 @@
     </a>
   </div>
 
-  <canvas id="particle-canvas"></canvas>
+  <canvas id="starfield-canvas"></canvas>
 
   <main>
 
@@ -67,11 +68,11 @@
         <span>IMAGE</span>
       </div>
       <div class="scene-content hero-content">
-        <h1 class="hero-name reveal">
+        <h1 class="hero-name reveal letter-animate">
           <span>Alexander</span>
           <span>Otto</span>
         </h1>
-        <p class="hero-tagline reveal">Strategist. Creator. Signal Engineer.</p>
+        <p class="hero-tagline reveal" data-typewriter>Strategist. Creator. Signal Engineer.</p>
       </div>
       <div class="scroll-hint reveal">
         <div class="scroll-hint-line"></div>
@@ -84,7 +85,7 @@
         <span>IMAGE</span>
       </div>
       <div class="scene-content signal-content">
-        <p class="statement reveal">Turning noise into meaning,<br>complexity into direction,<br>and direction into experiences<br>people actually move through.</p>
+        <p class="statement reveal reveal-scale">Turning noise into meaning,<br>complexity into direction,<br>and direction into experiences<br>people actually move through.</p>
       </div>
     </section>
 
@@ -96,25 +97,29 @@
         </div>
       </div>
       <div class="split-text">
-        <span class="section-num reveal">03</span>
-        <h2 class="section-heading reveal">About</h2>
-        <p class="reveal">He builds brands and digital ecosystems like living organisms: identity, language, interface, behavior, feedback loops.</p>
-        <p class="reveal">A brand is not a logo — it is a reality tunnel. A set of cues that shapes what people notice, trust, ignore, and choose.</p>
+        <span class="micro-label reveal reveal-left">PROFILE</span>
+        <span class="section-num reveal reveal-left">03</span>
+        <h2 class="section-heading reveal reveal-left letter-animate">About</h2>
+        <div class="vertical-accent">
+          <p class="reveal reveal-left">He builds brands and digital ecosystems like living organisms: identity, language, interface, behavior, feedback loops.</p>
+          <p class="reveal reveal-left">A brand is not a logo — it is a reality tunnel. A set of cues that shapes what people notice, trust, ignore, and choose.</p>
+        </div>
       </div>
     </section>
 
     <!-- 04 — WHAT HE DOES -->
     <section class="scene" id="work">
       <div class="scene-content work-content">
+        <span class="micro-label reveal">CAPABILITIES</span>
         <span class="section-num reveal">04</span>
-        <h2 class="section-heading reveal">What He Does</h2>
+        <h2 class="section-heading reveal letter-animate">What He Does</h2>
         <div class="work-items">
           <p class="work-item reveal">Reframe what they think the problem is</p>
           <p class="work-item reveal">Simplify decision-making without losing depth</p>
           <p class="work-item reveal">Design systems that survive change</p>
           <p class="work-item reveal">Translate strategy into platforms that land</p>
         </div>
-        <p class="work-coda reveal">He treats transformation as architecture.</p>
+        <p class="work-coda pull-quote reveal">He treats transformation as architecture.</p>
       </div>
     </section>
 
@@ -124,22 +129,23 @@
         <span>IMAGE</span>
       </div>
       <div class="scene-content gravity-content">
-        <span class="section-num reveal">05</span>
-        <h2 class="section-heading section-heading--large reveal">The Gravity of<br>His Interests</h2>
+        <span class="micro-label reveal reveal-left">FOCUS AREAS</span>
+        <span class="section-num reveal reveal-left">05</span>
+        <h2 class="section-heading section-heading--large reveal reveal-left letter-animate">The Gravity of<br>His Interests</h2>
         <div class="gravity-items">
-          <div class="gravity-item reveal">
+          <div class="gravity-item reveal reveal-scale">
             <h3>AI as Amplification</h3>
             <p>An amplification layer for creativity, operations, and perception.</p>
           </div>
-          <div class="gravity-item reveal">
+          <div class="gravity-item reveal reveal-scale">
             <h3>UAP &amp; Reality</h3>
             <p>A question about reality, evidence, narrative, and human limits.</p>
           </div>
-          <div class="gravity-item reveal">
+          <div class="gravity-item reveal reveal-scale">
             <h3>Future Thinking</h3>
             <p>A discipline of scenario, tension, and possibility.</p>
           </div>
-          <div class="gravity-item reveal">
+          <div class="gravity-item reveal reveal-scale">
             <h3>Systems Psychology</h3>
             <p>Self-reflection as a tool for leadership and clarity.</p>
           </div>
@@ -151,15 +157,15 @@
     <section class="scene" id="thinking">
       <div class="scene-content thinking-content">
         <div class="thinking-stack">
-          <div class="thinking-word reveal">
+          <div class="thinking-word reveal reveal-left">
             <h3>Systems</h3>
             <p>Cause, effect, loops, leverage.</p>
           </div>
-          <div class="thinking-word reveal">
+          <div class="thinking-word reveal reveal-left">
             <h3>Creative</h3>
             <p>Taste, coherence, narrative control.</p>
           </div>
-          <div class="thinking-word reveal">
+          <div class="thinking-word reveal reveal-left">
             <h3>Future</h3>
             <p>Scenarios, unknowns, strategic optionality.</p>
           </div>
@@ -170,18 +176,22 @@
     <!-- 07 — AESTHETIC -->
     <section class="scene" id="aesthetic">
       <div class="scene-content aesthetic-content">
-        <p class="statement statement--accent reveal">Minimal. Intentional.<br>High-signal.</p>
-        <p class="statement statement--sub reveal">If it cannot be used,<br>it is not finished.</p>
+        <span class="micro-label reveal reveal-scale">PHILOSOPHY</span>
+        <p class="statement statement--accent reveal reveal-scale letter-animate">Minimal. Intentional.<br>High-signal.</p>
+        <p class="statement statement--sub reveal reveal-scale">If it cannot be used,<br>it is not finished.</p>
       </div>
     </section>
 
     <!-- 08 — WHY -->
     <section class="scene" id="why">
       <div class="scene-content why-content">
+        <span class="micro-label reveal">PURPOSE</span>
         <span class="section-num reveal">08</span>
-        <h2 class="section-heading reveal">Why</h2>
-        <p class="why-text reveal">Because the world is changing faster than most organizations can metabolize. Because AI is rewriting workflows, identity, and value. Because reality itself is becoming negotiable.</p>
-        <p class="why-text reveal">Alexander operates where the future is not a distant idea, but an everyday pressure. He helps people and companies build coherent direction inside uncertainty — without flattening the mystery.</p>
+        <h2 class="section-heading reveal letter-animate">Why</h2>
+        <div class="vertical-accent">
+          <p class="why-text reveal">Because the world is changing faster than most organizations can metabolize. Because AI is rewriting workflows, identity, and value. Because reality itself is becoming negotiable.</p>
+          <p class="why-text reveal">Alexander operates where the future is not a distant idea, but an everyday pressure. He helps people and companies build coherent direction inside uncertainty — without flattening the mystery.</p>
+        </div>
       </div>
     </section>
 
@@ -191,8 +201,8 @@
         <span>IMAGE</span>
       </div>
       <div class="scene-content contact-content">
-        <h2 class="contact-heading reveal">Building<br>in the fog?</h2>
-        <div class="contact-links reveal">
+        <h2 class="contact-heading reveal reveal-scale letter-animate">Building<br>in the fog?</h2>
+        <div class="contact-links reveal reveal-scale">
           <a href="#" class="contact-link">Email</a>
           <a href="#" class="contact-link" target="_blank" rel="noopener">LinkedIn</a>
         </div>
