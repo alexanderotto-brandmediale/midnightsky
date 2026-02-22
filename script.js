@@ -802,7 +802,7 @@
   if (interactive) {
     interactive.addEventListener('mousemove', function (e) {
       dpTX = e.clientX + 20;
-      dpTY = e.clientY - 120;
+      dpTY = e.clientY - 160;
       if (!dpActive) {
         dpX = dpTX; dpY = dpTY;
         detailPanel.style.left = dpX + 'px';
