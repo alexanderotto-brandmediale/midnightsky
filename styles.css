@@ -1078,6 +1078,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
 
 .statement--accent span {
   display: block;
+  line-height: 1.1;
 }
 .statement--accent {
   font-family: 'Tomorrow', var(--font);
