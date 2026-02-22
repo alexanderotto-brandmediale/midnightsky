@@ -597,15 +597,15 @@
       ],
       desc: 'Not prediction — preparation.'
     },
-    { id: 3, label: 'Systems', full: 'Systems Psychology', x: 0, y: 0,
+    { id: 3, label: 'Consulting', full: 'Business Consulting', x: 0, y: 0,
       sub: [
-        { label: 'Adler', ox: -55, oy: -45 },
-        { label: 'Behavioral Design', ox: 70, oy: -30 },
+        { label: 'Process Design', ox: -55, oy: -45 },
+        { label: 'Growth Strategy', ox: 70, oy: -30 },
         { label: 'Leadership', ox: -65, oy: 35 },
-        { label: 'Drift', ox: 50, oy: 55 },
-        { label: 'Self-Awareness', ox: -5, oy: 70 }
+        { label: 'Change Mgmt', ox: 50, oy: 55 },
+        { label: 'Decision Logic', ox: -5, oy: 70 }
       ],
-      desc: 'Why people do what they do — and why I care.'
+      desc: 'Helping organizations find the leverage point.'
     },
     { id: 4, label: 'Brand', full: 'Brand Strategy', x: 0, y: 0,
       sub: [
@@ -617,25 +617,25 @@
       ],
       desc: 'I see brands as systems of meaning.'
     },
-    { id: 5, label: 'Music', full: 'Music & Creativity', x: 0, y: 0,
+    { id: 5, label: 'Transform', full: 'Transformation', x: 0, y: 0,
       sub: [
-        { label: 'Piano', ox: -50, oy: -45 },
-        { label: 'Production', ox: 60, oy: -35 },
-        { label: 'Synthesis', ox: -65, oy: 30 },
-        { label: 'Flow State', ox: 55, oy: 50 },
-        { label: 'Expression', ox: -5, oy: 65 }
+        { label: 'Digital', ox: -50, oy: -45 },
+        { label: 'Cultural', ox: 60, oy: -35 },
+        { label: 'Structural', ox: -65, oy: 30 },
+        { label: 'Mindset', ox: 55, oy: 50 },
+        { label: 'VUCA', ox: -5, oy: 65 }
       ],
-      desc: 'My counterweight. Where structure meets improvisation.'
+      desc: 'Navigating disruption — in real time.'
     },
-    { id: 6, label: 'Physics', full: 'Physics & Origin', x: 0, y: 0,
+    { id: 6, label: 'Economy', full: 'Ökonomie', x: 0, y: 0,
       sub: [
-        { label: 'Cosmology', ox: -60, oy: -40 },
-        { label: 'Astronomy', ox: 55, oy: -45 },
-        { label: 'Emergence', ox: -70, oy: 35 },
-        { label: 'Complexity', ox: 60, oy: 45 },
-        { label: 'Patterns', ox: 0, oy: 70 }
+        { label: 'Vermögen', ox: -60, oy: -40 },
+        { label: 'Märkte', ox: 55, oy: -45 },
+        { label: 'Investment', ox: -70, oy: 35 },
+        { label: 'Systeme', ox: 60, oy: 45 },
+        { label: 'Effizienz', ox: 0, oy: 70 }
       ],
-      desc: 'The big questions I keep returning to.'
+      desc: 'Understanding the systems that move everything.'
     }
   ];
 
