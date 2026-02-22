@@ -2011,8 +2011,9 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   height: 18px;
   display: block;
   margin: 0 auto 0.4rem;
-  opacity: 0.5;
+  opacity: 0.6;
   transition: opacity 0.3s;
+  filter: brightness(0) saturate(100%) invert(48%) sepia(83%) saturate(1057%) hue-rotate(325deg) brightness(101%) contrast(101%);
 }
 .contact-link:hover .contact-icon {
   opacity: 1;
