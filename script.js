@@ -953,17 +953,35 @@
   if (!tooltip || !tooltipText) return;
 
   var items = document.querySelectorAll('.tl-side-item[data-hover]');
+  var typeTimer = null;
+  var fullText = '';
+  var charIdx = 0;
+
+  function typeWrite() {
+    if (charIdx <= fullText.length) {
+      tooltipText.textContent = fullText.slice(0, charIdx);
+      charIdx++;
+      typeTimer = setTimeout(typeWrite, 12);
+    }
+  }
+
   items.forEach(function (item) {
     item.addEventListener('mouseenter', function () {
-      tooltipText.textContent = item.dataset.hover;
+      clearTimeout(typeTimer);
+      fullText = item.dataset.hover;
+      charIdx = 0;
+      tooltipText.textContent = '';
       tooltip.classList.add('visible');
+      typeWrite();
     });
     item.addEventListener('mouseleave', function () {
+      clearTimeout(typeTimer);
       tooltip.classList.remove('visible');
+      tooltipText.textContent = '';
     });
     item.addEventListener('mousemove', function (e) {
-      tooltip.style.left = (e.clientX + 8) + 'px';
-      tooltip.style.top = (e.clientY + 8) + 'px';
+      tooltip.style.left = (e.clientX + 12) + 'px';
+      tooltip.style.top = (e.clientY + 12) + 'px';
     });
   });
 })();

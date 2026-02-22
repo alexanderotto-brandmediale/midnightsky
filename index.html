@@ -330,12 +330,21 @@
     <section class="scene" id="thinking">
       <div class="hud hud-tl reveal">ATMOSPHERE — 100 AU</div>
       <div class="hud hud-br reveal">SIGNAL PATTERNS ◈ MAPPING</div>
+      <div class="crosshair crosshair-tl"></div>
+      <div class="crosshair crosshair-tr"></div>
       <div class="dash-border-top"></div>
       <div class="hud-ticker"><span>◇ SYSTEMS ◇ CREATIVE ◇ FUTURE ◇ LEVERAGE:HIGH ◇ COHERENCE:ACTIVE ◇ OPTIONALITY:OPEN ◇</span></div>
+      <div class="coord-label" style="top:18%;right:4rem;">ALT: 100 AU</div>
+      <div class="micro-blink" style="bottom:16%;left:8rem;">◈ PATTERN LOCK</div>
+      <div class="micro-blink" style="top:22%;right:6rem;">◈ SCANNING</div>
+      <div class="micro-text-static" style="top:12%;left:4rem;">DEPTH: ∞</div>
+      <div class="micro-accent-line" style="top:40%;right:0;width:80px;"></div>
       <div class="scene-content thinking-content">
         <span class="micro-label reveal reveal-left">THINKING — from the upper atmosphere</span>
-        <span class="section-num reveal reveal-left">06</span>
-        <h2 class="section-heading reveal reveal-left letter-animate blur-type">How He Thinks</h2>
+        <div class="thinking-header">
+          <span class="section-num reveal reveal-left">06</span>
+          <h2 class="section-heading reveal reveal-left letter-animate blur-type">How He Thinks</h2>
+        </div>
         <div class="swipe-track" id="swipe-track">
           <div class="swipe-card glass-panel">
             <span class="swipe-num">01</span>
@@ -388,7 +397,11 @@
             <p>Eventually, every orbit ends. Insights must return to ground level, translated into structures, decisions, language, and action. Ideas that cannot survive re-entry were never useful. Concepts that do become architecture. That is the real work: turning perspective into something that holds.</p>
           </div>
         </div>
-        <div class="swipe-dots" id="swipe-dots"></div>
+        <div class="swipe-nav-bar">
+          <button class="swipe-arrow swipe-arrow-left" id="swipe-prev" aria-label="Previous card">&#8249;</button>
+          <div class="swipe-dots" id="swipe-dots"></div>
+          <button class="swipe-arrow swipe-arrow-right" id="swipe-next" aria-label="Next card">&#8250;</button>
+        </div>
       </div>
     </section>
 

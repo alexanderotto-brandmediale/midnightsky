@@ -1226,44 +1226,30 @@ a { color: inherit; text-decoration: none; }
   transition: opacity 0.4s ease;
 }
 
-/* HUD Hover Tooltip */
+/* HUD Hover Tooltip — raw text at cursor */
 .tl-hover-tooltip {
   position: fixed;
   z-index: 500;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease;
-  max-width: 320px;
+  transition: opacity 0.2s ease;
+  max-width: 260px;
 }
 .tl-hover-tooltip.visible {
   opacity: 1;
 }
 .tl-hover-frame {
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(0,0,0,0.85);
-  padding: 0.8rem 1rem;
-  position: relative;
-}
-.tl-hover-frame::before {
-  content: '◈ INTEL';
-  position: absolute;
-  top: -0.5rem;
-  left: 0.8rem;
-  font-family: 'Geist', monospace;
-  font-size: 0.35rem;
-  letter-spacing: 0.3em;
-  color: var(--secondary);
-  opacity: 0.5;
-  background: rgba(0,0,0,0.85);
-  padding: 0 0.3rem;
+  background: none;
+  border: none;
+  padding: 0;
 }
 .tl-hover-text {
   font-family: 'Geist', monospace;
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   font-weight: 300;
-  line-height: 1.7;
-  letter-spacing: 0.05em;
-  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.35);
 }
 
 /* Sub Tracks */
@@ -1537,9 +1523,46 @@ a { color: inherit; text-decoration: none; }
 /* ── 06 HOW HE THINKS ────────────────────────────── */
 .thinking-content {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
   min-height: 100vh;
+}
+
+/* Horizontal heading: 06 + How He Thinks */
+.thinking-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+}
+.thinking-header .section-num {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+  font-weight: 200;
+  letter-spacing: 0.15em;
+}
+.thinking-header .section-heading {
+  margin-bottom: 1.5rem;
+}
+
+/* Brighter HUD elements for Section 06 */
+#thinking .hud {
+  color: rgba(255, 87, 90, 0.45);
+}
+#thinking .hud-ticker {
+  color: rgba(249,248,242,0.25);
+}
+#thinking .micro-blink {
+  opacity: 0.5;
+}
+#thinking .coord-label {
+  color: rgba(249,248,242,0.15);
+}
+#thinking .micro-text-static {
+  color: rgba(249,248,242,0.15);
+}
+#thinking .crosshair::before,
+#thinking .crosshair::after {
+  background: rgba(255,87,90,0.3);
 }
 
 .thinking-stack {
@@ -1914,14 +1937,14 @@ a { color: inherit; text-decoration: none; }
 }
 .swipe-num {
   font-family: 'Geist', monospace;
-  font-size: 0.5rem;
+  font-size: 0.55rem;
   font-weight: 300;
   letter-spacing: 0.3em;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.4);
 }
 .swipe-card h3 {
   font-family: var(--font);
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 200;
   letter-spacing: 0.03em;
   color: var(--cream);
@@ -1934,7 +1957,7 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(0);
 }
 .swipe-card p {
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   font-weight: 300;
   line-height: 1.8;
   color: rgba(255,255,255,0.85);
