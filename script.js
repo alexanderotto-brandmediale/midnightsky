@@ -560,31 +560,11 @@
       else p.classList.remove('active');
     });
 
-    // Animate detail panel
-    if (!detailVisible) {
-      // First time: show panel
-      detailPanel.style.display = 'block';
-      detailYear.textContent = d.year;
-      detailTag.textContent = d.tag;
-      detailText.textContent = d.text;
-      detailMeta.textContent = d.meta;
-      // Force reflow then animate in
-      void detailPanel.offsetHeight;
-      detailPanel.classList.add('visible');
-      detailVisible = true;
-    } else if (changing) {
-      // Cross-fade: briefly fade out, update, fade in
-      detailPanel.classList.remove('visible');
-      detailPanel.classList.add('updating');
-      setTimeout(function () {
-        detailYear.textContent = d.year;
-        detailTag.textContent = d.tag;
-        detailText.textContent = d.text;
-        detailMeta.textContent = d.meta;
-        detailPanel.classList.remove('updating');
-        detailPanel.classList.add('visible');
-      }, 180);
-    }
+    // Update detail panel content
+    detailYear.textContent = d.year;
+    detailTag.textContent = d.tag;
+    detailText.textContent = d.text;
+    detailMeta.textContent = d.meta;
 
     // Redraw mountain with animated glow
     startGlowAnimation(idx);
