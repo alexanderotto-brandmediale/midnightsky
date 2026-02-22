@@ -847,8 +847,8 @@
 
   function layoutNodes() {
     var cx = w / (2 * dpr), cy = h / (2 * dpr);
-    var spreadX = w / (2 * dpr) * 0.85;
-    var spreadY = h / (2 * dpr) * 0.8;
+    var spreadX = w / (2 * dpr) * 0.95;
+    var spreadY = h / (2 * dpr) * 0.9;
     // Organic positions for core nodes (16) — hand-tuned offsets
     var corePositions = [
       { ax: -0.15, ay: -0.55 },  // 0 AI
@@ -1087,7 +1087,7 @@
     for (var i = 0; i < nodes.length; i++) {
       var dx = world.x - nodes[i].x;
       var dy = world.y - nodes[i].y;
-      if (Math.sqrt(dx * dx + dy * dy) < 40 / cam.zoom) {
+      if (Math.sqrt(dx * dx + dy * dy) < 40 / cam.zoom && !nodes[i].grey) {
         clicked = nodes[i];
         break;
       }
