@@ -292,6 +292,8 @@ canvas{position:fixed;inset:0;z-index:1}
 
   canvas.addEventListener('click', handleInput);
   canvas.addEventListener('touchstart', handleInput, { passive: false });
+  startScreen.addEventListener('click', handleInput);
+  startScreen.addEventListener('touchstart', handleInput, { passive: false });
   window.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; });
   window.addEventListener('touchmove', function(e) { if (e.touches.length) { mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; } }, { passive: true });
 
