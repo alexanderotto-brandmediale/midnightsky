@@ -1,3 +1,30 @@
+/* ── Dawn Gradient (Dark → Light) ─────────────────── */
+(function () {
+  var dawn = document.getElementById('dawn-gradient');
+  var lightSections = document.querySelectorAll('.scene--light');
+  if (!dawn || !lightSections.length) return;
+
+  function updateDawn() {
+    var first = lightSections[0];
+    var rect = first.getBoundingClientRect();
+    var vh = window.innerHeight;
+    // Start transition 1 viewport before the light section
+    var transitionStart = vh * 1.5;
+    var progress = 0;
+
+    if (rect.top < transitionStart) {
+      progress = Math.min(1, (transitionStart - rect.top) / (vh * 1.2));
+      // Ease in: slow start, then accelerate (like sunrise)
+      progress = progress * progress;
+    }
+
+    dawn.style.opacity = progress * 0.85;
+  }
+
+  window.addEventListener('scroll', updateDawn, { passive: true });
+  updateDawn();
+})();
+
 /* ── Hamburger Menu ───────────────────────────────── */
 (function () {
   var btn = document.getElementById('hamburger');
