@@ -885,6 +885,38 @@
   updateBg();
 })();
 
+/* ── Swipe Cards Navigation ────────────────────────── */
+(function () {
+  var track = document.getElementById('swipe-track');
+  var prev = document.getElementById('swipe-prev');
+  var next = document.getElementById('swipe-next');
+  var counter = document.getElementById('swipe-counter');
+  if (!track || !prev || !next) return;
+
+  var cards = track.querySelectorAll('.swipe-card');
+  var total = cards.length;
+  var current = 0;
+
+  function scrollTo(idx) {
+    idx = Math.max(0, Math.min(total - 1, idx));
+    current = idx;
+    cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    counter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+  }
+
+  prev.addEventListener('click', function () { scrollTo(current - 1); });
+  next.addEventListener('click', function () { scrollTo(current + 1); });
+
+  // Update counter on manual scroll
+  track.addEventListener('scroll', function () {
+    var scrollLeft = track.scrollLeft;
+    var cardWidth = cards[0].offsetWidth + 24; // gap
+    var idx = Math.round(scrollLeft / cardWidth);
+    current = Math.max(0, Math.min(total - 1, idx));
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+  }, { passive: true });
+})();
+
 /* ── Mobile Bottom Nav ─────────────────────────────── */
 (function () {
   var mobileNav = document.getElementById('mobile-nav');

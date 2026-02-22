@@ -1799,6 +1799,76 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
+/* ── Swipe Cards (Section 6) ───────────────────────── */
+.swipe-track {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 1rem 0 2rem;
+  margin: 1rem -2rem 0;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.swipe-track::-webkit-scrollbar { display: none; }
+
+.swipe-card {
+  flex: 0 0 min(360px, 80vw);
+  scroll-snap-align: center;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.swipe-num {
+  font-family: 'Geist', monospace;
+  font-size: 0.45rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.15);
+}
+.swipe-card h3 {
+  font-family: var(--font);
+  font-size: 1.3rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+}
+.swipe-card p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--dim);
+}
+.swipe-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+.swipe-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.4);
+  font-family: 'Geist', monospace;
+  font-size: 1rem;
+  padding: 0.4rem 0.8rem;
+  transition: all 0.3s;
+}
+.swipe-btn:hover {
+  border-color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.7);
+}
+.swipe-counter {
+  font-family: 'Geist', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.2);
+}
+
 /* Hide custom cursor on touch/mobile */
 @media (pointer: coarse) {
   body, a, button, .tl-point, .indicator, .contact-link { cursor: auto !important; }
