@@ -17,6 +17,128 @@ function playSfx(name) {
   } catch(e) {}
 }
 
+/* ── Ambient Score System ─────────────────────────── */
+(function () {
+  var tracks = {
+    hero: 'audio/intro.mp3',
+    signal: 'audio/intro.mp3',
+    about: 'audio/intro.mp3',
+    roots: 'audio/others.mp3',
+    gravity: 'audio/others.mp3',
+    cosmos: 'audio/others.mp3',
+    thinking: 'audio/thinking.mp3',
+    contact: 'audio/thinking.mp3'
+  };
+
+  var audioA = new Audio();
+  var audioB = new Audio();
+  audioA.loop = true;
+  audioB.loop = true;
+  audioA.volume = 0;
+  audioB.volume = 0;
+  var activeAudio = audioA;
+  var inactiveAudio = audioB;
+  var currentTrack = '';
+  var isMuted = true;
+  var targetVol = 0.35;
+  var fadeInterval = null;
+
+  function crossfade(newSrc) {
+    if (newSrc === currentTrack) return;
+    currentTrack = newSrc;
+    inactiveAudio.src = newSrc;
+    inactiveAudio.currentTime = 0;
+    inactiveAudio.volume = 0;
+    inactiveAudio.play().catch(function(){});
+
+    var fadingOut = activeAudio;
+    var fadingIn = inactiveAudio;
+    var steps = 30;
+    var stepTime = 100; // 3s crossfade
+    var step = 0;
+
+    if (fadeInterval) clearInterval(fadeInterval);
+    fadeInterval = setInterval(function () {
+      step++;
+      var progress = step / steps;
+      fadingIn.volume = isMuted ? 0 : Math.min(targetVol, progress * targetVol);
+      fadingOut.volume = isMuted ? 0 : Math.max(0, (1 - progress) * targetVol);
+      if (step >= steps) {
+        clearInterval(fadeInterval);
+        fadeInterval = null;
+        fadingOut.pause();
+        fadingOut.volume = 0;
+        // Swap
+        var tmp = activeAudio;
+        activeAudio = inactiveAudio;
+        inactiveAudio = tmp;
+      }
+    }, stepTime);
+  }
+
+  // Section observer for track switching
+  var sectionIds = ['hero', 'signal', 'about', 'roots', 'gravity', 'cosmos', 'thinking', 'contact'];
+  var currentSection = '';
+  var secObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        if (id !== currentSection && tracks[id]) {
+          currentSection = id;
+          crossfade(tracks[id]);
+        }
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sectionIds.forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) secObs.observe(el);
+  });
+
+  // Toggle button
+  var btn = document.getElementById('audio-toggle');
+  if (btn) {
+    btn.addEventListener('click', function () {
+      isMuted = !isMuted;
+      btn.classList.toggle('playing', !isMuted);
+      if (!isMuted) {
+        // Start playing if not already
+        if (!currentTrack && tracks[currentSection || 'hero']) {
+          currentTrack = tracks[currentSection || 'hero'];
+          activeAudio.src = currentTrack;
+          activeAudio.play().catch(function(){});
+        } else if (activeAudio.paused) {
+          activeAudio.play().catch(function(){});
+        }
+        // Fade in
+        var vol = 0;
+        var fi = setInterval(function () {
+          vol += 0.02;
+          activeAudio.volume = Math.min(targetVol, vol);
+          if (vol >= targetVol) clearInterval(fi);
+        }, 50);
+      } else {
+        // Fade out
+        var fi2 = setInterval(function () {
+          activeAudio.volume = Math.max(0, activeAudio.volume - 0.02);
+          if (activeAudio.volume <= 0.01) { activeAudio.volume = 0; clearInterval(fi2); }
+        }, 50);
+      }
+      playSfx('click');
+    });
+  }
+
+  // Pause on tab hidden
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden && !isMuted) {
+      activeAudio.volume = 0;
+    } else if (!document.hidden && !isMuted) {
+      activeAudio.volume = targetVol;
+    }
+  });
+})();
+
 /* ── Typewriter Reveal Headings ────────────────────── */
 (function () {
   document.querySelectorAll('.typewriter-reveal').forEach(function (el) {
