@@ -2746,6 +2746,28 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   }
 })();
 
+/* ── Headline Parallax ────────────────────────────── */
+(function () {
+  var headings = document.querySelectorAll('.section-heading, .statement--accent, .hero-name');
+  if (!headings.length) return;
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(function () {
+        var scrollY = window.scrollY;
+        headings.forEach(function (h) {
+          var rect = h.getBoundingClientRect();
+          var center = rect.top + rect.height / 2;
+          var offset = (center - window.innerHeight / 2) * -0.08;
+          h.style.transform = 'translateY(' + offset + 'px)';
+        });
+        ticking = false;
+      });
+    }
+  });
+})();
+
 /* ── Dot Matrix EQ Visualizer ─────────────────────── */
 (function () {
   var c = document.getElementById('eq-canvas');
