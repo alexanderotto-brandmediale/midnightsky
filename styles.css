@@ -801,43 +801,31 @@ a { color: inherit; text-decoration: none; }
 }
 
 .hero-name span::before {
-  left: -3px;
-  text-shadow: 2px 0 #7B8CFF;
-  animation: glitch-c1 2s infinite linear alternate-reverse;
+  left: -1px;
+  text-shadow: 1px 0 rgba(123,140,255,0.4);
+  animation: glitch-c1 3s 2s infinite linear alternate-reverse;
 }
 
 .hero-name span::after {
-  left: 3px;
-  text-shadow: -3px 0 var(--secondary);
-  animation: glitch-c2 1s infinite linear alternate-reverse;
+  left: 1px;
+  text-shadow: -1px 0 rgba(255,87,90,0.4);
+  animation: glitch-c2 2s 2s infinite linear alternate-reverse;
 }
 
-/* Main text jitter + distortion */
+/* Main text jitter + distortion — starts after letter-animate */
 .hero-name {
-  animation: glitch-jitter 4s infinite linear;
+  animation: glitch-jitter 6s 2s infinite linear;
 }
-
 @keyframes glitch-jitter {
-  0% { transform: translate(0,0); }
-  2% { transform: translate(2px, -1px); }
+  0%, 100% { transform: translate(0,0); }
+  2% { transform: translate(1px, 0); }
   4% { transform: translate(0,0); }
-  50% { transform: translate(0,0); opacity: 1; }
-  56% { opacity: 0; }
-  57% { opacity: 0; }
-  58% { opacity: 1; transform: translate(0,0); }
-  71% { transform: scaleY(1) skewX(0deg); }
-  72% { transform: scaleY(2) skewX(-40deg); }
-  73% { transform: scaleY(1) skewX(0deg); }
-  80% { opacity: 1; }
-  81% { opacity: 0; }
-  83% { opacity: 0; }
+  82% { opacity: 1; }
+  83% { opacity: 0.7; }
   84% { opacity: 1; }
-  91% { transform: scaleX(1) scaleY(1) skewX(0deg); color: var(--white); }
-  92% { transform: scaleX(1.3) scaleY(.3) skewX(60deg); color: var(--secondary); }
-  93% { transform: scaleX(1) scaleY(1) skewX(0deg); color: var(--white); }
-  96% { transform: translate(-1px, 2px); }
-  98% { transform: translate(1px, -1px); }
-  100% { transform: translate(0,0); }
+  92% { transform: scaleY(1) skewX(0deg); }
+  93% { transform: scaleY(1.05) skewX(-2deg); }
+  94% { transform: scaleY(1) skewX(0deg); }
 }
 
 /* Channel 1: lavender shift */
