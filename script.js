@@ -1242,6 +1242,19 @@
   var glowPhase = 0;
   var glowAnimId = null;
 
+  // Direction word changes with timeline hover
+  var directionEl = document.getElementById('word-direction');
+  var directionDefault = directionEl ? directionEl.textContent : 'direction';
+  var yearConcepts = {
+    '2000': 'curiosity', '2001': 'craft', '2004': 'ambition',
+    '2006': 'expansion', '2007': 'perspective', '2008': 'depth',
+    '2009': 'foundation', '2010': 'structure', '2014': 'strategy',
+    '2015': 'clarity', '2016': 'disruption', '2017': 'systems',
+    '2018': 'courage', '2019': 'vision', '2020': 'resilience',
+    '2021': 'reinvention', '2022': 'synthesis', '2023': 'convergence',
+    '2024': 'transformation', '2025': 'emergence', '2026': 'amplification'
+  };
+
   // Render timeline points
   function renderPoints() {
     container.innerHTML = '';
@@ -1267,6 +1280,11 @@
     var changing = idx !== activeIdx;
     activeIdx = idx;
     var d = data[idx];
+
+    // Update direction word
+    if (directionEl && yearConcepts[d.year]) {
+      directionEl.textContent = yearConcepts[d.year];
+    }
 
     // Update points
     var points = container.querySelectorAll('.tl-point');
@@ -1626,6 +1644,8 @@
       dpActive = false;
       detailPanel.classList.remove('visible');
       hideMilestones();
+      // Reset direction word
+      if (directionEl) directionEl.textContent = directionDefault;
     });
   }
   
