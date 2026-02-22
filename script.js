@@ -321,8 +321,8 @@
   
   var ringMoving = false;
   function animateRing() {
-    rx += (mx - rx) * 0.15;
-    ry += (my - ry) * 0.15;
+    rx += (mx - rx) * 0.5;
+    ry += (my - ry) * 0.5;
     ring.style.left = rx + 'px';
     ring.style.top = ry + 'px';
     if (Math.abs(mx - rx) > 0.5 || Math.abs(my - ry) > 0.5) {
