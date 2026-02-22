@@ -2775,7 +2775,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
           targets[col] = Math.max(0.05, Math.min(1, targets[col]));
         }
       } else {
-        targets[col] = 0;
+        // Idle pulse — subtle breathing
+        targets[col] = 0.05 + Math.sin(t * 0.5 + col * 0.8) * 0.08;
       }
       levels[col] += (targets[col] - levels[col]) * 0.12;
 
@@ -2804,7 +2805,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
             ctx.shadowBlur = 0;
           }
         } else {
-          ctx.fillStyle = playing ? 'rgba(249,248,242,0.07)' : 'rgba(249,248,242,0.04)';
+          ctx.fillStyle = 'rgba(255,87,90,0.12)';
           ctx.shadowBlur = 0;
         }
         ctx.fill();
