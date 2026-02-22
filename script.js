@@ -254,6 +254,7 @@ function playSfx(name) {
 
   // Click
   numpadKeys.forEach(function (key) {
+    key.addEventListener('mouseenter', function () { playSfx('hover'); });
     key.addEventListener('click', function () {
       goToSection(parseInt(key.dataset.num));
     });
@@ -770,6 +771,11 @@ function playSfx(name) {
 
   scenes.forEach(function (scene) {
     sceneObserver.observe(scene);
+  });
+
+  indicators.forEach(function (ind) {
+    ind.addEventListener('mouseenter', function () { playSfx('hover'); });
+    ind.addEventListener('click', function () { playSfx('click'); });
   });
 })();
 
@@ -1537,6 +1543,7 @@ function playSfx(name) {
     if (idx < 0) idx = 0;
     if (idx >= data.length) idx = data.length - 1;
     var changing = idx !== activeIdx;
+    if (changing) playSfx('hover');
     activeIdx = idx;
     var d = data[idx];
 
@@ -2155,6 +2162,7 @@ function playSfx(name) {
 
   items.forEach(function (item) {
     item.addEventListener('mouseenter', function (e) {
+      playSfx('hover');
       clearTimeout(typeTimer);
       fullText = item.dataset.hover;
       charIdx = 0;
