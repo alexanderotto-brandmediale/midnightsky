@@ -884,7 +884,9 @@
   var interactive = document.querySelector('.tl-interactive');
   if (interactive) {
     interactive.addEventListener('mousemove', function (e) {
-      dpTX = e.clientX + 20;
+      var panelW = detailPanel.offsetWidth || 300;
+      var flipped = e.clientX + panelW + 40 > window.innerWidth;
+      dpTX = flipped ? e.clientX - panelW - 20 : e.clientX + 20;
       dpTY = e.clientY - 200;
       if (!dpActive) {
         dpX = dpTX; dpY = dpTY;
