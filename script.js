@@ -809,26 +809,26 @@
   var bgYear = document.getElementById('tl-bg-year');
   var milestonesEl = document.getElementById('tl-milestones');
   var globalEvents = {
-    '2000': ['Y2K Bug Survived', 'Dot-Com Bubble Peaks', 'Putin Elected', 'ISS Crew Arrives', 'Sydney Olympics', 'USB Flash Drives', 'First Camera Phones', 'Napster Lawsuit', 'Human Genome Draft', 'PlayStation 2 Launch'],
-    '2001': ['9/11 Attacks', 'Wikipedia Launches', 'iPod Released', 'War in Afghanistan', 'Windows XP', 'Enron Collapse', 'First Space Tourist', 'Shrek Released', 'Artificial Heart', 'Google Images'],
-    '2004': ['Facebook Founded', 'Mars Rovers Land', 'Tsunami Indian Ocean', 'EU Expansion 25', 'SpaceShipOne', 'Gmail Launches', 'Firefox 1.0', 'Lost Premiere', 'Athens Olympics', 'NATO Expands'],
-    '2006': ['Twitter Launches', 'Pluto Demoted', 'Wii Released', 'Google Buys YouTube', 'North Korea Nuclear Test', 'Saddam Executed', 'World Cup Germany', 'Al Gore Inconvenient Truth', 'Blu-ray vs HD DVD', 'Wikileaks Founded'],
-    '2007': ['iPhone Released', 'Global Financial Crisis Begins', 'Kindle Launched', 'Harry Potter Ends', 'Virginia Tech Shooting', 'Sarkozy Elected', 'EU Treaty of Lisbon', 'Spotify Founded', 'Burma Protests', 'Arctic Ice Record Low'],
-    '2008': ['Obama Elected', 'Lehman Brothers Collapse', 'LHC Activated', 'Beijing Olympics', 'Airbnb Founded', 'Bitcoin Whitepaper', 'Mumbai Attacks', 'Spotify Launches', 'Iron Man MCU Begins', 'Global Recession'],
-    '2009': ['Obama Inaugurated', 'H1N1 Pandemic', 'Michael Jackson Dies', 'Avatar Released', 'Uber Founded', 'WhatsApp Launches', 'Bitcoin Network Live', 'Lisbon Treaty Signed', 'Ares I-X Launch', 'Copenhagen Climate Summit'],
-    '2010': ['iPad Released', 'Deepwater Horizon', 'Arab Spring Begins', 'Instagram Launches', 'Wikileaks Cables', 'Eyjafjallajökull Eruption', 'World Cup South Africa', 'Chilean Miners Rescued', 'Stuxnet Discovered', 'Haiti Earthquake'],
-    '2014': ['Crimea Annexed', 'Ice Bucket Challenge', 'Rosetta Comet Landing', 'Ebola Outbreak', 'Amazon Echo Released', 'Scotland Referendum', 'ISIS Rise', 'World Cup Brazil', 'Malaysia MH370', 'Alibaba IPO'],
-    '2015': ['Paris Climate Agreement', 'Paris Attacks', 'Refugee Crisis Europe', 'SpaceX Landing', 'Iran Nuclear Deal', 'New Horizons Pluto', 'Apple Watch', 'Star Wars Force Awakens', 'VW Dieselgate', 'Nepal Earthquake'],
-    '2016': ['Brexit Vote', 'Trump Elected', 'AlphaGo Beats Human', 'Pokémon Go', 'Panama Papers', 'Zika Virus', 'Tesla Autopilot', 'SpaceX Lands at Sea', 'Paris Agreement Signed', 'David Bowie Dies'],
-    '2017': ['#MeToo Movement', 'Bitcoin $20K', 'Hurricane Season', 'Macron Elected', 'North Korea Missiles', 'Charlottesville', 'Net Neutrality Repeal', 'Las Vegas Shooting', 'Paradise Papers', 'Solar Eclipse USA'],
-    '2018': ['Cambridge Analytica', 'GDPR Takes Effect', 'Thai Cave Rescue', 'Khashoggi Murder', 'Yellow Vests France', 'Hawaii False Missile Alert', 'Royal Wedding', 'Stan Lee Dies', 'Mars InSight Lands', 'Crypto Winter'],
-    '2019': ['COVID-19 Emerges', 'Black Hole Photo', 'Notre-Dame Fire', 'Hong Kong Protests', 'Greta Thunberg', 'Boeing 737 MAX Grounded', 'Disney+ Launches', 'Impeachment Inquiry', 'EU Elections', 'Amazon Fires'],
-    '2020': ['COVID-19 Pandemic', 'George Floyd Protests', 'US Election Biden', 'Beirut Explosion', 'SpaceX Crew Dragon', 'TikTok Boom', 'Vaccine Race', 'Zoom Era Begins', 'Kobe Bryant Dies', 'Murder Hornets'],
-    '2021': ['Capitol Riot Jan 6', 'Suez Canal Blocked', 'Vaccine Rollout', 'Afghanistan Withdrawal', 'Bezos in Space', 'Facebook to Meta', 'COP26 Glasgow', 'Squid Game', 'Supply Chain Crisis', 'NFT Boom'],
-    '2022': ['Ukraine War Begins', 'Queen Elizabeth Dies', 'ChatGPT Released', 'James Webb Telescope', 'Twitter Musk Takeover', 'Inflation Surge', 'World Cup Qatar', 'Crypto FTX Collapse', 'Midterms Red Wave Fails', 'Fusion Breakthrough'],
-    '2023': ['ChatGPT Explosion', 'AI Arms Race', 'SVB Bank Collapse', 'OceanGate Titan', 'Israel-Gaza War', 'Threads Launches', 'Oppenheimer Barbie', 'Taylor Swift Eras Tour', 'India Moon Landing', 'Sam Altman Fired/Rehired'],
-    '2024': ['Trump Returns', 'AI Agents Rise', 'OpenAI Sora', 'TikTok Ban Debate', 'Paris Olympics', 'Climate Records Broken', 'Neuralink First Patient', 'Boeing Crisis', 'EU AI Act', 'Gemini Ultra Launch'],
-    '2025': ['AI Everywhere', 'DeepSeek Moment', 'Quantum Computing Leap', 'Mars Sample Prep', 'Humanoid Robots Ship', 'Digital Euro Pilot', 'Fusion Progress', 'Post-AI Economy Debate', 'Starship Orbital', 'AGI Discussions']
+    '2000': ['Dot-Com Bubble Peaks', 'USB Flash Drives', 'PlayStation 2', 'First Camera Phones', 'Napster Disrupts Music', 'Human Genome Draft', 'AOL Time Warner Merger', 'ADSL Broadband', 'Palm Pilot Era', 'Y2K Survived'],
+    '2001': ['Wikipedia Launches', 'iPod Released', 'Windows XP', 'Enron Collapse', '.com Crash', 'First Space Tourist', 'iTunes Store', 'Xbox Launch', 'Segway Unveiled', 'Bluetooth Mainstream'],
+    '2004': ['Facebook Founded', 'Gmail Launches', 'Firefox 1.0', 'Google IPO', 'Flickr Launches', 'Skype Growth', 'SpaceShipOne', 'RSS Feeds Boom', 'Web 2.0 Era', 'Podcasting Born'],
+    '2006': ['Twitter Launches', 'Google Buys YouTube', 'AWS Cloud Launch', 'Nintendo Wii', 'Blu-ray Released', 'Wikileaks Founded', 'Core 2 Duo CPUs', 'HD Video Mainstream', 'MySpace Peak', 'Ruby on Rails'],
+    '2007': ['iPhone Released', 'Kindle Launched', 'Spotify Founded', 'Android Announced', 'Dropbox Founded', 'Subprime Crisis', 'Netflix Streaming', 'Git Mainstream', 'Cloud Computing Rise', 'Mobile Web Era'],
+    '2008': ['Lehman Collapse', 'Global Recession', 'Airbnb Founded', 'Bitcoin Whitepaper', 'Chrome Browser', 'App Store Launch', 'Spotify Launches', 'GitHub Founded', 'Android First Phone', 'Tesla Roadster Ships'],
+    '2009': ['Uber Founded', 'WhatsApp Launches', 'Bitcoin Network Live', 'Kickstarter Launches', 'Windows 7', '4G Networks', 'Square Founded', 'SaaS Boom', 'Node.js Released', 'Real-Time Web'],
+    '2010': ['iPad Released', 'Instagram Launches', 'Pinterest Launches', 'Nest Founded', 'Tesla IPO', '4G Mainstream', 'Responsive Design', 'Cloud-First Strategy', 'Stuxnet Worm', 'Angular.js Era'],
+    '2014': ['Amazon Echo Released', 'Alibaba IPO Record', 'Apple Pay Launch', 'Docker Containers', 'Stripe $3.5B', 'Swift Language', 'React.js Adoption', 'Microservices Rise', 'Uber $40B', 'Smartwatch Era'],
+    '2015': ['SpaceX First Landing', 'Apple Watch Ships', 'Kubernetes 1.0', 'TensorFlow Open Source', 'Windows 10', 'GraphQL Released', 'Slack $2.8B', 'Serverless Computing', 'Paris Climate Deal', 'VW Dieselgate'],
+    '2016': ['AlphaGo Beats Human', 'Tesla Autopilot', 'SpaceX Sea Landing', 'Pokémon Go AR', 'AirPods Released', 'Crypto Boom Begins', 'VR Headsets Ship', 'Progressive Web Apps', 'Edge Computing', 'Chatbot Hype'],
+    '2017': ['Bitcoin Hits $20K', 'Transformer Paper', 'iPhone X Face ID', 'Ethereum Smart Contracts', 'Waymo Self-Driving', 'Figma Growth', 'Kotlin Official', 'ICO Boom', 'TensorFlow 2.0', 'Serverless Scale'],
+    '2018': ['GDPR Takes Effect', 'GPT-1 Released', 'Crypto Winter', 'Zoom Growth Begins', '5G Trials Begin', 'Notion Breakout', 'TypeScript Adoption', 'Low-Code Platforms', 'Mars InSight Lands', 'Fortnite $3B'],
+    '2019': ['5G Networks Launch', 'GPT-2 Released', 'Starlink Satellites', 'Quantum Supremacy', 'Disney+ Launches', 'Edge Computing Growth', 'Remote Tools Surge', 'JAMstack Movement', 'No-Code Boom', 'Libra Announced'],
+    '2020': ['Remote Work Standard', 'SpaceX Crew Dragon', 'mRNA Vaccine Tech', 'GPT-3 Released', 'Apple M1 Chip', 'Zoom Becomes Standard', 'EV Push Accelerates', 'Digital Transformation', 'Robinhood Surge', 'TikTok Boom'],
+    '2021': ['NFT Boom', 'Facebook to Meta', 'Crypto $3T Cap', 'GitHub Copilot', 'DALL-E Announced', 'Rivian IPO', 'Web3 Hype', 'Chip Shortage', 'Supply Chain Crisis', 'Creator Economy'],
+    '2022': ['ChatGPT Released', 'James Webb Telescope', 'FTX Collapse', 'Stable Diffusion', 'Fusion Breakthrough', 'Midjourney Art', 'DALL-E 2 Public', 'Interest Rate Shock', 'Musk Buys Twitter', 'Inflation Surge'],
+    '2023': ['GPT-4 Launches', 'AI Arms Race', 'Claude Released', 'SVB Bank Collapse', 'Open Source LLMs', 'AI Coding Assistants', 'Vision Pro Announced', 'AI Regulation Debate', 'Threads Launch', 'Altman Drama'],
+    '2024': ['AI Agents Era', 'Sora Video AI', 'Neuralink Patient', 'EU AI Act', 'Claude 3 Opus', 'Apple Intelligence', 'Humanoid Robots', 'AI Energy Demands', 'Sovereign AI', 'Gemini Ultra'],
+    '2025': ['AI-Native Workflows', 'DeepSeek Disruption', 'Quantum Leap', 'Humanoid Robots Ship', 'Digital Euro Pilot', 'Fusion Progress', 'Post-AI Economy', 'Starship Mars Prep', 'AGI Debate', 'Autonomous Scale']
   };
 
   var currentMilestones = [];
@@ -856,6 +856,7 @@
         el.style.transform = 'rotate(' + (Math.random() * 6 - 3) + 'deg)';
         milestonesEl.appendChild(el);
         currentMilestones.push(el);
+        el.style.setProperty('--pulse-delay', (Math.random() * 4) + 's');
         setTimeout(function () { el.classList.add('visible'); }, 80 * i);
       });
     }, 200);

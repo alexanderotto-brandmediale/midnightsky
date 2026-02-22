@@ -1139,6 +1139,12 @@ a { color: inherit; text-decoration: none; }
 }
 .tl-milestone.visible {
   opacity: 1;
+  animation: milestone-pulse 6s ease-in-out infinite;
+  animation-delay: var(--pulse-delay, 0s);
+}
+@keyframes milestone-pulse {
+  0%, 100% { opacity: 0.02; }
+  50% { opacity: 0.05; }
 }
 
 /* Detail panel + tooltip: body-level, cursor-following */
