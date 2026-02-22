@@ -58,11 +58,17 @@
     </a>
   </div>
 
-  <!-- HUD Hover Tooltip — must be top-level for fixed positioning -->
-  <div class="tl-hover-tooltip" id="tl-hover-tooltip">
-    <div class="tl-hover-frame">
-      <span class="tl-hover-text" id="tl-hover-text"></span>
-    </div>
+  <!-- Timeline detail — MUST be body-level, fixed positioning breaks inside transforms -->
+  <div id="tl-detail">
+    <span id="tl-detail-year"></span>
+    <span id="tl-detail-tag"></span>
+    <p id="tl-detail-text"></p>
+    <span id="tl-detail-meta"></span>
+  </div>
+
+  <!-- Side-data hover tooltip -->
+  <div id="tl-hover-tooltip">
+    <span id="tl-hover-text"></span>
   </div>
 
   <!-- Mobile Bottom Nav -->
@@ -176,16 +182,6 @@
           
           <div class="tl-interactive" id="tl-interactive">
             <canvas id="tl-mountain" class="tl-mountain"></canvas>
-            
-            <div class="tl-detail-panel" id="tl-detail">
-              <div class="tl-detail-header">
-                <span class="tl-detail-year" id="tl-detail-year"></span>
-                <span class="tl-detail-tag" id="tl-detail-tag"></span>
-              </div>
-              <p class="tl-detail-text" id="tl-detail-text"></p>
-              <div class="tl-detail-meta" id="tl-detail-meta"></div>
-            </div>
-
             <div class="tl-track">
               <div class="tl-line"></div>
               <div class="tl-points" id="tl-points"></div>

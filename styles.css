@@ -1091,17 +1091,16 @@ a { color: inherit; text-decoration: none; }
   position: relative;
 }
 
-.tl-detail-panel {
-  position: fixed !important;
-  z-index: 99998 !important;
-  pointer-events: none !important;
-  max-width: 280px;
-  padding: 0;
-  text-align: left;
+/* Detail panel + tooltip: body-level, cursor-following */
+#tl-detail, #tl-hover-tooltip {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
   display: none;
+  max-width: 260px;
+  text-align: left;
 }
-
-.tl-detail-panel.visible {
+#tl-detail.visible, #tl-hover-tooltip.visible {
   display: block;
 }
 
@@ -1124,49 +1123,46 @@ a { color: inherit; text-decoration: none; }
   outline: none;
 }
 
-.tl-detail-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 0.8rem;
-}
-
-.tl-detail-year {
+#tl-detail-year {
   font-family: 'Geist', monospace;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 200;
-  color: var(--secondary);
+  color: rgba(255,255,255,0.6);
   letter-spacing: 0.05em;
+  margin-right: 0.5rem;
 }
-
-.tl-detail-tag {
+#tl-detail-tag {
   font-family: 'Geist', monospace;
-  font-size: 0.45rem;
-  font-weight: 400;
-  letter-spacing: 0.3em;
+  font-size: 0.4rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  border: 1px solid rgba(255,87,90,0.15);
-  padding: 0.15rem 0.5rem;
+  color: rgba(255,255,255,0.2);
 }
-
-.tl-detail-text {
+#tl-detail-text {
+  font-family: 'Geist', monospace;
   font-size: 0.5rem;
   font-weight: 300;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.4);
   line-height: 1.6;
-  font-family: 'Geist', monospace;
   letter-spacing: 0.02em;
+  margin: 0.3rem 0 0;
 }
-
-.tl-detail-meta {
-  margin-top: 0.8rem;
+#tl-detail-meta {
   font-family: 'Geist', monospace;
-  font-size: 0.38rem;
-  letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.15);
+  font-size: 0.35rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.12);
   text-transform: uppercase;
+  margin-top: 0.3rem;
+  display: block;
+}
+#tl-hover-text {
+  font-family: 'Geist', monospace;
+  font-size: 0.5rem;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.03em;
+  color: rgba(255,255,255,0.45);
 }
 
 /* Side Data */
@@ -1222,29 +1218,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* HUD Hover Tooltip — text at cursor */
-#tl-hover-tooltip {
-  position: fixed !important;
-  z-index: 99999 !important;
-  pointer-events: none !important;
-  max-width: 220px;
-  display: none;
-}
-#tl-hover-tooltip.visible {
-  display: block !important;
-}
-#tl-hover-tooltip .tl-hover-frame {
-  background: none;
-  border: none;
-  padding: 0;
-}
-#tl-hover-tooltip .tl-hover-text {
-  font-family: 'Geist', monospace;
-  font-size: 0.5rem;
-  font-weight: 300;
-  line-height: 1.5;
-  letter-spacing: 0.03em;
-  color: rgba(255,255,255,0.5);
-}
+/* old tooltip styles removed — now in #tl-hover-tooltip above */
 
 /* Sub Tracks */
 .tl-sub-tracks {
