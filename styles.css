@@ -134,7 +134,7 @@ a, button, .tl-point, .indicator, .contact-link { cursor: none; }
   background: var(--secondary);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 99999;
   transform: translate(-50%, -50%);
   transition: transform 0.05s ease;
 }
@@ -145,7 +145,7 @@ a, button, .tl-point, .indicator, .contact-link { cursor: none; }
   height: 32px;
   border: 1px solid rgba(255,87,90,0.4);
   pointer-events: none;
-  z-index: 9998;
+  z-index: 99998;
   transform: translate(-50%, -50%);
   transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
   animation: cursor-pulse 2s ease-in-out infinite;
