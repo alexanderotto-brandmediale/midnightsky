@@ -1289,7 +1289,7 @@
           // Stagger points
           var pts = track.querySelectorAll('.tl-point');
           pts.forEach(function (p, i) {
-            p.style.transitionDelay = (0.5 + i * 0.05) + 's';
+            p.style.transitionDelay = (1 + i * 0.1) + 's';
           });
         } else {
           track.classList.remove('visible');
