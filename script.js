@@ -611,6 +611,7 @@
       }
     }
     yearType();
+    showMilestones(d.year);
 
     // Redraw mountain with animated glow
     startGlowAnimation(idx);
@@ -804,6 +805,68 @@
   canvas.style.pointerEvents = 'auto';
   canvas.style.cursor = 'none';
 
+  // Background year + milestones
+  var bgYear = document.getElementById('tl-bg-year');
+  var milestonesEl = document.getElementById('tl-milestones');
+  var globalEvents = {
+    '2000': ['Y2K Bug Survived', 'Dot-Com Bubble Peaks', 'Putin Elected', 'ISS Crew Arrives', 'Sydney Olympics', 'USB Flash Drives', 'First Camera Phones', 'Napster Lawsuit', 'Human Genome Draft', 'PlayStation 2 Launch'],
+    '2001': ['9/11 Attacks', 'Wikipedia Launches', 'iPod Released', 'War in Afghanistan', 'Windows XP', 'Enron Collapse', 'First Space Tourist', 'Shrek Released', 'Artificial Heart', 'Google Images'],
+    '2004': ['Facebook Founded', 'Mars Rovers Land', 'Tsunami Indian Ocean', 'EU Expansion 25', 'SpaceShipOne', 'Gmail Launches', 'Firefox 1.0', 'Lost Premiere', 'Athens Olympics', 'NATO Expands'],
+    '2006': ['Twitter Launches', 'Pluto Demoted', 'Wii Released', 'Google Buys YouTube', 'North Korea Nuclear Test', 'Saddam Executed', 'World Cup Germany', 'Al Gore Inconvenient Truth', 'Blu-ray vs HD DVD', 'Wikileaks Founded'],
+    '2007': ['iPhone Released', 'Global Financial Crisis Begins', 'Kindle Launched', 'Harry Potter Ends', 'Virginia Tech Shooting', 'Sarkozy Elected', 'EU Treaty of Lisbon', 'Spotify Founded', 'Burma Protests', 'Arctic Ice Record Low'],
+    '2008': ['Obama Elected', 'Lehman Brothers Collapse', 'LHC Activated', 'Beijing Olympics', 'Airbnb Founded', 'Bitcoin Whitepaper', 'Mumbai Attacks', 'Spotify Launches', 'Iron Man MCU Begins', 'Global Recession'],
+    '2009': ['Obama Inaugurated', 'H1N1 Pandemic', 'Michael Jackson Dies', 'Avatar Released', 'Uber Founded', 'WhatsApp Launches', 'Bitcoin Network Live', 'Lisbon Treaty Signed', 'Ares I-X Launch', 'Copenhagen Climate Summit'],
+    '2010': ['iPad Released', 'Deepwater Horizon', 'Arab Spring Begins', 'Instagram Launches', 'Wikileaks Cables', 'Eyjafjallajökull Eruption', 'World Cup South Africa', 'Chilean Miners Rescued', 'Stuxnet Discovered', 'Haiti Earthquake'],
+    '2014': ['Crimea Annexed', 'Ice Bucket Challenge', 'Rosetta Comet Landing', 'Ebola Outbreak', 'Amazon Echo Released', 'Scotland Referendum', 'ISIS Rise', 'World Cup Brazil', 'Malaysia MH370', 'Alibaba IPO'],
+    '2015': ['Paris Climate Agreement', 'Paris Attacks', 'Refugee Crisis Europe', 'SpaceX Landing', 'Iran Nuclear Deal', 'New Horizons Pluto', 'Apple Watch', 'Star Wars Force Awakens', 'VW Dieselgate', 'Nepal Earthquake'],
+    '2016': ['Brexit Vote', 'Trump Elected', 'AlphaGo Beats Human', 'Pokémon Go', 'Panama Papers', 'Zika Virus', 'Tesla Autopilot', 'SpaceX Lands at Sea', 'Paris Agreement Signed', 'David Bowie Dies'],
+    '2017': ['#MeToo Movement', 'Bitcoin $20K', 'Hurricane Season', 'Macron Elected', 'North Korea Missiles', 'Charlottesville', 'Net Neutrality Repeal', 'Las Vegas Shooting', 'Paradise Papers', 'Solar Eclipse USA'],
+    '2018': ['Cambridge Analytica', 'GDPR Takes Effect', 'Thai Cave Rescue', 'Khashoggi Murder', 'Yellow Vests France', 'Hawaii False Missile Alert', 'Royal Wedding', 'Stan Lee Dies', 'Mars InSight Lands', 'Crypto Winter'],
+    '2019': ['COVID-19 Emerges', 'Black Hole Photo', 'Notre-Dame Fire', 'Hong Kong Protests', 'Greta Thunberg', 'Boeing 737 MAX Grounded', 'Disney+ Launches', 'Impeachment Inquiry', 'EU Elections', 'Amazon Fires'],
+    '2020': ['COVID-19 Pandemic', 'George Floyd Protests', 'US Election Biden', 'Beirut Explosion', 'SpaceX Crew Dragon', 'TikTok Boom', 'Vaccine Race', 'Zoom Era Begins', 'Kobe Bryant Dies', 'Murder Hornets'],
+    '2021': ['Capitol Riot Jan 6', 'Suez Canal Blocked', 'Vaccine Rollout', 'Afghanistan Withdrawal', 'Bezos in Space', 'Facebook to Meta', 'COP26 Glasgow', 'Squid Game', 'Supply Chain Crisis', 'NFT Boom'],
+    '2022': ['Ukraine War Begins', 'Queen Elizabeth Dies', 'ChatGPT Released', 'James Webb Telescope', 'Twitter Musk Takeover', 'Inflation Surge', 'World Cup Qatar', 'Crypto FTX Collapse', 'Midterms Red Wave Fails', 'Fusion Breakthrough'],
+    '2023': ['ChatGPT Explosion', 'AI Arms Race', 'SVB Bank Collapse', 'OceanGate Titan', 'Israel-Gaza War', 'Threads Launches', 'Oppenheimer Barbie', 'Taylor Swift Eras Tour', 'India Moon Landing', 'Sam Altman Fired/Rehired'],
+    '2024': ['Trump Returns', 'AI Agents Rise', 'OpenAI Sora', 'TikTok Ban Debate', 'Paris Olympics', 'Climate Records Broken', 'Neuralink First Patient', 'Boeing Crisis', 'EU AI Act', 'Gemini Ultra Launch'],
+    '2025': ['AI Everywhere', 'DeepSeek Moment', 'Quantum Computing Leap', 'Mars Sample Prep', 'Humanoid Robots Ship', 'Digital Euro Pilot', 'Fusion Progress', 'Post-AI Economy Debate', 'Starship Orbital', 'AGI Discussions']
+  };
+
+  var currentMilestones = [];
+  function showMilestones(year) {
+    if (bgYear) {
+      bgYear.textContent = year;
+      bgYear.classList.add('visible');
+    }
+    if (!milestonesEl) return;
+    milestonesEl.classList.add('visible');
+    // Clear old
+    currentMilestones.forEach(function (el) { el.classList.remove('visible'); });
+    setTimeout(function () {
+      milestonesEl.innerHTML = '';
+      var events = globalEvents[year] || [];
+      currentMilestones = [];
+      events.forEach(function (evt, i) {
+        var el = document.createElement('div');
+        el.className = 'tl-milestone';
+        el.textContent = evt;
+        var sizes = [0.7, 0.9, 1.1, 1.4, 1.8, 2.2, 0.8, 1.0, 1.3, 1.6];
+        el.style.fontSize = sizes[i % sizes.length] + 'rem';
+        el.style.top = (8 + Math.random() * 75) + '%';
+        el.style.left = (3 + Math.random() * 85) + '%';
+        el.style.transform = 'rotate(' + (Math.random() * 6 - 3) + 'deg)';
+        milestonesEl.appendChild(el);
+        currentMilestones.push(el);
+        setTimeout(function () { el.classList.add('visible'); }, 80 * i);
+      });
+    }, 200);
+  }
+
+  function hideMilestones() {
+    if (bgYear) bgYear.classList.remove('visible');
+    if (milestonesEl) milestonesEl.classList.remove('visible');
+    currentMilestones.forEach(function (el) { el.classList.remove('visible'); });
+  }
+
   // Detail panel follows cursor
   var dpX = 0, dpY = 0, dpTX = 0, dpTY = 0, dpActive = false;
   (function dpLoop() {
@@ -832,6 +895,7 @@
     interactive.addEventListener('mouseleave', function () {
       dpActive = false;
       detailPanel.classList.remove('visible');
+      hideMilestones();
     });
   }
   

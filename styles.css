@@ -1093,6 +1093,54 @@ a { color: inherit; text-decoration: none; }
   margin-top: -60px;
 }
 
+/* Big background year */
+#tl-bg-year {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Geist', monospace;
+  font-size: clamp(15rem, 30vw, 35rem);
+  font-weight: 100;
+  color: rgba(255,255,255,0.02);
+  z-index: 0;
+  pointer-events: none;
+  display: none;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: opacity 0.6s ease;
+}
+#tl-bg-year.visible {
+  display: block;
+}
+
+/* Global milestones */
+#tl-milestones {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: none;
+  overflow: hidden;
+}
+#tl-milestones.visible {
+  display: block;
+}
+.tl-milestone {
+  position: absolute;
+  font-family: 'Geist', monospace;
+  font-weight: 200;
+  color: rgba(255,255,255,0.03);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.tl-milestone.visible {
+  opacity: 1;
+}
+
 /* Detail panel + tooltip: body-level, cursor-following */
 #tl-detail, #tl-hover-tooltip {
   position: fixed;
