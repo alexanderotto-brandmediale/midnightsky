@@ -2689,4 +2689,5 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   .tl-point-year, .tl-point-dot, .tl-line, .tl-point::before { display: none !important; }
   #word-direction { display: block; min-width: 100%; }
   .statement.reveal.reveal-scale { min-height: 6em; }
+  #cosmos-heading-big { font-size: clamp(1.5rem, 8vw, 3rem); }
 }
