@@ -651,6 +651,85 @@ a { color: inherit; text-decoration: none; }
   50% { opacity: 1; transform: scaleY(1); }
 }
 
+/* ── Scroll Arrow ─────────────────────────────────── */
+.scroll-arrow {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: arrow-bounce 2.5s ease-in-out infinite;
+}
+.scroll-arrow-text {
+  font-family: 'Geist', monospace;
+  font-size: 0.45rem;
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  color: rgba(255,87,90,0.4);
+}
+.scroll-arrow-icon {
+  animation: arrow-fade 2.5s ease-in-out infinite;
+}
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+@keyframes arrow-fade {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── Micro Blink Text ─────────────────────────────── */
+.micro-blink {
+  position: absolute;
+  z-index: 10;
+  font-family: 'Geist', monospace;
+  font-size: 0.4rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  opacity: 0.3;
+  animation: micro-blink 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes micro-blink {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Micro Static Text ────────────────────────────── */
+.micro-text-static {
+  position: absolute;
+  z-index: 10;
+  font-family: 'Geist', monospace;
+  font-size: 0.38rem;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(249,248,242,0.06);
+  pointer-events: none;
+}
+
+/* ── Micro Accent Lines ───────────────────────────── */
+.micro-accent-line {
+  position: absolute;
+  z-index: 5;
+  height: 1px;
+  background: linear-gradient(90deg, var(--secondary), transparent);
+  opacity: 0.1;
+  pointer-events: none;
+  animation: accent-line-pulse 4s ease-in-out infinite;
+}
+@keyframes accent-line-pulse {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.15; }
+}
+
 /* ── Noise Canvas ─────────────────────────────────── */
 #noise-canvas {
   position: absolute;
