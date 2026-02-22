@@ -990,14 +990,25 @@
   prev.addEventListener('click', function () { scrollTo(current - 1); });
   next.addEventListener('click', function () { scrollTo(current + 1); });
 
-  // Update counter on manual scroll
-  track.addEventListener('scroll', function () {
-    var scrollLeft = track.scrollLeft;
-    var cardWidth = cards[0].offsetWidth + 24; // gap
-    var idx = Math.round(scrollLeft / cardWidth);
-    current = Math.max(0, Math.min(total - 1, idx));
+  function updateActiveCard() {
+    var trackRect = track.getBoundingClientRect();
+    var center = trackRect.left + trackRect.width / 2;
+    var closest = 0, closestDist = Infinity;
+    cards.forEach(function (card, i) {
+      var rect = card.getBoundingClientRect();
+      var cardCenter = rect.left + rect.width / 2;
+      var dist = Math.abs(cardCenter - center);
+      if (dist < closestDist) { closestDist = dist; closest = i; }
+    });
+    current = closest;
+    cards.forEach(function (card, i) {
+      card.classList.toggle('active', i === closest);
+    });
     counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
-  }, { passive: true });
+  }
+
+  track.addEventListener('scroll', updateActiveCard, { passive: true });
+  updateActiveCard();
 })();
 
 /* ── Mobile Bottom Nav ─────────────────────────────── */
