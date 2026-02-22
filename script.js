@@ -1755,7 +1755,7 @@
   var tabs = document.querySelectorAll('.thinking-tab');
   var blocks = document.querySelectorAll('.thinking-block');
   var counter = document.getElementById('thinking-current');
-  var ranges = { perspective: '01–04', systems: '05–08', strategy: '09–12', human: '13–16', future: '17–20' };
+  var ranges = { perspective: '01–03', systems: '04–07', adler: '08–11', cognition: '12–15', communication: '16–19', reality: '20–23', physics: '24–27', ai: '28–31', transformation: '32–35', society: '36–39', futuredesign: '40–43', methods: '44–47', strategy: '48–51', vision: '52–55' };
 
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
