@@ -1062,7 +1062,7 @@
   }
 
   // Enterprise cycling
-  var enterprises = ['BSH', 'Nestlé', 'Barmenia', 'Heinz-Glas', 'PORR', 'Avenida-Therme'];
+  var enterprises = ['BSH', 'febana group', 'MICROSTEP', 'Schaumberg Tierhygiene', 'Avenida-Therme'];
   var entEl = document.getElementById('tl-enterprise');
   if (entEl) {
     var entIdx = 0;
