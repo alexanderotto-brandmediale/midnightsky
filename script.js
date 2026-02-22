@@ -334,9 +334,15 @@ function playSfx(name) {
   ];
   var idx = 0;
 
+  var heroVisible = false;
+  var heroObs = new IntersectionObserver(function (e) {
+    heroVisible = e[0].isIntersecting;
+  }, { threshold: 0.3 });
+  heroObs.observe(document.getElementById('hero') || heroName);
+
   setInterval(function () {
     heroName.classList.add('glitching');
-    playSfx('glitch');
+    if (heroVisible) playSfx('glitch');
     setTimeout(function () {
       idx = (idx + 1) % phrases.length;
       spans[0].textContent = phrases[idx][0];
