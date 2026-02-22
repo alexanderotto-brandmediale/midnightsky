@@ -97,8 +97,9 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Section Background Gradients ─────────────────── */
 #hero { background: radial-gradient(ellipse at 50% 30%, rgba(52,10,34,0.35) 0%, #0a0a0a 70%); }
-#signal .video-bg video { opacity: 0.35; }
-#signal .video-bg::after { background: rgba(0,0,0,0.35); }
+#signal .video-bg { z-index: 1; }
+#signal .video-bg video { opacity: 0.4; }
+#signal .video-bg::after { background: rgba(0,0,0,0.3); }
 #signal { background: radial-gradient(ellipse at 30% 60%, rgba(21,44,58,0.4) 0%, #0a0a0a 70%); }
 #about { background: linear-gradient(160deg, rgba(52,10,34,0.25) 0%, #0a0a0a 100%); }
 #work { background: radial-gradient(ellipse at 70% 50%, rgba(21,44,58,0.35) 0%, #0a0a0a 70%); }
@@ -657,8 +658,9 @@ a { color: inherit; text-decoration: none; }
 #noise-canvas {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
+  opacity: 0.4;
 }
 
 /* ── Accent Words ─────────────────────────────────── */
