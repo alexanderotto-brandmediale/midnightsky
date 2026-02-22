@@ -1954,6 +1954,7 @@ a { color: inherit; text-decoration: none; }
   opacity: 0;
   transition: opacity 0.3s;
 }
+.mobile-nav-hide { display: none; }
 .mobile-nav-item.active::before {
   opacity: 0.4;
 }
