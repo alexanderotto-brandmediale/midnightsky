@@ -30,13 +30,40 @@
 /* ── Keyboard Navigation (1-9) ─────────────────────── */
 (function () {
   var sections = ['hero', 'signal', 'about', 'work', 'gravity', 'thinking', 'aesthetic', 'why', 'contact'];
+  var numpadKeys = document.querySelectorAll('.numpad-key');
+
+  function goToSection(num) {
+    var target = document.getElementById(sections[num - 1]);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Keyboard
   document.addEventListener('keydown', function (e) {
     var num = parseInt(e.key);
-    if (num >= 1 && num <= 9 && !e.ctrlKey && !e.metaKey && !e.altKey) {
-      var target = document.getElementById(sections[num - 1]);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (num >= 1 && num <= 9 && !e.ctrlKey && !e.metaKey && !e.altKey) goToSection(num);
   });
+
+  // Click
+  numpadKeys.forEach(function (key) {
+    key.addEventListener('click', function () {
+      goToSection(parseInt(key.dataset.num));
+    });
+  });
+
+  // Highlight active section
+  function updateNumpad() {
+    var scrollY = window.scrollY + window.innerHeight * 0.4;
+    var activeIdx = 0;
+    sections.forEach(function (id, i) {
+      var el = document.getElementById(id);
+      if (el && el.offsetTop <= scrollY) activeIdx = i;
+    });
+    numpadKeys.forEach(function (key) {
+      key.classList.toggle('active', parseInt(key.dataset.num) === activeIdx + 1);
+    });
+  }
+  window.addEventListener('scroll', updateNumpad, { passive: true });
+  updateNumpad();
 })();
 
 /* ── Hero Verb Cycle ───────────────────────────────── */
