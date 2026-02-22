@@ -1266,6 +1266,38 @@
   var glowPhase = 0;
   var glowAnimId = null;
 
+  // Sci-fi typewriter sound via Web Audio API
+  var audioCtx = null;
+  function playTypeClick() {
+    if (!audioCtx) {
+      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { return; }
+    }
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    var t = audioCtx.currentTime;
+    // Short click — filtered noise burst
+    var bufLen = audioCtx.sampleRate * 0.03;
+    var buf = audioCtx.createBuffer(1, bufLen, audioCtx.sampleRate);
+    var data = buf.getChannelData(0);
+    for (var i = 0; i < bufLen; i++) {
+      var env = Math.exp(-i / (bufLen * 0.15));
+      data[i] = (Math.random() * 2 - 1) * env * 0.12;
+    }
+    var src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    // Bandpass for sci-fi tone
+    var filter = audioCtx.createBiquadFilter();
+    filter.type = 'bandpass';
+    filter.frequency.value = 3500 + Math.random() * 2000;
+    filter.Q.value = 5;
+    var gain = audioCtx.createGain();
+    gain.gain.value = 0.15;
+    src.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+    src.start(t);
+    src.stop(t + 0.03);
+  }
+
   // Direction word changes with timeline hover
   var directionEl = document.getElementById('word-direction');
   var directionDefault = directionEl ? directionEl.textContent : 'direction';
@@ -1337,6 +1369,7 @@
         if (window._dirTypeTimer) clearInterval(window._dirTypeTimer);
         window._dirTypeTimer = setInterval(function () {
           directionEl.textContent = newWord.slice(0, ++ci);
+          playTypeClick();
           if (ci >= newWord.length) {
             clearInterval(window._dirTypeTimer);
             setTimeout(function () { directionEl.classList.remove('typing'); }, 600);
@@ -1711,6 +1744,7 @@
         if (window._dirTypeTimer) clearInterval(window._dirTypeTimer);
         window._dirTypeTimer = setInterval(function () {
           directionEl.textContent = directionDefault.slice(0, ++ri);
+          playTypeClick();
           if (ri >= directionDefault.length) {
             clearInterval(window._dirTypeTimer);
             setTimeout(function () { directionEl.classList.remove('typing'); }, 600);
