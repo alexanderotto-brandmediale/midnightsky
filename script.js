@@ -27,6 +27,18 @@
   }, { passive: true });
 })();
 
+/* ── Keyboard Navigation (1-9) ─────────────────────── */
+(function () {
+  var sections = ['hero', 'signal', 'about', 'work', 'gravity', 'thinking', 'aesthetic', 'why', 'contact'];
+  document.addEventListener('keydown', function (e) {
+    var num = parseInt(e.key);
+    if (num >= 1 && num <= 9 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      var target = document.getElementById(sections[num - 1]);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+})();
+
 /* ── Hero Verb Cycle ───────────────────────────────── */
 (function () {
   var el = document.getElementById('hero-verb-cycle');
