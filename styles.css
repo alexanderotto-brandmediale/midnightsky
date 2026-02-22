@@ -864,7 +864,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-hud {
-  margin-top: 4rem;
+  margin-top: 2rem;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   position: relative;

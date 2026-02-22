@@ -803,14 +803,13 @@
     
     var w = canvas.width, h = canvas.height;
     
+    // Solid vertical crosshair line
     ctx.beginPath();
     ctx.moveTo(mouseX, 0);
     ctx.lineTo(mouseX, h);
-    ctx.strokeStyle = 'rgba(255,87,90,0.2)';
+    ctx.strokeStyle = 'rgba(255,87,90,0.35)';
     ctx.lineWidth = 1;
-    ctx.setLineDash([2, 4]);
     ctx.stroke();
-    ctx.setLineDash([]);
     
     var pct = mouseX / w;
     var idx = pct * (data.length - 1);
