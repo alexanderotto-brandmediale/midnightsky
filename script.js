@@ -96,32 +96,47 @@ function playSfx(name) {
     if (el) secObs.observe(el);
   });
 
-  // Autoplay on load
+  // Autoplay on first user interaction (browser policy)
+  var audioStarted = false;
   function startAudio() {
-    if (currentTrack) return;
+    if (audioStarted) return;
+    audioStarted = true;
     isMuted = false;
     currentTrack = tracks[currentSection || 'hero'];
     activeAudio.src = currentTrack;
     activeAudio.volume = 0;
     activeAudio.play().then(function () {
-      var btn = document.getElementById('audio-toggle');
-      if (btn) btn.classList.add('playing');
+      var b = document.getElementById('audio-toggle');
+      if (b) b.classList.add('playing');
       var vol = 0;
       var fi = setInterval(function () {
         vol += 0.01;
         activeAudio.volume = Math.min(targetVol, vol);
         if (vol >= targetVol) clearInterval(fi);
       }, 80);
-    }).catch(function () {
-      // Browser blocked autoplay — wait for first interaction
-      isMuted = true;
-      document.addEventListener('click', function startOnClick() {
-        document.removeEventListener('click', startOnClick);
+    }).catch(function () { audioStarted = false; isMuted = true; });
+  }
+  // Try autoplay, fallback to first interaction
+  activeAudio.src = tracks['hero'];
+  activeAudio.volume = 0;
+  activeAudio.play().then(function () {
+    audioStarted = true; isMuted = false; currentTrack = tracks['hero'];
+    var b = document.getElementById('audio-toggle');
+    if (b) b.classList.add('playing');
+    var vol = 0;
+    var fi = setInterval(function () {
+      vol += 0.01; activeAudio.volume = Math.min(targetVol, vol);
+      if (vol >= targetVol) clearInterval(fi);
+    }, 80);
+  }).catch(function () {
+    // Blocked — start on any interaction
+    ['click', 'scroll', 'touchstart', 'keydown'].forEach(function (evt) {
+      document.addEventListener(evt, function h() {
+        document.removeEventListener(evt, h);
         startAudio();
       }, { once: true });
     });
-  }
-  startAudio();
+  });
 
   // Toggle button
   var btn = document.getElementById('audio-toggle');
