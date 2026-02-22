@@ -2694,7 +2694,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   #cosmos-heading-big > span > .letter { display: inline-block; }
   .thinking-header .section-heading > span { display: block; }
   .thinking-header .section-heading > span > .letter { display: inline-block; }
-  .thinking-header .micro-label { margin-bottom: 0.5rem; }
+  .thinking-header .micro-label { display: none !important; }
   .cosmos-heading-small {
     top: auto !important;
     bottom: 2rem !important;
