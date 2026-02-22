@@ -575,9 +575,9 @@
 
   // Flowing particles along curved paths
   var streams = [];
-  var STREAM_COUNT = 80;
+  var STREAM_COUNT = 160;
   var dots = [];
-  var DOT_COUNT = 200;
+  var DOT_COUNT = 400;
 
   function resize() {
     var rect = canvas.parentElement.getBoundingClientRect();
@@ -587,7 +587,7 @@
     canvas.style.height = rect.height + 'px';
     cx = w / 2;
     cy = h / 2;
-    radius = Math.min(w, h) * 0.42;
+    radius = Math.min(w, h) * 0.48;
     initStreams();
     initDots();
     computeNodePositions();
@@ -614,23 +614,27 @@
       var baseAngle = Math.random() * Math.PI * 2;
       var pts = [];
       var numPts = 40 + Math.floor(Math.random() * 30);
-      var r0 = radius * (0.15 + Math.random() * 0.8);
-      var drift = (Math.random() - 0.5) * 0.03;
+      var r0 = radius * (0.1 + Math.random() * 0.9);
+      var escapes = Math.random() > 0.4; // 60% of streams extend beyond sphere
       for (var j = 0; j < numPts; j++) {
         var t = j / numPts;
-        var a = baseAngle + t * (1.5 + Math.random() * 2) + Math.sin(t * 4) * 0.3;
-        var r = r0 + Math.sin(t * Math.PI) * radius * 0.3 + Math.sin(t * 7) * 15;
-        var distFromCenter = Math.sqrt(Math.pow(Math.cos(a) * r, 2) + Math.pow(Math.sin(a) * r, 2));
-        if (distFromCenter > radius) r = radius * radius / distFromCenter; // keep in sphere
+        var a = baseAngle + t * (1.2 + Math.random() * 2.5) + Math.sin(t * 3) * 0.4;
+        var r = r0 + Math.sin(t * Math.PI) * radius * 0.4 + Math.sin(t * 5) * 20;
+        if (!escapes) {
+          var distFromCenter = Math.sqrt(Math.pow(Math.cos(a) * r, 2) + Math.pow(Math.sin(a) * r, 2));
+          if (distFromCenter > radius) r = radius * radius / distFromCenter;
+        } else {
+          // Let streams branch out beyond sphere, up to edge
+          r = Math.min(r * 1.3, Math.min(w, h) * 0.49);
+        }
         pts.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
       }
       streams.push({
         pts: pts,
         offset: Math.random() * 100,
-        speed: 0.2 + Math.random() * 0.4,
-        opacity: 0.03 + Math.random() * 0.06,
-        width: 0.3 + Math.random() * 0.8,
-        hue: Math.random() > 0.7 ? 'coral' : (Math.random() > 0.5 ? 'lavender' : 'white')
+        speed: 0.15 + Math.random() * 0.35,
+        opacity: 0.025 + Math.random() * 0.055,
+        width: 0.2 + Math.random() * 0.7
       });
     }
   }
@@ -639,7 +643,7 @@
     dots = [];
     for (var i = 0; i < DOT_COUNT; i++) {
       var a = Math.random() * Math.PI * 2;
-      var r = Math.random() * radius;
+      var r = Math.random() * radius * (Math.random() > 0.3 ? 1.3 : 1);
       dots.push({
         x: cx + Math.cos(a) * r,
         y: cy + Math.sin(a) * r,
@@ -657,23 +661,13 @@
     ctx.clearRect(0, 0, w, h);
     time += 0.01;
 
-    // Sphere boundary — subtle circle
-    ctx.beginPath();
-    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(123,140,255,0.06)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
     // Flowing streams
     for (var s = 0; s < streams.length; s++) {
       var st = streams[s];
       var pts = st.pts;
       var off = (time * st.speed * 60 + st.offset) % pts.length;
 
-      var col;
-      if (st.hue === 'coral') col = '255,87,90';
-      else if (st.hue === 'lavender') col = '123,140,255';
-      else col = '249,248,242';
+      var col = '249,248,242';
 
       ctx.beginPath();
       ctx.strokeStyle = 'rgba(' + col + ',' + st.opacity + ')';
@@ -716,7 +710,7 @@
           var mx2 = cx + (fi.x + fj.x - 2 * cx) * 0.3;
           var my2 = cy + (fi.y + fj.y - 2 * cy) * 0.3;
           ctx.quadraticCurveTo(mx2, my2, fj.x, fj.y);
-          ctx.strokeStyle = 'rgba(123,140,255,' + op + ')';
+          ctx.strokeStyle = 'rgba(249,248,242,' + op + ')';
           ctx.stroke();
         }
       }
