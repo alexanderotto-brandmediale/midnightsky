@@ -96,6 +96,33 @@ function playSfx(name) {
     if (el) secObs.observe(el);
   });
 
+  // Autoplay on load
+  function startAudio() {
+    if (currentTrack) return;
+    isMuted = false;
+    currentTrack = tracks[currentSection || 'hero'];
+    activeAudio.src = currentTrack;
+    activeAudio.volume = 0;
+    activeAudio.play().then(function () {
+      var btn = document.getElementById('audio-toggle');
+      if (btn) btn.classList.add('playing');
+      var vol = 0;
+      var fi = setInterval(function () {
+        vol += 0.01;
+        activeAudio.volume = Math.min(targetVol, vol);
+        if (vol >= targetVol) clearInterval(fi);
+      }, 80);
+    }).catch(function () {
+      // Browser blocked autoplay — wait for first interaction
+      isMuted = true;
+      document.addEventListener('click', function startOnClick() {
+        document.removeEventListener('click', startOnClick);
+        startAudio();
+      }, { once: true });
+    });
+  }
+  startAudio();
+
   // Toggle button
   var btn = document.getElementById('audio-toggle');
   if (btn) {
@@ -103,15 +130,13 @@ function playSfx(name) {
       isMuted = !isMuted;
       btn.classList.toggle('playing', !isMuted);
       if (!isMuted) {
-        // Start playing if not already
-        if (!currentTrack && tracks[currentSection || 'hero']) {
-          currentTrack = tracks[currentSection || 'hero'];
-          activeAudio.src = currentTrack;
-          activeAudio.play().catch(function(){});
-        } else if (activeAudio.paused) {
+        if (activeAudio.paused) {
+          if (!currentTrack) {
+            currentTrack = tracks[currentSection || 'hero'];
+            activeAudio.src = currentTrack;
+          }
           activeAudio.play().catch(function(){});
         }
-        // Fade in
         var vol = 0;
         var fi = setInterval(function () {
           vol += 0.02;
@@ -119,7 +144,6 @@ function playSfx(name) {
           if (vol >= targetVol) clearInterval(fi);
         }, 50);
       } else {
-        // Fade out
         var fi2 = setInterval(function () {
           activeAudio.volume = Math.max(0, activeAudio.volume - 0.02);
           if (activeAudio.volume <= 0.01) { activeAudio.volume = 0; clearInterval(fi2); }
