@@ -1173,7 +1173,7 @@ a { color: inherit; text-decoration: none; }
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 5%, rgba(255,255,255,0.2) 95%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,87,90,0.3) 5%, rgba(255,87,90,0.3) 95%, transparent);
   transform-origin: left;
   transform: scaleX(0);
   transition: transform 3s ease-out;
