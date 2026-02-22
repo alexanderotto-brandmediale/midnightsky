@@ -1562,6 +1562,8 @@ function playSfx(name) {
       var el = document.createElement('div');
       el.className = 'tl-point' + (d.major ? ' major' : '') + (i === activeIdx ? ' active' : '');
       el.style.left = pct + '%';
+      var yOffset = 30 - (d.density / 10) * 20;
+      el.style.top = yOffset + '%';
       el.setAttribute('role', 'button');
       el.setAttribute('aria-label', d.year + ' — ' + d.tag);
       el.innerHTML = '<span class="tl-point-year">' + d.year + '</span>' +
