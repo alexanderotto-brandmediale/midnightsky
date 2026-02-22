@@ -8,7 +8,7 @@ function playSfx(name) {
     if (!audio) {
       if (pool.length >= 3) { audio = pool[0]; } else {
         audio = new Audio('sfx/' + name + '.mp3');
-        audio.volume = name === 'type' ? 0.08 : (name === 'pulse' ? 0.15 : 0.2);
+        audio.volume = name === 'glitch' ? 0.05 : (name === 'type' ? 0.25 : (name === 'pulse' ? 0.4 : 0.5));
         pool.push(audio);
       }
     }
