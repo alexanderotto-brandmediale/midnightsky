@@ -479,7 +479,13 @@
       meta: 'M.A. 1.7 · HEINZ-GLAS · LKSG · SAP · ENTERPRISE' },
     { year: '2023', tag: 'SYNTHESIS', major: true, density: 9,
       text: 'Everything converges. brandmediale GmbH (Agency MD & Art Director), brandnext (Strategic Consulting), Smyvia (Dental tourism startup). AI integration, future systems, signal engineering. Two decades of pattern recognition compressed into one question: What\'s the real problem — and what would clarity look like?',
-      meta: 'BRANDMEDIALE · BRANDNEXT · SMYVIA · AI · NOW' }
+      meta: 'BRANDMEDIALE · BRANDNEXT · SMYVIA · AI · CONVERGENCE' },
+    { year: '2024', tag: 'BSH TRANSFORMATION', major: true, density: 8,
+      text: 'Deep inside BSH — 17 years of partnership reaching its most intensive phase. Digital transformation at scale: 500+ employees, solar energy, photovoltaic systems, storage solutions. Communication architecture, brand strategy, growth frameworks. Managing a multi-year transition while building new structures from within.',
+      meta: 'BSH · 500+ EMPLOYEES · SOLAR/PV · 17 YRS PARTNERSHIP' },
+    { year: '2025', tag: 'FUTURE SYSTEMS', major: true, density: 10,
+      text: 'The year of AI-native work. BSH partnership entering managed transition. BÜCHEL emerging as next major client. Smyvia scaling dental tourism across DACH. Building with AI as co-pilot — not as tool, but as thinking partner. Every workflow reimagined. Every assumption questioned. The seed became the system.',
+      meta: 'BSH TRANSITION · BÜCHEL · SMYVIA DACH · AI-NATIVE · NOW' }
   ];
 
   var activeIdx = data.length - 1;
