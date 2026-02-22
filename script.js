@@ -535,7 +535,10 @@
       meta: 'ENTERPRISE · TRANSFORMATION · ARCHITECTURE' },
     { year: '2025', tag: 'FUTURE SYSTEMS', major: true, density: 10,
       text: 'AI-native work. Building with AI as thinking partner, not tool. Every workflow reimagined. Every assumption questioned. New ventures scaling internationally. The seed became the system.',
-      meta: 'AI-NATIVE · INTERNATIONAL · FUTURE SYSTEMS · NOW' }
+      meta: 'AI-NATIVE · INTERNATIONAL · FUTURE SYSTEMS' },
+    { year: '2026', tag: 'AI TRANSFORMATION', major: true, density: 10,
+      text: 'The age of agents. AI systems that reason, decide, and execute — not just assist. Autonomous workflows replacing manual processes. Every organization forced to rethink what humans do vs. what machines handle. Strategy becomes architecture. The transformation is no longer coming — it\'s here.',
+      meta: 'AI AGENTS · AUTONOMOUS SYSTEMS · TRANSFORMATION · NOW' }
   ];
 
   var activeIdx = data.length - 1;
@@ -828,7 +831,8 @@
     '2022': ['ChatGPT Released', 'James Webb Telescope', 'FTX Collapse', 'Stable Diffusion', 'Fusion Breakthrough', 'Midjourney Art', 'DALL-E 2 Public', 'Interest Rate Shock', 'Musk Buys Twitter', 'Inflation Surge'],
     '2023': ['GPT-4 Launches', 'AI Arms Race', 'Claude Released', 'SVB Bank Collapse', 'Open Source LLMs', 'AI Coding Assistants', 'Vision Pro Announced', 'AI Regulation Debate', 'Threads Launch', 'Altman Drama'],
     '2024': ['AI Agents Era', 'Sora Video AI', 'Neuralink Patient', 'EU AI Act', 'Claude 3 Opus', 'Apple Intelligence', 'Humanoid Robots', 'AI Energy Demands', 'Sovereign AI', 'Gemini Ultra'],
-    '2025': ['AI-Native Workflows', 'DeepSeek Disruption', 'Quantum Leap', 'Humanoid Robots Ship', 'Digital Euro Pilot', 'Fusion Progress', 'Post-AI Economy', 'Starship Mars Prep', 'AGI Debate', 'Autonomous Scale']
+    '2025': ['AI-Native Workflows', 'DeepSeek Disruption', 'Quantum Leap', 'Humanoid Robots Ship', 'Digital Euro Pilot', 'Fusion Progress', 'Post-AI Economy', 'Starship Mars Prep', 'AGI Debate', 'Autonomous Scale'],
+    '2026': ['AI Agents Mainstream', 'Autonomous Workflows', 'Claude Opus 4', 'Enterprise AI Adoption', 'Agent-to-Agent Protocols', 'AI Regulation Wave', 'Coding Agents Standard', 'Voice AI Everywhere', 'Agentic Economy', 'Human-AI Co-Leadership']
   };
 
   var currentMilestones = [];
