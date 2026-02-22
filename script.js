@@ -230,7 +230,7 @@ function playSfx(name) {
   var overlay = document.getElementById('menu-overlay');
   if (!btn || !overlay) return;
   btn.addEventListener('click', function () {
-    playSfx('click');
+    playSfx('nav');
     btn.classList.toggle('active');
     overlay.classList.toggle('active');
     document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
@@ -272,8 +272,8 @@ function playSfx(name) {
 
   // Click
   numpadKeys.forEach(function (key) {
-    key.addEventListener('mouseenter', function () { playSfx('hover'); });
     key.addEventListener('click', function () {
+      playSfx('nav');
       goToSection(parseInt(key.dataset.num));
     });
   });
@@ -793,8 +793,7 @@ function playSfx(name) {
   });
 
   indicators.forEach(function (ind) {
-    ind.addEventListener('mouseenter', function () { playSfx('hover'); });
-    ind.addEventListener('click', function () { playSfx('click'); });
+    ind.addEventListener('click', function () { playSfx('nav'); });
   });
 })();
 
