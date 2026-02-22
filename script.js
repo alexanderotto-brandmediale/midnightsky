@@ -1921,6 +1921,318 @@
   });
 })();
 
+/* ── Thinking Book Picks ───────────────────────────── */
+(function () {
+  var bookMap = {
+    'Upper Atmosphere': [
+      { title: 'Thinking in Systems', author: 'Donella Meadows' },
+      { title: 'The Art of Looking Sideways', author: 'Alan Fletcher' },
+      { title: 'Seeing What Others Don\'t', author: 'Gary Klein' }
+    ],
+    'The View From Above': [
+      { title: 'The Overview Effect', author: 'Frank White' },
+      { title: 'Scale', author: 'Geoffrey West' },
+      { title: 'Thinking, Fast and Slow', author: 'Daniel Kahneman' }
+    ],
+    'Pattern Recognition': [
+      { title: 'Blink', author: 'Malcolm Gladwell' },
+      { title: 'The Signal and the Noise', author: 'Nate Silver' },
+      { title: 'Antifragile', author: 'Nassim Nicholas Taleb' }
+    ],
+    'Systemtheorie': [
+      { title: 'Thinking in Systems', author: 'Donella Meadows' },
+      { title: 'The Fifth Discipline', author: 'Peter Senge' },
+      { title: 'An Introduction to Cybernetics', author: 'W. Ross Ashby' }
+    ],
+    'Feedback Loops': [
+      { title: 'The Fifth Discipline', author: 'Peter Senge' },
+      { title: 'Cybernetics', author: 'Norbert Wiener' },
+      { title: 'Thinking in Systems', author: 'Donella Meadows' }
+    ],
+    'Leverage Points': [
+      { title: 'Thinking in Systems', author: 'Donella Meadows' },
+      { title: 'The Art of Action', author: 'Stephen Bungay' },
+      { title: 'Systems Thinking Made Simple', author: 'Derek Cabrera' }
+    ],
+    'Entropy': [
+      { title: 'The Order of Time', author: 'Carlo Rovelli' },
+      { title: 'A Brief History of Time', author: 'Stephen Hawking' },
+      { title: 'Complexity', author: 'Mitchell Waldrop' }
+    ],
+    'Alfred Adler': [
+      { title: 'Understanding Human Nature', author: 'Alfred Adler' },
+      { title: 'The Courage to Be Disliked', author: 'Ichiro Kishimi' },
+      { title: 'What Life Should Mean to You', author: 'Alfred Adler' }
+    ],
+    'Gemeinschaftsgefühl': [
+      { title: 'Social Interest', author: 'Alfred Adler' },
+      { title: 'The Courage to Be Disliked', author: 'Ichiro Kishimi' },
+      { title: 'Together', author: 'Vivek Murthy' }
+    ],
+    'Inferiority & Compensation': [
+      { title: 'The Neurotic Character', author: 'Alfred Adler' },
+      { title: 'Status Anxiety', author: 'Alain de Botton' },
+      { title: 'Daring Greatly', author: 'Brené Brown' }
+    ],
+    'Life Style': [
+      { title: 'Understanding Human Nature', author: 'Alfred Adler' },
+      { title: 'Mindset', author: 'Carol Dweck' },
+      { title: 'The Interpretation of Cultures', author: 'Clifford Geertz' }
+    ],
+    'Cognitive Biases': [
+      { title: 'Thinking, Fast and Slow', author: 'Daniel Kahneman' },
+      { title: 'Predictably Irrational', author: 'Dan Ariely' },
+      { title: 'The Art of Thinking Clearly', author: 'Rolf Dobelli' }
+    ],
+    "Kahneman's Two Systems": [
+      { title: 'Thinking, Fast and Slow', author: 'Daniel Kahneman' },
+      { title: 'Noise', author: 'Kahneman, Sibony & Sunstein' },
+      { title: 'Nudge', author: 'Thaler & Sunstein' }
+    ],
+    'Narrative Bias': [
+      { title: 'The Black Swan', author: 'Nassim Nicholas Taleb' },
+      { title: 'Sapiens', author: 'Yuval Noah Harari' },
+      { title: 'Story', author: 'Robert McKee' }
+    ],
+    'Dunning-Kruger Landscape': [
+      { title: 'Thinking, Fast and Slow', author: 'Daniel Kahneman' },
+      { title: 'The Knowledge Illusion', author: 'Sloman & Fernbach' },
+      { title: 'Being Wrong', author: 'Kathryn Schulz' }
+    ],
+    'Kommunikationswissenschaft': [
+      { title: 'Pragmatics of Human Communication', author: 'Watzlawick et al.' },
+      { title: 'Social Systems', author: 'Niklas Luhmann' },
+      { title: 'A Mathematical Theory of Communication', author: 'Claude Shannon' }
+    ],
+    "Watzlawick's Axioms": [
+      { title: 'Pragmatics of Human Communication', author: 'Paul Watzlawick' },
+      { title: 'How Real Is Real?', author: 'Paul Watzlawick' },
+      { title: 'Change', author: 'Watzlawick, Weakland & Fisch' }
+    ],
+    'Signal vs. Noise': [
+      { title: 'The Signal and the Noise', author: 'Nate Silver' },
+      { title: 'Information Theory', author: 'Claude Shannon' },
+      { title: 'Deep Work', author: 'Cal Newport' }
+    ],
+    'Framing': [
+      { title: 'Don\'t Think of an Elephant', author: 'George Lakoff' },
+      { title: 'Nudge', author: 'Thaler & Sunstein' },
+      { title: 'Influence', author: 'Robert Cialdini' }
+    ],
+    'UAP & Epistemology': [
+      { title: 'In Plain Sight', author: 'Ross Coulthart' },
+      { title: 'UFOs', author: 'Leslie Kean' },
+      { title: 'American Cosmic', author: 'D.W. Pasulka' }
+    ],
+    'The Nature of Reality': [
+      { title: 'Reality Is Not What It Seems', author: 'Carlo Rovelli' },
+      { title: 'Our Mathematical Universe', author: 'Max Tegmark' },
+      { title: 'The Fabric of Reality', author: 'David Deutsch' }
+    ],
+    'Time': [
+      { title: 'The Order of Time', author: 'Carlo Rovelli' },
+      { title: 'From Eternity to Here', author: 'Sean Carroll' },
+      { title: 'A Brief History of Time', author: 'Stephen Hawking' }
+    ],
+    'Perception as Construction': [
+      { title: 'The Brain That Changes Itself', author: 'Norman Doidge' },
+      { title: 'Being You', author: 'Anil Seth' },
+      { title: 'Surfing Uncertainty', author: 'Andy Clark' }
+    ],
+    'Quantum Mechanics': [
+      { title: 'Something Deeply Hidden', author: 'Sean Carroll' },
+      { title: 'Helgoland', author: 'Carlo Rovelli' },
+      { title: 'QED', author: 'Richard Feynman' }
+    ],
+    'Max Tegmark': [
+      { title: 'Our Mathematical Universe', author: 'Max Tegmark' },
+      { title: 'Life 3.0', author: 'Max Tegmark' },
+      { title: 'The Road to Reality', author: 'Roger Penrose' }
+    ],
+    'Emergence & Complexity': [
+      { title: 'Complexity', author: 'Mitchell Waldrop' },
+      { title: 'Emergence', author: 'Steven Johnson' },
+      { title: 'At Home in the Universe', author: 'Stuart Kauffman' }
+    ],
+    'Cosmology': [
+      { title: 'A Brief History of Time', author: 'Stephen Hawking' },
+      { title: 'The Elegant Universe', author: 'Brian Greene' },
+      { title: 'Astrophysics for People in a Hurry', author: 'Neil deGrasse Tyson' }
+    ],
+    'AI as Amplification': [
+      { title: 'Life 3.0', author: 'Max Tegmark' },
+      { title: 'The Alignment Problem', author: 'Brian Christian' },
+      { title: 'Co-Intelligence', author: 'Ethan Mollick' }
+    ],
+    'Nick Bostrom': [
+      { title: 'Superintelligence', author: 'Nick Bostrom' },
+      { title: 'Deep Utopia', author: 'Nick Bostrom' },
+      { title: 'The Alignment Problem', author: 'Brian Christian' }
+    ],
+    'Human×Machine': [
+      { title: 'Co-Intelligence', author: 'Ethan Mollick' },
+      { title: 'The Second Machine Age', author: 'Brynjolfsson & McAfee' },
+      { title: 'Machines of Loving Grace', author: 'John Markoff' }
+    ],
+    'Post-Digital': [
+      { title: 'The Inevitable', author: 'Kevin Kelly' },
+      { title: 'New Dark Age', author: 'James Bridle' },
+      { title: 'The Stack', author: 'Benjamin Bratton' }
+    ],
+    'Transformation ≠ Change': [
+      { title: 'Leading Change', author: 'John Kotter' },
+      { title: 'Switch', author: 'Chip & Dan Heath' },
+      { title: 'Reinventing Organizations', author: 'Frederic Laloux' }
+    ],
+    'The J-Curve': [
+      { title: 'Leading Change', author: 'John Kotter' },
+      { title: 'The Dip', author: 'Seth Godin' },
+      { title: 'Crossing the Chasm', author: 'Geoffrey Moore' }
+    ],
+    'Cultural Metabolism': [
+      { title: 'Reinventing Organizations', author: 'Frederic Laloux' },
+      { title: 'The Culture Code', author: 'Daniel Coyle' },
+      { title: 'Tribal Leadership', author: 'Logan, King & Fischer-Wright' }
+    ],
+    'Identity Shift': [
+      { title: 'Atomic Habits', author: 'James Clear' },
+      { title: 'The Courage to Be Disliked', author: 'Ichiro Kishimi' },
+      { title: 'Reinventing Organizations', author: 'Frederic Laloux' }
+    ],
+    'Gesellschaft als System': [
+      { title: 'Social Systems', author: 'Niklas Luhmann' },
+      { title: 'The Society of Society', author: 'Niklas Luhmann' },
+      { title: 'Modernity and Self-Identity', author: 'Anthony Giddens' }
+    ],
+    'Collective Intelligence': [
+      { title: 'The Wisdom of Crowds', author: 'James Surowiecki' },
+      { title: 'Superminds', author: 'Thomas Malone' },
+      { title: 'Radical Candor', author: 'Kim Scott' }
+    ],
+    'Attention Economy': [
+      { title: 'Stolen Focus', author: 'Johann Hari' },
+      { title: 'The Attention Merchants', author: 'Tim Wu' },
+      { title: 'Indistractable', author: 'Nir Eyal' }
+    ],
+    'Trust Erosion': [
+      { title: 'Trust', author: 'Francis Fukuyama' },
+      { title: 'The Speed of Trust', author: 'Stephen M.R. Covey' },
+      { title: 'Bowling Alone', author: 'Robert Putnam' }
+    ],
+    'Zukunftsdesign': [
+      { title: 'Speculative Everything', author: 'Dunne & Raby' },
+      { title: 'The Art of the Long View', author: 'Peter Schwartz' },
+      { title: 'Superforecasting', author: 'Philip Tetlock' }
+    ],
+    'Scenario Thinking': [
+      { title: 'The Art of the Long View', author: 'Peter Schwartz' },
+      { title: 'Superforecasting', author: 'Philip Tetlock' },
+      { title: 'Scenario Planning', author: 'Gill Ringland' }
+    ],
+    'Weak Signals': [
+      { title: 'The Art of the Long View', author: 'Peter Schwartz' },
+      { title: 'Megatrends', author: 'John Naisbitt' },
+      { title: 'The Black Swan', author: 'Nassim Nicholas Taleb' }
+    ],
+    'Backcasting': [
+      { title: 'The Natural Step', author: 'Karl-Henrik Robèrt' },
+      { title: 'Speculative Everything', author: 'Dunne & Raby' },
+      { title: 'Doughnut Economics', author: 'Kate Raworth' }
+    ],
+    'Design Thinking': [
+      { title: 'Change by Design', author: 'Tim Brown' },
+      { title: 'The Design of Everyday Things', author: 'Don Norman' },
+      { title: 'Sprint', author: 'Jake Knapp' }
+    ],
+    'Systems Mapping': [
+      { title: 'Thinking in Systems', author: 'Donella Meadows' },
+      { title: 'Business Dynamics', author: 'John Sterman' },
+      { title: 'The Systems View of Life', author: 'Capra & Luisi' }
+    ],
+    'Prototyping Reality': [
+      { title: 'Sprint', author: 'Jake Knapp' },
+      { title: 'The Lean Startup', author: 'Eric Ries' },
+      { title: 'Creative Confidence', author: 'Tom & David Kelley' }
+    ],
+    'Structured Dialogue': [
+      { title: 'Dialogue', author: 'William Isaacs' },
+      { title: 'Nonviolent Communication', author: 'Marshall Rosenberg' },
+      { title: 'Crucial Conversations', author: 'Patterson et al.' }
+    ],
+    'Strategy as Navigation': [
+      { title: 'Good Strategy Bad Strategy', author: 'Richard Rumelt' },
+      { title: 'The Art of War', author: 'Sun Tzu' },
+      { title: 'Playing to Win', author: 'Lafley & Martin' }
+    ],
+    'Decision Architecture': [
+      { title: 'Nudge', author: 'Thaler & Sunstein' },
+      { title: 'Decisive', author: 'Chip & Dan Heath' },
+      { title: 'The Paradox of Choice', author: 'Barry Schwartz' }
+    ],
+    'Tempo': [
+      { title: 'Tempo', author: 'Venkatesh Rao' },
+      { title: 'Boyd', author: 'Robert Coram' },
+      { title: 'Blitzscaling', author: 'Reid Hoffman' }
+    ],
+    'Positioning': [
+      { title: 'Positioning', author: 'Al Ries & Jack Trout' },
+      { title: 'Obviously Awesome', author: 'April Dunford' },
+      { title: 'Blue Ocean Strategy', author: 'Kim & Mauborgne' }
+    ],
+    'Clarity Over Certainty': [
+      { title: 'Antifragile', author: 'Nassim Nicholas Taleb' },
+      { title: 'Essentialism', author: 'Greg McKeown' },
+      { title: 'The Courage to Be Disliked', author: 'Ichiro Kishimi' }
+    ],
+    'Elegance': [
+      { title: 'The Laws of Simplicity', author: 'John Maeda' },
+      { title: 'Wabi-Sabi', author: 'Leonard Koren' },
+      { title: 'Less Is More', author: 'Goldberg & Zipursky' }
+    ],
+    'Re-Entry': [
+      { title: 'Making Ideas Happen', author: 'Scott Belsky' },
+      { title: 'The Art of Action', author: 'Stephen Bungay' },
+      { title: 'Execution', author: 'Bossidy & Charan' }
+    ],
+    'The Long Game': [
+      { title: 'The Long Game', author: 'Dorie Clark' },
+      { title: 'Finite and Infinite Games', author: 'James Carse' },
+      { title: 'The Almanack of Naval Ravikant', author: 'Eric Jorgenson' }
+    ]
+  };
+
+  document.querySelectorAll('.thinking-item').forEach(function (item) {
+    var h3 = item.querySelector('h3');
+    if (!h3) return;
+    var title = h3.childNodes[0].textContent.trim();
+    var books = bookMap[title];
+    if (!books || !books.length) return;
+
+    var toggle = document.createElement('div');
+    toggle.className = 'thinking-books-toggle';
+    toggle.textContent = '📚 3 book picks';
+
+    var booksDiv = document.createElement('div');
+    booksDiv.className = 'thinking-books';
+    var inner = '<div class="thinking-books-inner">';
+    books.forEach(function (b) {
+      inner += '<div class="thinking-book"><em>' + b.title + '</em> <span>— ' + b.author + '</span></div>';
+    });
+    inner += '</div>';
+    booksDiv.innerHTML = inner;
+
+    toggle.addEventListener('click', function () {
+      var isOpen = booksDiv.classList.contains('open');
+      booksDiv.classList.toggle('open');
+      toggle.classList.toggle('open');
+      toggle.textContent = isOpen ? '📚 3 book picks' : '📚 close';
+    });
+
+    item.appendChild(toggle);
+    item.appendChild(booksDiv);
+  });
+})();
+
 /* ── Thinking Wiki Links ───────────────────────────── */
 (function () {
   var wikiMap = {
