@@ -2692,6 +2692,9 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   #cosmos-heading-big { font-size: clamp(1.5rem, 8vw, 3rem); }
   #cosmos-heading-big > span { display: block; }
   #cosmos-heading-big > span > .letter { display: inline-block; }
+  .thinking-header .section-heading > span { display: block; }
+  .thinking-header .section-heading > span > .letter { display: inline-block; }
+  .thinking-header .micro-label { margin-bottom: 0.5rem; }
   .cosmos-heading-small {
     top: auto !important;
     bottom: 2rem !important;
