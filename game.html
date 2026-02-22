@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Signal Hunter</title>
+<link href="https://fonts.googleapis.com/css2?family=Tomorrow:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:#0A0A0A;overflow:hidden;font-family:'Tomorrow',sans-serif;color:#F9F8F2;cursor:crosshair;-webkit-tap-highlight-color:transparent;touch-action:none}
+canvas{position:fixed;inset:0;z-index:1}
+::selection{background:rgba(255,87,90,0.35);color:#fff}
+
+/* Crosshairs */
+.crosshair{position:fixed;width:20px;height:20px;z-index:10;pointer-events:none;opacity:0.15}
+.crosshair::before,.crosshair::after{content:'';position:absolute;border-color:rgba(249,248,242,0.3)}
+.crosshair-tl{top:1.5rem;left:1.5rem}.crosshair-tl::before{top:0;left:0;width:100%;height:100%;border-top:1px solid;border-left:1px solid}
+.crosshair-tr{top:1.5rem;right:1.5rem}.crosshair-tr::before{top:0;right:0;width:100%;height:100%;border-top:1px solid;border-right:1px solid}
+.crosshair-bl{bottom:1.5rem;left:1.5rem}.crosshair-bl::before{bottom:0;left:0;width:100%;height:100%;border-bottom:1px solid;border-left:1px solid}
+.crosshair-br{bottom:1.5rem;right:1.5rem}.crosshair-br::before{bottom:0;right:0;width:100%;height:100%;border-bottom:1px solid;border-right:1px solid}
+
+/* HUD */
+.hud{position:fixed;z-index:20;pointer-events:none;font-size:0.55rem;letter-spacing:0.3em;text-transform:uppercase;color:rgba(249,248,242,0.4)}
+.hud-score{top:2.5rem;left:2.5rem}
+.hud-high{top:2.5rem;right:2.5rem;text-align:right}
+.hud-phrase{top:2.5rem;left:50%;transform:translateX(-50%);text-align:center;font-size:0.7rem;letter-spacing:0.4em}
+.hud-phrase .revealed{color:#FF575A}
+.hud-phrase .hidden-letter{color:rgba(249,248,242,0.08)}
+.hud-level{bottom:2.5rem;left:50%;transform:translateX(-50%);font-size:0.45rem;color:rgba(255,87,90,0.3)}
+
+/* Back link */
+.back-link{position:fixed;bottom:2.5rem;left:2.5rem;z-index:30;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(249,248,242,0.25);text-decoration:none;transition:color 0.3s}
+.back-link:hover{color:#FF575A}
+
+/* Start Screen */
+.start-screen{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0A0A0A;transition:opacity 0.8s ease}
+.start-screen.hidden{opacity:0;pointer-events:none}
+.start-title{font-size:clamp(2rem,8vw,5rem);font-weight:200;letter-spacing:0.15em;animation:title-glitch 4s ease-in-out infinite}
+.start-sub{font-size:0.6rem;letter-spacing:0.4em;color:rgba(249,248,242,0.3);margin-top:2rem;text-transform:uppercase;animation:pulse 2s ease-in-out infinite}
+.start-desc{font-size:0.5rem;letter-spacing:0.2em;color:rgba(249,248,242,0.15);margin-top:1rem;text-transform:uppercase;max-width:300px;text-align:center;line-height:1.8}
+.start-desc span{color:rgba(255,87,90,0.5)}
+
+@keyframes title-glitch{
+  0%,90%,100%{text-shadow:none;transform:translate(0)}
+  92%{text-shadow:-2px 0 #FF575A,2px 0 #7B8CFF;transform:translate(-1px,1px)}
+  94%{text-shadow:2px 0 #FF575A,-2px 0 #7B8CFF;transform:translate(1px,-1px)}
+  96%{text-shadow:-1px 1px #FF575A,1px -1px #7B8CFF;transform:translate(0)}
+  98%{text-shadow:none}
+}
+@keyframes pulse{0%,100%{opacity:0.3}50%{opacity:0.7}}
+
+/* Glitch overlay */
+.glitch-overlay{position:fixed;inset:0;z-index:40;pointer-events:none;opacity:0;mix-blend-mode:screen}
+
+/* Combo */
+.combo-text{position:fixed;z-index:25;font-size:0.7rem;letter-spacing:0.2em;color:#FF575A;pointer-events:none;opacity:0;transition:none;text-shadow:0 0 10px rgba(255,87,90,0.4)}
+
+@media(max-width:600px){
+  .hud{font-size:0.45rem}
+  .hud-phrase{font-size:0.55rem}
+  .crosshair{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="crosshair crosshair-tl"></div>
+<div class="crosshair crosshair-tr"></div>
+<div class="crosshair crosshair-bl"></div>
+<div class="crosshair crosshair-br"></div>
+
+<div class="hud hud-score" id="hud-score">SIGNALS ◈ 0</div>
+<div class="hud hud-high" id="hud-high">BEST ◈ 0</div>
+<div class="hud hud-phrase" id="hud-phrase"></div>
+<div class="hud hud-level" id="hud-level">WAVE 1</div>
+
+<a href="index.html" class="back-link">← BACK</a>
+
+<div class="start-screen" id="start-screen">
+  <div class="start-title">SIGNAL HUNTER</div>
+  <div class="start-sub">Tap to begin</div>
+  <div class="start-desc">Collect <span>signals</span> · Avoid noise · Reveal the message</div>
+</div>
+
+<canvas id="game-canvas"></canvas>
+
+<script>
+(function(){
+  var canvas = document.getElementById('game-canvas');
+  var ctx = canvas.getContext('2d');
+  var W, H, dpr;
+  var started = false;
+  var score = 0;
+  var highScore = parseInt(localStorage.getItem('signal-hunter-high') || '0');
+  var particles = [];
+  var bursts = [];
+  var stars = [];
+  var trail = [];
+  var STAR_COUNT = 120;
+  var MAX_PARTICLES = 80;
+  var spawnRate = 1.2;
+  var noiseRatio = 0.35;
+  var wave = 1;
+  var waveTimer = 0;
+  var glitchTimer = 0;
+  var shakeX = 0, shakeY = 0;
+  var combo = 0;
+  var comboTexts = [];
+  var mouseX = 0, mouseY = 0;
+
+  var phrases = [
+    'TRANSFORMATION RUNNING',
+    'FROM NOISE TO SIGNAL',
+    'CLARITY EMERGES',
+    'PATTERNS FOUND',
+    'CHOOSE YOUR ORBIT',
+    'TURNING NOISE INTO DIRECTION',
+    'THE SIGNAL IS YOU'
+  ];
+  var phraseIdx = 0;
+  var revealedCount = 0;
+
+  var hudScore = document.getElementById('hud-score');
+  var hudHigh = document.getElementById('hud-high');
+  var hudPhrase = document.getElementById('hud-phrase');
+  var hudLevel = document.getElementById('hud-level');
+  var startScreen = document.getElementById('start-screen');
+
+  // Audio
+  var audioCtx;
+  function getAudio() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+  function playPing() {
+    try {
+      var a = getAudio(), o = a.createOscillator(), g = a.createGain();
+      o.type = 'sine'; o.frequency.value = 880 + Math.random() * 200;
+      g.gain.setValueAtTime(0.08, a.currentTime);
+      g.gain.exponentialDecayToValueAtTime ? g.gain.exponentialDecayToValueAtTime(0.001, a.currentTime + 0.12) : g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.12);
+      o.connect(g); g.connect(a.destination);
+      o.start(); o.stop(a.currentTime + 0.12);
+    } catch(e){}
+  }
+  function playBuzz() {
+    try {
+      var a = getAudio(), o = a.createOscillator(), g = a.createGain();
+      o.type = 'sawtooth'; o.frequency.value = 110;
+      g.gain.setValueAtTime(0.06, a.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, a.currentTime + 0.2);
+      o.connect(g); g.connect(a.destination);
+      o.start(); o.stop(a.currentTime + 0.2);
+    } catch(e){}
+  }
+  function playClick() {
+    try {
+      var a = getAudio(), buf = a.createBuffer(1, a.sampleRate * 0.04, a.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3);
+      var s = a.createBufferSource(), g = a.createGain();
+      s.buffer = buf; g.gain.value = 0.04;
+      s.connect(g); g.connect(a.destination);
+      s.start();
+    } catch(e){}
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function createStars() {
+    stars = [];
+    for (var i = 0; i < STAR_COUNT; i++) {
+      stars.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 0.8 + 0.2, o: Math.random() * 0.3 + 0.05, phase: Math.random() * Math.PI * 2, speed: Math.random() * 0.005 + 0.002 });
+    }
+  }
+
+  function spawnParticle() {
+    if (particles.length >= MAX_PARTICLES) return;
+    var isNoise = Math.random() < noiseRatio;
+    var side = Math.floor(Math.random() * 4);
+    var x, y, vx, vy;
+    var sp = 0.3 + Math.random() * 0.5 + wave * 0.05;
+    if (side === 0) { x = -10; y = Math.random() * H; vx = sp; vy = (Math.random() - 0.5) * sp; }
+    else if (side === 1) { x = W + 10; y = Math.random() * H; vx = -sp; vy = (Math.random() - 0.5) * sp; }
+    else if (side === 2) { x = Math.random() * W; y = -10; vy = sp; vx = (Math.random() - 0.5) * sp; }
+    else { x = Math.random() * W; y = H + 10; vy = -sp; vx = (Math.random() - 0.5) * sp; }
+    particles.push({
+      x: x, y: y, vx: vx, vy: vy,
+      r: isNoise ? 3 + Math.random() * 2 : 4 + Math.random() * 3,
+      isNoise: isNoise,
+      life: 1,
+      jitter: isNoise ? 0.8 : 0,
+      glow: isNoise ? 0 : 0.6 + Math.random() * 0.4
+    });
+  }
+
+  function createBurst(x, y, color, count) {
+    for (var i = 0; i < count; i++) {
+      var angle = Math.random() * Math.PI * 2;
+      var speed = 1 + Math.random() * 3;
+      bursts.push({ x: x, y: y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, r: 1 + Math.random() * 2, life: 1, color: color });
+    }
+  }
+
+  function updatePhrase() {
+    var phrase = phrases[phraseIdx];
+    var html = '';
+    for (var i = 0; i < phrase.length; i++) {
+      if (phrase[i] === ' ') html += ' ';
+      else if (i < revealedCount) html += '<span class="revealed">' + phrase[i] + '</span>';
+      else html += '<span class="hidden-letter">' + phrase[i] + '</span>';
+    }
+    hudPhrase.innerHTML = html;
+  }
+
+  function hitParticle(px, py) {
+    var closest = null, closestDist = Infinity;
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      var dx = px - p.x, dy = py - p.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var hitR = p.r + 20;
+      if (dist < hitR && dist < closestDist) {
+        closest = i; closestDist = dist;
+      }
+    }
+    if (closest === null) return;
+    var p = particles[closest];
+    particles.splice(closest, 1);
+
+    if (!p.isNoise) {
+      // Signal hit
+      score++;
+      combo++;
+      playPing();
+      createBurst(p.x, p.y, '#FF575A', 12);
+      var phrase = phrases[phraseIdx];
+      var realLen = phrase.replace(/ /g, '').length;
+      if (revealedCount < phrase.length) {
+        revealedCount++;
+        while (revealedCount < phrase.length && phrase[revealedCount - 1] === ' ') revealedCount++;
+        playClick();
+      }
+      if (revealedCount >= phrase.length) {
+        // Phrase complete
+        createBurst(W / 2, H / 2, '#7B8CFF', 30);
+        createBurst(W / 2, H / 2, '#FF575A', 30);
+        setTimeout(function() {
+          phraseIdx = (phraseIdx + 1) % phrases.length;
+          revealedCount = 0;
+          updatePhrase();
+        }, 1500);
+      }
+      if (combo >= 5 && combo % 5 === 0) {
+        comboTexts.push({ x: px, y: py - 20, text: combo + 'x COMBO', life: 1 });
+      }
+      updatePhrase();
+    } else {
+      // Noise hit
+      score = Math.max(0, score - 2);
+      combo = 0;
+      playBuzz();
+      glitchTimer = 0.2;
+      createBurst(p.x, p.y, 'rgba(255,255,255,0.3)', 6);
+    }
+    hudScore.textContent = 'SIGNALS ◈ ' + score;
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem('signal-hunter-high', String(highScore));
+    }
+    hudHigh.textContent = 'BEST ◈ ' + highScore;
+  }
+
+  function handleInput(e) {
+    e.preventDefault();
+    if (!started) {
+      started = true;
+      startScreen.classList.add('hidden');
+      updatePhrase();
+      return;
+    }
+    var x, y;
+    if (e.touches) { x = e.touches[0].clientX; y = e.touches[0].clientY; }
+    else { x = e.clientX; y = e.clientY; }
+    hitParticle(x, y);
+  }
+
+  canvas.addEventListener('click', handleInput);
+  canvas.addEventListener('touchstart', handleInput, { passive: false });
+  window.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; });
+  window.addEventListener('touchmove', function(e) { if (e.touches.length) { mouseX = e.touches[0].clientX; mouseY = e.touches[0].clientY; } }, { passive: true });
+
+  var lastTime = 0;
+  var spawnAccum = 0;
+
+  function draw(time) {
+    var dt = Math.min((time - lastTime) / 1000, 0.05);
+    lastTime = time;
+
+    // Shake
+    if (glitchTimer > 0) {
+      glitchTimer -= dt;
+      shakeX = (Math.random() - 0.5) * 6;
+      shakeY = (Math.random() - 0.5) * 6;
+    } else { shakeX = 0; shakeY = 0; }
+
+    ctx.save();
+    ctx.translate(shakeX, shakeY);
+    ctx.clearRect(-10, -10, W + 20, H + 20);
+
+    // Stars
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      var twinkle = Math.sin(time * 0.001 * s.speed + s.phase) * 0.3 + 0.7;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(249,248,242,' + (s.o * twinkle) + ')';
+      ctx.fill();
+    }
+
+    // Trail
+    trail.push({ x: mouseX, y: mouseY, life: 1 });
+    if (trail.length > 15) trail.shift();
+    for (var i = 0; i < trail.length; i++) {
+      var t = trail[i];
+      t.life -= dt * 3;
+      if (t.life > 0) {
+        ctx.beginPath();
+        ctx.arc(t.x, t.y, 1.5 * t.life, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,87,90,' + (t.life * 0.2) + ')';
+        ctx.fill();
+      }
+    }
+    trail = trail.filter(function(t) { return t.life > 0; });
+
+    if (!started) { ctx.restore(); requestAnimationFrame(draw); return; }
+
+    // Spawn
+    spawnAccum += dt * spawnRate;
+    while (spawnAccum >= 1) { spawnParticle(); spawnAccum--; }
+
+    // Wave timer
+    waveTimer += dt;
+    if (waveTimer > 20) {
+      waveTimer = 0;
+      wave++;
+      noiseRatio = Math.min(0.6, 0.35 + wave * 0.03);
+      spawnRate = Math.min(3, 1.2 + wave * 0.15);
+      hudLevel.textContent = 'WAVE ' + wave;
+    }
+
+    // Particles
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.x += p.vx + (Math.random() - 0.5) * p.jitter;
+      p.y += p.vy + (Math.random() - 0.5) * p.jitter;
+
+      // Remove offscreen
+      if (p.x < -50 || p.x > W + 50 || p.y < -50 || p.y > H + 50) {
+        particles.splice(i, 1); continue;
+      }
+
+      if (!p.isNoise) {
+        // Signal — coral glow
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r + 8, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,87,90,' + (p.glow * 0.08) + ')';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,87,90,' + (0.7 + Math.sin(time * 0.003) * 0.15) + ')';
+        ctx.fill();
+        ctx.restore();
+      } else {
+        // Noise — grey, flickering
+        var flicker = 0.1 + Math.random() * 0.08;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,' + flicker + ')';
+        ctx.fill();
+      }
+    }
+
+    // Bursts
+    for (var i = bursts.length - 1; i >= 0; i--) {
+      var b = bursts[i];
+      b.x += b.vx; b.y += b.vy;
+      b.life -= dt * 2.5;
+      b.vx *= 0.97; b.vy *= 0.97;
+      if (b.life <= 0) { bursts.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r * b.life, 0, Math.PI * 2);
+      ctx.fillStyle = b.color.indexOf('rgba') >= 0 ? b.color : b.color.replace(')', ',' + b.life + ')').replace('rgb', 'rgba');
+      if (b.color[0] === '#') {
+        var alpha = b.life;
+        if (b.color === '#FF575A') ctx.fillStyle = 'rgba(255,87,90,' + alpha + ')';
+        else if (b.color === '#7B8CFF') ctx.fillStyle = 'rgba(123,140,255,' + alpha + ')';
+        else ctx.fillStyle = 'rgba(255,255,255,' + alpha * 0.3 + ')';
+      }
+      ctx.fill();
+    }
+
+    // Combo texts
+    for (var i = comboTexts.length - 1; i >= 0; i--) {
+      var c = comboTexts[i];
+      c.life -= dt;
+      c.y -= 30 * dt;
+      if (c.life <= 0) { comboTexts.splice(i, 1); continue; }
+      ctx.font = '500 0.7rem Tomorrow';
+      ctx.fillStyle = 'rgba(255,87,90,' + c.life + ')';
+      ctx.textAlign = 'center';
+      ctx.fillText(c.text, c.x, c.y);
+    }
+
+    // Glitch RGB split
+    if (glitchTimer > 0) {
+      ctx.save();
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.globalAlpha = 0.08;
+      ctx.drawImage(canvas, -3 * dpr, 0);
+      ctx.drawImage(canvas, 3 * dpr, 0);
+      ctx.restore();
+    }
+
+    ctx.restore();
+    requestAnimationFrame(draw);
+  }
+
+  function init() {
+    resize();
+    createStars();
+    hudHigh.textContent = 'BEST ◈ ' + highScore;
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', function() { resize(); createStars(); });
+  init();
+})();
+</script>
+</body>
+</html>
