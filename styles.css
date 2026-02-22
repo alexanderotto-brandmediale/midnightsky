@@ -2864,6 +2864,7 @@ body.ambient-mode .hamburger,
 body.ambient-mode .nav-numpad,
 body.ambient-mode .side-data,
 body.ambient-mode .currently-widget,
+body.ambient-mode .nav-indicators,
 body.ambient-mode main,
 body.ambient-mode .cursor-dot,
 body.ambient-mode .cursor-ring {
@@ -2878,11 +2879,14 @@ body.ambient-mode .bg-layer-item {
   opacity: 1 !important;
 }
 body.ambient-mode .bg-layer-item video {
-  opacity: 0.35 !important;
+  opacity: 0.6 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  object-fit: cover !important;
 }
 body.ambient-mode #starfield-canvas {
   z-index: 57;
-  opacity: 0.8;
+  opacity: 0.6;
 }
 body.ambient-mode .ambient-toggle {
   z-index: 60;
