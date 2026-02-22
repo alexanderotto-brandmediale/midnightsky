@@ -1722,6 +1722,61 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
+/* ── Mobile Bottom Nav ─────────────────────────────── */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 300;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 0.4rem 0 env(safe-area-inset-bottom, 0.3rem);
+  justify-content: space-around;
+  align-items: center;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.mobile-nav.visible {
+  transform: translateY(0);
+}
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  text-decoration: none;
+  color: rgba(255,255,255,0.25);
+  transition: color 0.3s;
+  padding: 0.2rem 0;
+  flex: 1;
+}
+.mobile-nav-item svg {
+  width: 18px;
+  height: 18px;
+}
+.mobile-nav-item span {
+  font-family: 'Geist', monospace;
+  font-size: 0.35rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.mobile-nav-item.active {
+  color: var(--secondary);
+}
+.mobile-nav-item.active span {
+  color: var(--secondary);
+}
+
+@media (max-width: 900px) {
+  .mobile-nav {
+    display: flex;
+  }
+}
+
 /* Hide custom cursor on touch/mobile */
 @media (pointer: coarse) {
   body, a, button, .tl-point, .indicator, .contact-link { cursor: auto !important; }

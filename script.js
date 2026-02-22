@@ -885,6 +885,34 @@
   updateBg();
 })();
 
+/* ── Mobile Bottom Nav ─────────────────────────────── */
+(function () {
+  var mobileNav = document.getElementById('mobile-nav');
+  if (!mobileNav) return;
+  var shown = false;
+  
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 200 && !shown) {
+      mobileNav.classList.add('visible');
+      shown = true;
+    } else if (window.scrollY <= 200 && shown) {
+      mobileNav.classList.remove('visible');
+      shown = false;
+    }
+    
+    // Update active item
+    var sections = document.querySelectorAll('.scene');
+    var scrollPos = window.scrollY + window.innerHeight * 0.5;
+    var activeIdx = 0;
+    sections.forEach(function (s, i) {
+      if (s.offsetTop <= scrollPos) activeIdx = i;
+    });
+    mobileNav.querySelectorAll('.mobile-nav-item').forEach(function (item, i) {
+      item.classList.toggle('active', i === activeIdx);
+    });
+  }, { passive: true });
+})();
+
 /* ── Smooth Anchor Scroll + URL Hash ───────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   anchor.addEventListener('click', function (e) {
