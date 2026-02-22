@@ -1,3 +1,22 @@
+/* ── Sci-fi Sound System (global) ──────────────────── */
+var sfxPool = {};
+function playSfx(name) {
+  try {
+    if (!sfxPool[name]) sfxPool[name] = [];
+    var pool = sfxPool[name];
+    var audio = pool.find(function(a) { return a.paused || a.ended; });
+    if (!audio) {
+      if (pool.length >= 3) { audio = pool[0]; } else {
+        audio = new Audio('sfx/' + name + '.mp3');
+        audio.volume = name === 'type' ? 0.25 : (name === 'pulse' ? 0.15 : 0.2);
+        pool.push(audio);
+      }
+    }
+    audio.currentTime = 0;
+    audio.play().catch(function(){});
+  } catch(e) {}
+}
+
 /* ── Hamburger Menu ───────────────────────────────── */
 (function () {
   var btn = document.getElementById('hamburger');
@@ -1269,25 +1288,6 @@
   var glowPhase = 0;
   var glowAnimId = null;
 
-  // Sci-fi sound system
-  var sfxPool = {};
-  function playSfx(name) {
-    try {
-      if (!sfxPool[name]) sfxPool[name] = [];
-      // Pool of 3 audio instances per sound for overlap
-      var pool = sfxPool[name];
-      var audio = pool.find(function(a) { return a.paused || a.ended; });
-      if (!audio) {
-        if (pool.length >= 3) { audio = pool[0]; } else {
-          audio = new Audio('sfx/' + name + '.mp3');
-          audio.volume = name === 'type' ? 0.25 : (name === 'pulse' ? 0.15 : 0.2);
-          pool.push(audio);
-        }
-      }
-      audio.currentTime = 0;
-      audio.play().catch(function(){});
-    } catch(e) {}
-  }
   function playTypeClick() { playSfx('type'); }
 
   // Direction word changes with timeline hover
