@@ -801,8 +801,8 @@
   var interactive = document.querySelector('.tl-interactive');
   if (interactive) {
     interactive.addEventListener('mousemove', function (e) {
-      dpTX = e.clientX + 24;
-      dpTY = e.clientY - 20;
+      dpTX = e.clientX + 20;
+      dpTY = e.clientY - 120;
       if (!dpActive) {
         dpX = dpTX; dpY = dpTY;
         detailPanel.style.left = dpX + 'px';
