@@ -1618,17 +1618,21 @@
     var targetBg = bgMap[activeSectionId] || bgMap['hero'];
     
     if (targetBg !== currentBg) {
-      // First: pause ALL videos
+      // First: fade out ALL
       items.forEach(function (item) {
         var vid = item.querySelector('video');
         if (vid) vid.pause();
         item.classList.remove('active');
       });
-      // Then: play only the active one
-      targetBg.classList.add('active');
-      var activeVid = targetBg.querySelector('video');
-      if (activeVid) activeVid.play();
       currentBg = targetBg;
+      // Dark pause, then fade in new
+      setTimeout(function () {
+        if (currentBg === targetBg) {
+          targetBg.classList.add('active');
+          var activeVid = targetBg.querySelector('video');
+          if (activeVid) activeVid.play();
+        }
+      }, 400);
     }
   }
   
