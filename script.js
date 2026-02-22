@@ -29,14 +29,19 @@
     dot.style.top = my + 'px';
   });
   
+  var ringMoving = false;
   function animateRing() {
     rx += (mx - rx) * 0.15;
     ry += (my - ry) * 0.15;
     ring.style.left = rx + 'px';
     ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
+    if (Math.abs(mx - rx) > 0.5 || Math.abs(my - ry) > 0.5) {
+      requestAnimationFrame(animateRing);
+    } else { ringMoving = false; }
   }
-  animateRing();
+  document.addEventListener('mousemove', function () {
+    if (!ringMoving) { ringMoving = true; requestAnimationFrame(animateRing); }
+  });
   
   // Hover detection
   var hoverEls = 'a, button, .tl-point, .indicator, .contact-link, .gravity-item';
@@ -888,16 +893,21 @@
   }
 
   // Detail panel follows cursor
-  var dpX = 0, dpY = 0, dpTX = 0, dpTY = 0, dpActive = false;
-  (function dpLoop() {
+  var dpX = 0, dpY = 0, dpTX = 0, dpTY = 0, dpActive = false, dpRunning = false;
+  function dpLoop() {
     if (dpActive) {
       dpX += (dpTX - dpX) * 0.12;
       dpY += (dpTY - dpY) * 0.12;
       detailPanel.style.left = Math.round(dpX) + 'px';
       detailPanel.style.top = Math.round(dpY) + 'px';
-    }
-    requestAnimationFrame(dpLoop);
-  })();
+      if (Math.abs(dpTX - dpX) > 0.5 || Math.abs(dpTY - dpY) > 0.5) {
+        requestAnimationFrame(dpLoop);
+      } else { dpRunning = false; }
+    } else { dpRunning = false; }
+  }
+  function startDpLoop() {
+    if (!dpRunning) { dpRunning = true; requestAnimationFrame(dpLoop); }
+  }
 
   var interactive = document.querySelector('.tl-interactive');
   if (interactive) {
@@ -912,6 +922,7 @@
         detailPanel.style.top = dpY + 'px';
       }
       dpActive = true;
+      startDpLoop();
       detailPanel.classList.add('visible');
     });
     interactive.addEventListener('mouseleave', function () {
@@ -1110,18 +1121,22 @@
   var typeTimer = null;
   var fullText = '';
   var charIdx = 0;
-  var ttX = 0, ttY = 0, ttTX = 0, ttTY = 0, ttActive = false;
+  var ttX = 0, ttY = 0, ttTX = 0, ttTY = 0, ttActive = false, ttRunning = false;
 
-  // Smooth follow loop
-  (function ttLoop() {
+  function ttLoop() {
     if (ttActive) {
       ttX += (ttTX - ttX) * 0.12;
       ttY += (ttTY - ttY) * 0.12;
       tooltip.style.left = Math.round(ttX) + 'px';
       tooltip.style.top = Math.round(ttY) + 'px';
-    }
-    requestAnimationFrame(ttLoop);
-  })();
+      if (Math.abs(ttTX - ttX) > 0.5 || Math.abs(ttTY - ttY) > 0.5) {
+        requestAnimationFrame(ttLoop);
+      } else { ttRunning = false; }
+    } else { ttRunning = false; }
+  }
+  function startTtLoop() {
+    if (!ttRunning) { ttRunning = true; requestAnimationFrame(ttLoop); }
+  }
 
   function typeWrite() {
     if (charIdx <= fullText.length) {
@@ -1156,6 +1171,7 @@
     item.addEventListener('mousemove', function (e) {
       ttTX = e.clientX + 20;
       ttTY = e.clientY;
+      startTtLoop();
     });
   });
 })();
