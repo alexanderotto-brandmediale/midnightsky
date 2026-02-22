@@ -21,13 +21,13 @@ function playSfx(name) {
 (function () {
   var tracks = {
     hero: 'audio/intro.mp3',
-    signal: 'audio/intro.mp3',
+    signal: 'audio/intro2.mp3',
     about: 'audio/intro.mp3',
     roots: 'audio/others.mp3',
-    gravity: 'audio/others.mp3',
-    cosmos: 'audio/others.mp3',
+    gravity: 'audio/others2.mp3',
+    cosmos: 'audio/others2.mp3',
     thinking: 'audio/thinking.mp3',
-    contact: 'audio/thinking.mp3'
+    contact: 'audio/thinking3.mp3'
   };
 
   var audioA = new Audio();
