@@ -990,6 +990,8 @@
 (function () {
   var track = document.getElementById('swipe-track');
   var dotsContainer = document.getElementById('swipe-dots');
+  var prevBtn = document.getElementById('swipe-prev');
+  var nextBtn = document.getElementById('swipe-next');
   if (!track || !dotsContainer) return;
 
   var cards = track.querySelectorAll('.swipe-card');
@@ -1010,6 +1012,20 @@
     })(d));
     dotsContainer.appendChild(dot);
     dots.push(dot);
+  }
+
+  function scrollToCard(idx) {
+    if (idx < 0) idx = 0;
+    if (idx >= total) idx = total - 1;
+    cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  // Arrow buttons
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function () { scrollToCard(current - 1); });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function () { scrollToCard(current + 1); });
   }
 
   function updateActiveCard() {
