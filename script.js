@@ -105,6 +105,7 @@ function playSfx(name) {
     currentTrack = tracks[currentSection || 'hero'];
     activeAudio.src = currentTrack;
     activeAudio.volume = 0;
+    if (!analyser) initAnalyser(activeAudio);
     activeAudio.play().then(function () {
       var b = document.getElementById('audio-toggle');
       if (b) b.classList.add('playing');
@@ -185,6 +186,92 @@ function playSfx(name) {
       playSfx('click');
     });
   }
+
+  // EQ Visualizer Canvas
+  var eqCanvas = document.getElementById('eq-canvas');
+  var eqCtx = eqCanvas ? eqCanvas.getContext('2d') : null;
+  var analyser = null;
+  var eqData = null;
+  var eqAnimId = null;
+
+  function initAnalyser(audio) {
+    try {
+      var actx = new (window.AudioContext || window.webkitAudioContext)();
+      var src = actx.createMediaElementSource(audio);
+      analyser = actx.createAnalyser();
+      analyser.fftSize = 128;
+      analyser.smoothingTimeConstant = 0.8;
+      src.connect(analyser);
+      analyser.connect(actx.destination);
+      eqData = new Uint8Array(analyser.frequencyBinCount);
+    } catch(e) {}
+  }
+
+  function drawEQ() {
+    if (!eqCtx) return;
+    eqAnimId = requestAnimationFrame(drawEQ);
+    var w = 120, h = 80;
+    eqCtx.clearRect(0, 0, w, h);
+
+    if (isMuted || !analyser) {
+      // Static dots when muted
+      for (var i = 0; i < 20; i++) {
+        var sx = (i % 5) * 24 + 12;
+        var sy = Math.floor(i / 5) * 16 + 12;
+        eqCtx.beginPath();
+        eqCtx.arc(sx, sy, 1.5, 0, Math.PI * 2);
+        eqCtx.fillStyle = 'rgba(255,87,90,0.2)';
+        eqCtx.fill();
+      }
+      return;
+    }
+
+    analyser.getByteFrequencyData(eqData);
+    var cols = 10;
+    var rows = 8;
+    var dotR = 1.5;
+    var gapX = w / (cols + 1);
+    var gapY = h / (rows + 1);
+
+    for (var c = 0; c < cols; c++) {
+      // Map column to frequency bin
+      var binIdx = Math.floor(c * eqData.length / cols);
+      var val = eqData[binIdx] / 255;
+      var activeDots = Math.ceil(val * rows);
+
+      for (var r = 0; r < rows; r++) {
+        var x = (c + 1) * gapX;
+        var y = h - (r + 1) * gapY;
+        var isActive = r < activeDots;
+
+        eqCtx.beginPath();
+        eqCtx.arc(x, y, isActive ? dotR + 0.5 : dotR, 0, Math.PI * 2);
+
+        if (isActive) {
+          var intensity = r / rows;
+          if (intensity > 0.7) {
+            eqCtx.fillStyle = 'rgba(255,87,90,' + (0.6 + intensity * 0.4) + ')';
+            eqCtx.shadowColor = 'rgba(255,87,90,0.6)';
+            eqCtx.shadowBlur = 4;
+          } else if (intensity > 0.4) {
+            eqCtx.fillStyle = 'rgba(255,87,90,' + (0.4 + intensity * 0.3) + ')';
+            eqCtx.shadowBlur = 0;
+          } else {
+            eqCtx.fillStyle = 'rgba(249,248,242,' + (0.3 + intensity * 0.4) + ')';
+            eqCtx.shadowBlur = 0;
+          }
+        } else {
+          eqCtx.fillStyle = 'rgba(249,248,242,0.06)';
+          eqCtx.shadowBlur = 0;
+        }
+        eqCtx.fill();
+      }
+    }
+    eqCtx.shadowBlur = 0;
+  }
+
+  // Start visualizer
+  if (eqCanvas) drawEQ();
 
   // Pause on tab hidden
   document.addEventListener('visibilitychange', function () {
