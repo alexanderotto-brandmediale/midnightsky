@@ -999,6 +999,12 @@
   var sections = document.querySelectorAll('.scene');
   var currentBg = null;
   
+  // Pause ALL videos on init
+  items.forEach(function (item) {
+    var vid = item.querySelector('video');
+    if (vid) { vid.pause(); vid.currentTime = 0; }
+  });
+  
   function updateBg() {
     var scrollY = window.scrollY + window.innerHeight * 0.4;
     var activeSectionId = null;
@@ -1013,15 +1019,16 @@
     var targetBg = bgMap[activeSectionId] || bgMap['hero'];
     
     if (targetBg !== currentBg) {
+      // First: pause ALL videos
       items.forEach(function (item) {
-        var isTarget = item === targetBg;
-        item.classList.toggle('active', isTarget);
-        // Pause/play videos
         var vid = item.querySelector('video');
-        if (vid) {
-          if (isTarget) vid.play(); else vid.pause();
-        }
+        if (vid) vid.pause();
+        item.classList.remove('active');
       });
+      // Then: play only the active one
+      targetBg.classList.add('active');
+      var activeVid = targetBg.querySelector('video');
+      if (activeVid) activeVid.play();
       currentBg = targetBg;
     }
   }
