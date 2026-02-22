@@ -2,12 +2,16 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --black: #000000;
-  --white: #ffffff;
-  --dim: rgba(255, 255, 255, 0.4);
-  --muted: rgba(255, 255, 255, 0.15);
+  --black: #0a0a0a;
+  --white: #F9F8F2;
+  --dim: rgba(249, 248, 242, 0.45);
+  --muted: rgba(249, 248, 242, 0.12);
   --surface: #111111;
   --surface-2: #1a1a1a;
+  --primary: #340A22;
+  --secondary: #FF575A;
+  --tertiary: #152C3A;
+  --cream: #F9F8F2;
   --font: 'Geist', system-ui, -apple-system, sans-serif;
 }
 
@@ -77,7 +81,7 @@ a { color: inherit; text-decoration: none; }
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.25), transparent);
+  background: linear-gradient(180deg, var(--secondary), transparent);
 }
 
 /* ── Micro Labels ─────────────────────────────────── */
@@ -92,15 +96,15 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Section Background Gradients ─────────────────── */
-#hero { background: radial-gradient(ellipse at 50% 30%, rgba(20,10,40,0.4) 0%, #000 70%); }
-#signal { background: radial-gradient(ellipse at 30% 60%, rgba(10,30,35,0.3) 0%, #000 70%); }
-#about { background: linear-gradient(160deg, rgba(15,15,20,0.5) 0%, #000 100%); }
-#work { background: radial-gradient(ellipse at 70% 50%, rgba(10,15,35,0.3) 0%, #000 70%); }
-#gravity { background: radial-gradient(ellipse at 40% 40%, rgba(25,10,40,0.3) 0%, #000 70%); }
-#thinking { background: radial-gradient(ellipse at 60% 70%, rgba(15,25,20,0.25) 0%, #000 70%); }
-#aesthetic { background: radial-gradient(ellipse at 50% 50%, rgba(30,10,25,0.2) 0%, #000 70%); }
-#why { background: radial-gradient(ellipse at 30% 40%, rgba(10,25,30,0.3) 0%, #000 70%); }
-#contact { background: radial-gradient(ellipse at 50% 60%, rgba(20,10,35,0.35) 0%, #000 70%); }
+#hero { background: radial-gradient(ellipse at 50% 30%, rgba(52,10,34,0.35) 0%, #0a0a0a 70%); }
+#signal { background: radial-gradient(ellipse at 30% 60%, rgba(21,44,58,0.4) 0%, #0a0a0a 70%); }
+#about { background: linear-gradient(160deg, rgba(52,10,34,0.25) 0%, #0a0a0a 100%); }
+#work { background: radial-gradient(ellipse at 70% 50%, rgba(21,44,58,0.35) 0%, #0a0a0a 70%); }
+#gravity { background: radial-gradient(ellipse at 40% 40%, rgba(52,10,34,0.3) 0%, #0a0a0a 70%); }
+#thinking { background: radial-gradient(ellipse at 60% 70%, rgba(21,44,58,0.3) 0%, #0a0a0a 70%); }
+#aesthetic { background: radial-gradient(ellipse at 50% 50%, rgba(255,87,90,0.08) 0%, #0a0a0a 70%); }
+#why { background: radial-gradient(ellipse at 30% 40%, rgba(21,44,58,0.35) 0%, #0a0a0a 70%); }
+#contact { background: radial-gradient(ellipse at 50% 60%, rgba(52,10,34,0.35) 0%, #0a0a0a 70%); }
 
 /* ── Letter Animation ─────────────────────────────── */
 .letter-animate .letter {
@@ -151,9 +155,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Text Glow on Hover ───────────────────────────── */
-.contact-link:hover {
-  text-shadow: 0 0 20px rgba(255,255,255,0.15), 0 0 40px rgba(255,255,255,0.05);
-}
 
 /* ── Corner Brackets on Image Placeholders ────────── */
 .image-placeholder::before,
@@ -167,20 +168,38 @@ a { color: inherit; text-decoration: none; }
 .image-placeholder::before {
   top: 12px;
   left: 12px;
-  border-top: 1px solid rgba(255,255,255,0.12);
-  border-left: 1px solid rgba(255,255,255,0.12);
+  border-top: 1px solid rgba(255,87,90,0.2);
+  border-left: 1px solid rgba(255,87,90,0.2);
 }
 .image-placeholder::after {
   bottom: 12px;
   right: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-  border-right: 1px solid rgba(255,255,255,0.12);
+  border-bottom: 1px solid rgba(255,87,90,0.2);
+  border-right: 1px solid rgba(255,87,90,0.2);
 }
 
 /* ── Outline Text for Thinking Section ────────────── */
 .thinking-word:last-child h3 {
-  -webkit-text-stroke: 1px rgba(255,255,255,0.5);
+  -webkit-text-stroke: 1px rgba(255,87,90,0.5);
   -webkit-text-fill-color: transparent;
+}
+
+/* ── Section Number Accent ────────────────────────── */
+.section-num {
+  color: var(--secondary) !important;
+  opacity: 0.4;
+}
+
+/* ── Gravity Item Heading Accent ──────────────────── */
+.gravity-item h3 {
+  color: var(--cream) !important;
+}
+.gravity-item h3::before {
+  content: '◆ ';
+  color: var(--secondary);
+  font-size: 0.5em;
+  vertical-align: middle;
+  margin-right: 0.3em;
 }
 
 /* ── Navigation — thin, nearly invisible ──────────── */
@@ -368,7 +387,7 @@ a { color: inherit; text-decoration: none; }
 .scroll-hint-line {
   width: 1px;
   height: 50px;
-  background: linear-gradient(to bottom, transparent, var(--dim));
+  background: linear-gradient(to bottom, transparent, var(--secondary));
   animation: scroll-pulse 2s ease-in-out infinite;
 }
 
@@ -398,7 +417,7 @@ a { color: inherit; text-decoration: none; }
   left: 0;
   width: 0;
   height: 1px;
-  background: #7B8CFF;
+  background: var(--secondary);
   transition: width 0.8s ease;
 }
 .accent-word.active::after {
@@ -712,8 +731,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 .contact-link:hover {
-  color: var(--white);
-  border-color: var(--white);
+  color: var(--secondary);
+  border-color: var(--secondary);
+  text-shadow: 0 0 20px rgba(255,87,90,0.2), 0 0 40px rgba(255,87,90,0.08);
 }
 
 /* ── Footer ───────────────────────────────────────── */
