@@ -73,14 +73,14 @@
   const wordNoise = document.getElementById('word-noise');
   const wordDirection = document.getElementById('word-direction');
   
-  const PARTICLE_COUNT = 120;
-  const ACCENT = [123, 140, 255]; // #7B8CFF
-  const GRID_COLS = 12;
-  const GRID_ROWS = 10;
+  const PARTICLE_COUNT = 500;
+  const ACCENT = [123, 140, 255];
+  const GRID_COLS = 25;
+  const GRID_ROWS = 20;
   
   let w, h, particles, phase, phaseTimer, animId, isVisible = false;
+  let gridOpacity = 0; // for grid lines fade-in
   
-  // Phases: 'noise' → 'ordering' → 'ordered' → 'pause' → 'scattering' → 'noise'
   phase = 'noise';
   
   function resize() {
@@ -104,11 +104,37 @@
         y: Math.random() * h,
         targetX: spacingX * (col + 1),
         targetY: spacingY * (row + 1),
-        vx: (Math.random() - 0.5) * 2,
-        vy: (Math.random() - 0.5) * 2,
-        r: Math.random() * 2 + 1,
-        baseO: Math.random() * 0.4 + 0.2,
+        vx: (Math.random() - 0.5) * 6,
+        vy: (Math.random() - 0.5) * 6,
+        r: Math.random() * 1.8 + 0.4,
+        baseO: Math.random() * 0.35 + 0.1,
       });
+    }
+  }
+  
+  function drawGridLines(opacity) {
+    if (opacity <= 0) return;
+    const spacingX = w / (GRID_COLS + 1);
+    const spacingY = h / (GRID_ROWS + 1);
+    
+    ctx.strokeStyle = 'rgba(255, 255, 255, ' + (opacity * 0.04) + ')';
+    ctx.lineWidth = 0.5;
+    
+    // Vertical lines
+    for (let c = 1; c <= GRID_COLS; c++) {
+      const x = spacingX * c;
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, h);
+      ctx.stroke();
+    }
+    // Horizontal lines
+    for (let r = 1; r <= GRID_ROWS; r++) {
+      const y = spacingY * r;
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.stroke();
     }
   }
   
@@ -119,87 +145,72 @@
     if (newPhase === 'noise') {
       wordNoise.classList.add('active');
       wordDirection.classList.remove('active');
-      // Scatter particles
       particles.forEach(function (p) {
-        p.vx = (Math.random() - 0.5) * 3;
-        p.vy = (Math.random() - 0.5) * 3;
+        p.vx = (Math.random() - 0.5) * 8;
+        p.vy = (Math.random() - 0.5) * 8;
       });
-      phaseTimer = setTimeout(function () { setPhase('ordering'); }, 3000);
+      phaseTimer = setTimeout(function () { setPhase('ordering'); }, 3500);
     } else if (newPhase === 'ordering') {
-      // Start moving to grid
-      phaseTimer = setTimeout(function () { setPhase('ordered'); }, 2500);
+      phaseTimer = setTimeout(function () { setPhase('ordered'); }, 3000);
     } else if (newPhase === 'ordered') {
       wordNoise.classList.remove('active');
       wordDirection.classList.add('active');
-      phaseTimer = setTimeout(function () { setPhase('scattering'); }, 2500);
+      phaseTimer = setTimeout(function () { setPhase('scattering'); }, 3000);
     } else if (newPhase === 'scattering') {
       wordDirection.classList.remove('active');
-      phaseTimer = setTimeout(function () { setPhase('noise'); }, 500);
+      particles.forEach(function (p) {
+        p.vx = (Math.random() - 0.5) * 10;
+        p.vy = (Math.random() - 0.5) * 10;
+      });
+      phaseTimer = setTimeout(function () { setPhase('noise'); }, 800);
     }
   }
   
   function draw() {
     ctx.clearRect(0, 0, w, h);
     
+    // Grid opacity target
+    const gridTarget = (phase === 'ordering' || phase === 'ordered') ? 1 : 0;
+    gridOpacity += (gridTarget - gridOpacity) * 0.03;
+    drawGridLines(gridOpacity);
+    
+    // Calculate global order level for this frame
+    let totalOrder = 0;
+    
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       
       if (phase === 'noise' || phase === 'scattering') {
-        // Random drift
         p.x += p.vx;
         p.y += p.vy;
-        p.vx += (Math.random() - 0.5) * 0.3;
-        p.vy += (Math.random() - 0.5) * 0.3;
-        p.vx *= 0.98;
-        p.vy *= 0.98;
-        // Wrap
+        p.vx += (Math.random() - 0.5) * 0.5;
+        p.vy += (Math.random() - 0.5) * 0.5;
+        p.vx *= 0.97;
+        p.vy *= 0.97;
         if (p.x < 0) p.x = w;
         if (p.x > w) p.x = 0;
         if (p.y < 0) p.y = h;
         if (p.y > h) p.y = 0;
       } else if (phase === 'ordering' || phase === 'ordered') {
-        // Ease toward target
-        const ease = phase === 'ordering' ? 0.04 : 0.08;
+        const ease = phase === 'ordering' ? 0.035 : 0.1;
         p.x += (p.targetX - p.x) * ease;
         p.y += (p.targetY - p.y) * ease;
-        p.vx *= 0.9;
-        p.vy *= 0.9;
       }
       
-      // Calculate how close to grid (0 = scattered, 1 = ordered)
       const dx = p.targetX - p.x;
       const dy = p.targetY - p.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const maxDist = Math.sqrt(w * w + h * h) * 0.3;
+      const maxDist = Math.sqrt(w * w + h * h) * 0.25;
       const order = 1 - Math.min(dist / maxDist, 1);
+      totalOrder += order;
       
-      // Color: white when scattered, accent when ordered
-      const r = Math.round(255 + (ACCENT[0] - 255) * order);
-      const g = Math.round(255 + (ACCENT[1] - 255) * order);
-      const b = Math.round(255 + (ACCENT[2] - 255) * order);
+      // Noise = bright white scattered, Order = light gray on grid
+      const grey = Math.round(180 + 75 * (1 - order));
       
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (p.baseO * 0.6) + ')';
+      ctx.fillStyle = 'rgba(' + grey + ',' + grey + ',' + grey + ',' + (p.baseO * 0.7) + ')';
       ctx.fill();
-      
-      // Draw connections when ordered
-      if (order > 0.6) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const cdx = p.x - p2.x;
-          const cdy = p.y - p2.y;
-          const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
-          if (cdist < 60) {
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = 'rgba(' + ACCENT[0] + ',' + ACCENT[1] + ',' + ACCENT[2] + ',' + (0.06 * order) + ')';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
     }
     
     if (isVisible) {
@@ -207,7 +218,6 @@
     }
   }
   
-  // Only run when section is visible
   const sectionObs = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting && !isVisible) {
@@ -231,7 +241,6 @@
   window.addEventListener('resize', function () {
     if (isVisible) {
       resize();
-      // Recalculate targets
       const spacingX = w / (GRID_COLS + 1);
       const spacingY = h / (GRID_ROWS + 1);
       particles.forEach(function (p, i) {

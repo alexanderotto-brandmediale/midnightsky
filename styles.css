@@ -387,10 +387,22 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Accent Words ─────────────────────────────────── */
 .accent-word {
-  transition: color 0.8s ease;
+  transition: all 0.8s ease;
+  position: relative;
+  display: inline;
 }
-.accent-word.active {
-  color: #7B8CFF;
+.accent-word::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #7B8CFF;
+  transition: width 0.8s ease;
+}
+.accent-word.active::after {
+  width: 100%;
 }
 
 /* ── 02 SIGNAL — big statement ────────────────────── */
