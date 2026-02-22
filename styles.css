@@ -32,6 +32,22 @@
 .hamburger:hover .hamburger-line { background: rgba(255,87,90,1); }
 .hamburger:hover .hamburger-line:nth-child(2) { width: 100%; }
 .hamburger.scrolled { transform: scale(0.8); }
+.hamburger { animation: hamburger-glitch 6s infinite; }
+@keyframes hamburger-glitch {
+  0%, 88%, 96%, 100% { transform: translate(0); filter: none; }
+  90% { transform: translate(-2px, 1px) skewX(-8deg); filter: drop-shadow(2px 0 rgba(255,87,90,0.6)) drop-shadow(-2px 0 rgba(123,140,255,0.6)); }
+  91% { transform: translate(1px, -1px) skewX(5deg); filter: drop-shadow(-1px 0 rgba(52,10,34,0.8)) drop-shadow(1px 0 rgba(21,44,58,0.8)); }
+  92% { transform: translate(-1px, 0) skewX(-3deg); filter: drop-shadow(1px 0 rgba(255,87,90,0.4)); }
+  93% { transform: translate(0); filter: none; }
+}
+.hamburger.scrolled { animation-name: hamburger-glitch-small; }
+@keyframes hamburger-glitch-small {
+  0%, 88%, 96%, 100% { transform: scale(0.8) translate(0); filter: none; }
+  90% { transform: scale(0.8) translate(-2px, 1px) skewX(-8deg); filter: drop-shadow(2px 0 rgba(255,87,90,0.6)) drop-shadow(-2px 0 rgba(123,140,255,0.6)); }
+  91% { transform: scale(0.8) translate(1px, -1px) skewX(5deg); }
+  92% { transform: scale(0.8) translate(-1px, 0) skewX(-3deg); }
+  93% { transform: scale(0.8) translate(0); filter: none; }
+}
 .hamburger.active .hamburger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.active .hamburger-line:nth-child(2) { opacity: 0; width: 0; }
 .hamburger.active .hamburger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
