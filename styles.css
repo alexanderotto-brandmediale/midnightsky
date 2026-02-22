@@ -2686,4 +2686,5 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   .cursor-dot, .cursor-ring { display: none !important; }
   .nav-numpad { display: none !important; }
   .tl-hud-label { margin-left: 4px; }
+  .tl-point-year, .tl-point-dot, .tl-line, .tl-point::before { display: none !important; }
 }
