@@ -1633,7 +1633,7 @@ a { color: inherit; text-decoration: none; }
 .split-text p {
   font-size: clamp(0.95rem, 1.3vw, 1.1rem);
   font-weight: 300;
-  color: var(--dim);
+  color: rgba(249,248,242,0.75);
   line-height: 1.8;
   max-width: 480px;
   margin-bottom: 1.5rem;
