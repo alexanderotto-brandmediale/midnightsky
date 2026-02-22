@@ -2685,4 +2685,5 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   body, a, button, .tl-point, .indicator, .contact-link { cursor: auto !important; }
   .cursor-dot, .cursor-ring { display: none !important; }
   .nav-numpad { display: none !important; }
+  .tl-hud-label { margin-left: 4px; }
 }
