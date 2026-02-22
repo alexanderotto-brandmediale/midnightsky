@@ -19,6 +19,11 @@
     });
   });
   
+  // Shrink on scroll
+  window.addEventListener('scroll', function () {
+    btn.classList.toggle('scrolled', window.scrollY > 100);
+  }, { passive: true });
+  
   // Close on Escape
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && overlay.classList.contains('active')) {
