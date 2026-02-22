@@ -576,23 +576,41 @@
       else p.classList.remove('active');
     });
 
-    // Update detail panel content with typewriter
-    detailYear.textContent = d.year;
-    detailTag.textContent = d.tag;
-    detailMeta.textContent = d.meta;
-    // Typewriter for detail text
+    // Typewriter for year + text
     if (window._detailTypeTimer) clearTimeout(window._detailTypeTimer);
-    var dtFullText = d.text;
-    var dtIdx = 0;
+    if (window._yearTypeTimer) clearTimeout(window._yearTypeTimer);
+    
+    // Year typewriter
+    var yearStr = '◈ ' + d.year + ' — ' + d.tag;
+    var yIdx = 0;
+    detailYear.textContent = '';
+    detailTag.textContent = '';
+    detailMeta.textContent = d.meta;
     detailText.textContent = '';
-    function dtType() {
-      if (dtIdx <= dtFullText.length) {
-        detailText.textContent = dtFullText.slice(0, dtIdx);
-        dtIdx++;
-        window._detailTypeTimer = setTimeout(dtType, 8);
+    
+    function yearType() {
+      if (yIdx <= yearStr.length) {
+        detailYear.textContent = yearStr.slice(0, yIdx) + '█';
+        yIdx++;
+        window._yearTypeTimer = setTimeout(yearType, 30);
+      } else {
+        detailYear.textContent = yearStr;
+        // Then type the description
+        var dtFullText = d.text;
+        var dtIdx = 0;
+        function dtType() {
+          if (dtIdx <= dtFullText.length) {
+            detailText.textContent = dtFullText.slice(0, dtIdx) + '█';
+            dtIdx++;
+            window._detailTypeTimer = setTimeout(dtType, 8);
+          } else {
+            detailText.textContent = dtFullText;
+          }
+        }
+        dtType();
       }
     }
-    dtType();
+    yearType();
 
     // Redraw mountain with animated glow
     startGlowAnimation(idx);
@@ -802,7 +820,7 @@
   if (interactive) {
     interactive.addEventListener('mousemove', function (e) {
       dpTX = e.clientX + 20;
-      dpTY = e.clientY - 160;
+      dpTY = e.clientY - 200;
       if (!dpActive) {
         dpX = dpTX; dpY = dpTY;
         detailPanel.style.left = dpX + 'px';
