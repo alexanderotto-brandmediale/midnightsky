@@ -2,17 +2,17 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --black: #0D1117;
-  --white: #F5F5F7;
-  --dim: rgba(245, 245, 247, 0.45);
-  --muted: rgba(245, 245, 247, 0.12);
-  --surface: #1A1F2E;
-  --surface-2: #222838;
-  --primary: #1A1F2E;
-  --secondary: #F5A623;
-  --tertiary: #283044;
-  --cream: #F5F5F7;
-  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --black: #0a0a0a;
+  --white: #F9F8F2;
+  --dim: rgba(249, 248, 242, 0.45);
+  --muted: rgba(249, 248, 242, 0.12);
+  --surface: #111111;
+  --surface-2: #1a1a1a;
+  --primary: #340A22;
+  --secondary: #FF575A;
+  --tertiary: #152C3A;
+  --cream: #F9F8F2;
+  --font: 'Geist', system-ui, -apple-system, sans-serif;
 }
 
 html {
@@ -345,7 +345,7 @@ a { color: inherit; text-decoration: none; }
 .hud {
   position: absolute;
   z-index: 10;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.5rem;
   font-weight: 300;
   letter-spacing: 0.3em;
@@ -379,7 +379,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Meta Whisper — Narrative Layer ───────────────── */
 .meta-whisper {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.6rem;
   font-weight: 200;
   font-style: italic;
@@ -415,7 +415,7 @@ a { color: inherit; text-decoration: none; }
   bottom: 2rem;
   left: 6rem;
   z-index: 10;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.45rem;
   font-weight: 300;
   letter-spacing: 0.2em;
@@ -447,7 +447,7 @@ a { color: inherit; text-decoration: none; }
 /* ── Floating Micro-Badges ────────────────────────── */
 .micro-badge {
   display: inline-block;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.4rem;
   font-weight: 400;
   letter-spacing: 0.35em;
@@ -567,7 +567,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Micro Coordinate Labels ──────────────────────── */
 .coord-label {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.4rem;
   font-weight: 300;
   letter-spacing: 0.3em;
@@ -740,7 +740,7 @@ a { color: inherit; text-decoration: none; }
   animation: arrow-bounce 2.5s ease-in-out infinite;
 }
 .scroll-arrow-text {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.45rem;
   font-weight: 400;
   letter-spacing: 0.5em;
@@ -762,7 +762,7 @@ a { color: inherit; text-decoration: none; }
 .micro-blink {
   position: absolute;
   z-index: 10;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.4rem;
   font-weight: 300;
   letter-spacing: 0.3em;
@@ -781,7 +781,7 @@ a { color: inherit; text-decoration: none; }
 .micro-text-static {
   position: absolute;
   z-index: 10;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.38rem;
   font-weight: 300;
   letter-spacing: 0.25em;
@@ -918,7 +918,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-hud-label {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.5rem;
   font-weight: 400;
   letter-spacing: 0.4em;
@@ -928,7 +928,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-hud-status {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.4rem;
   letter-spacing: 0.3em;
   position: static;
@@ -1017,7 +1017,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-point-year {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.45rem;
   font-weight: 400;
   letter-spacing: 0.2em;
@@ -1039,7 +1039,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-point-label {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.35rem;
   letter-spacing: 0.15em;
   color: rgba(255,255,255,0.08);
@@ -1099,7 +1099,7 @@ a { color: inherit; text-decoration: none; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: clamp(15rem, 30vw, 35rem);
   font-weight: 100;
   color: rgba(255,255,255,0.02);
@@ -1128,7 +1128,7 @@ a { color: inherit; text-decoration: none; }
 }
 .tl-milestone {
   position: absolute;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-weight: 200;
   color: rgba(255,255,255,0.03);
   white-space: nowrap;
@@ -1180,7 +1180,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 #tl-detail-year {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 1.3rem;
   font-weight: 200;
   color: rgba(255,255,255,0.8);
@@ -1188,14 +1188,14 @@ a { color: inherit; text-decoration: none; }
   margin-right: 0.5rem;
 }
 #tl-detail-tag {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.4rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.2);
 }
 #tl-detail-text {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.75rem;
   font-weight: 300;
   color: rgba(255,255,255,0.75);
@@ -1204,7 +1204,7 @@ a { color: inherit; text-decoration: none; }
   margin: 0.3rem 0 0;
 }
 #tl-detail-meta {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.35rem;
   letter-spacing: 0.2em;
   color: rgba(255,255,255,0.12);
@@ -1213,7 +1213,7 @@ a { color: inherit; text-decoration: none; }
   display: block;
 }
 #tl-hover-text {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.5rem;
   font-weight: 300;
   line-height: 1.5;
@@ -1243,7 +1243,7 @@ a { color: inherit; text-decoration: none; }
 
 .tl-side-label {
   display: block;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.5rem;
   font-weight: 400;
   letter-spacing: 0.35em;
@@ -1255,7 +1255,7 @@ a { color: inherit; text-decoration: none; }
 
 .tl-side-value {
   display: block;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', sans-serif;
   font-size: 1.4rem;
   font-weight: 200;
   color: var(--cream);
@@ -1293,7 +1293,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-sub-label {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.4rem;
   font-weight: 400;
   letter-spacing: 0.3em;
@@ -1304,7 +1304,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-sub-data {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.4rem;
   font-weight: 300;
   letter-spacing: 0.15em;
@@ -1320,7 +1320,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-hud-coord {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.38rem;
   font-weight: 300;
   letter-spacing: 0.2em;
@@ -1890,7 +1890,7 @@ a { color: inherit; text-decoration: none; }
   height: 18px;
 }
 .mobile-nav-item span {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.35rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -1960,7 +1960,7 @@ a { color: inherit; text-decoration: none; }
   }
 }
 .swipe-num {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.55rem;
   font-weight: 300;
   letter-spacing: 0.3em;
@@ -2071,7 +2071,7 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 0 10px rgba(255,255,255,0.3), 0 0 20px rgba(255,255,255,0.1);
 }
 .swipe-dot-label {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', monospace;
   font-size: 0.38rem;
   letter-spacing: 0.2em;
   color: rgba(255,255,255,0.15);
