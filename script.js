@@ -2763,6 +2763,20 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   }
 })();
 
+/* ── Glitch-on-Reveal Sound ────────────────────────── */
+(function () {
+  document.querySelectorAll('.glitch-on-reveal').forEach(function (el) {
+    var played = false;
+    var obs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && !played) {
+        played = true;
+        playSfx('glitch');
+      }
+    }, { threshold: 0.5 });
+    obs.observe(el);
+  });
+})();
+
 /* ── Headline Parallax ────────────────────────────── */
 (function () {
   var headings = document.querySelectorAll('.section-heading, .statement--accent, .hero-name');
