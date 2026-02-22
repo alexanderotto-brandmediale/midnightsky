@@ -411,6 +411,222 @@
   });
 })();
 
+/* ── HUD Interactive Timeline ─────────────────────── */
+(function () {
+  var container = document.getElementById('tl-points');
+  var canvas = document.getElementById('tl-mountain');
+  var detailPanel = document.getElementById('tl-detail');
+  var detailYear = document.getElementById('tl-detail-year');
+  var detailTag = document.getElementById('tl-detail-tag');
+  var detailText = document.getElementById('tl-detail-text');
+  var detailMeta = document.getElementById('tl-detail-meta');
+  if (!container || !canvas) return;
+
+  var ctx = canvas.getContext('2d');
+  var data = [
+    { year: '2000', tag: 'ORIGIN', major: true, density: 1,
+      text: 'It started with pixels and curiosity. A semester of media technology at TU Ilmenau — first contact with digital systems, code, and the question of how technology shapes perception.',
+      meta: 'TU ILMENAU · MEDIA TECHNOLOGY · 2 SEMESTERS' },
+    { year: '2001', tag: 'CRAFT', major: true, density: 3,
+      text: 'Apprenticeship at DiehlDesign in Frankfurt am Main. Building interfaces for Allianz Dresdner, ARD Sales & Services, IKW. Corporate design systems, screen layouts, Flash animations. Learning the craft of making digital things work — certified by IHK.',
+      meta: 'DIEHLDESIGN GMBH · FRANKFURT · MEDIENGESTALTER · IHK 2003' },
+    { year: '2004', tag: 'FIRST CLIENTS', density: 2,
+      text: 'First own clients. BGM Bayerisches Gesundheitsmanagement: full corporate design, web, image film, viral marketing. EFBE Elektrogeräte: Flash microsites. VS Verlag: DVD production for Bundeskongress Soziale Arbeit.',
+      meta: 'BGM · EFBE · VS VERLAG · FREELANCE LAUNCH' },
+    { year: '2006', tag: 'EXPANSION', major: true, density: 5,
+      text: 'Rapid expansion: Schauenburg Consulting, LASOTEC, Hotel Zum Steinhof, MBA FH Coburg website, Roland Berger recycling logo competition. Began studying Communication Science at Universität Erfurt. Media sociology, interactive media, international media systems.',
+      meta: 'UNIVERSITÄT ERFURT · B.A. START · 8 NEW CLIENTS' },
+    { year: '2007', tag: 'GLOBAL', density: 4,
+      text: 'Global Communications Project — international PR with final presentation in Lisbon. Landrover Deutschland event documentation. CLIQS Switzerland: corporate design and product CD-ROM. Rhetoric seminars with Konrad Adenauer Stiftung.',
+      meta: 'LISBON · LANDROVER · CLIQS CH · KAS SEMINAR' },
+    { year: '2008', tag: 'RESEARCH', density: 4,
+      text: 'Research group at Universität Erfurt studying local television and public discourse. Hanns-Seidel-Stiftung rhetoric seminar. Media sociology deep dive. Joined Mediencluster Thüringen board. Parallel: FINESTAS, H-S Feinblechbau, LANGGUTH management consulting.',
+      meta: 'FORSCHUNGSGRUPPE · MEDIENCLUSTER TH · BOARD MEMBER' },
+    { year: '2009', tag: 'B.A.', major: true, density: 3,
+      text: 'Bachelor of Arts in Kommunikationswissenschaft, grade 1.7. AMBITON Leipzig — first post-degree project. The lens widened permanently: from craft to communication systems. Self-employed full-time. The practice begins.',
+      meta: 'B.A. GRADE 1.7 · AMBITON LEIPZIG · SELF-EMPLOYED' },
+    { year: '2010', tag: 'BUILDING', density: 6,
+      text: 'Building the practice. Brand strategy and media design for KMU across Germany. Neumann Bauelemente, Beetz Bauelemente, Avenida Therme, Stausee Hohenfelden, Ziegler Käsespezialitäten, Malburg Versicherungen, Derma Cultura, PORR Deutschland, FK Funk. ~20 projects per year.',
+      meta: '~20 PROJECTS P.A. · 9+ RETAINER CLIENTS · KMU FOCUS' },
+    { year: '2014', tag: 'BRANDNEXT', major: true, density: 7,
+      text: 'brandnext founded — consulting that thinks implementation. First clients: Ziegler Käse (complete marketing process overhaul), Solicity Energy (market positioning, online strategy). Not just strategy decks — real structural change.',
+      meta: 'BRANDNEXT FOUNDED · ZIEGLER · SOLICITY · CONSULTING' },
+    { year: '2015', tag: 'DEEPENING', density: 5,
+      text: 'Polymer Engineering: revamping strategy with new sales dimensions. Optimum Steuerberatung: unified communication strategy. Avenida-Therme: brand strategy, integration of premium spa segment into tourism marketing.',
+      meta: 'POLYMER ENG · OPTIMUM · AVENIDA THERME · STRATEGY' },
+    { year: '2016', tag: 'DIGITAL MARKETS', density: 5,
+      text: 'Digital market penetration: Beetz Bauelemente — e-commerce platform with industry interface and payment integration. Bergfeld & Söhne Kassel — Asian supplier integration, Leitbild development, corporate culture transformation.',
+      meta: 'E-COMMERCE · BEETZ · BERGFELD · DIGITAL TRANSFORMATION' },
+    { year: '2017', tag: 'PROCESS ERA', major: true, density: 8,
+      text: 'The deepest work yet. Beetz: personnel management, knowledge systems, new org chart, Leitbild from employee survey, mediation between board and executives. Avenida: wellness restructuring. HEPALO: intercultural leadership, equality framework. Conflict resolution training.',
+      meta: 'PROCESS CONSULTING · MEDIATION · LEITBILD · 3 ORGS' },
+    { year: '2018', tag: 'STARTUP', density: 4,
+      text: 'AMBULANTICA — nursing startup consulting. Thüringer Gründerpreis participant. Brand strategy and business development from zero. Meanwhile: enterprise clients growing — Barmenia, Nestlé, BSH. ~20 projects annually.',
+      meta: 'AMBULANTICA · GRÜNDERPREIS · ENTERPRISE ENTRY' },
+    { year: '2019', tag: 'M.A.', major: true, density: 5,
+      text: 'Back to university — ZukunftsDesign at Hochschule Coburg. Innovation theory, ethics & values, organizational development, leadership, digital business management. How do you design futures, not just products?',
+      meta: 'HOCHSCHULE COBURG · ZUKUNFTSDESIGN · M.A. START' },
+    { year: '2020', tag: 'CRISIS', density: 4,
+      text: 'BAFA Corona consulting: rapid crisis pivots. SAUNASHOW — complete business field change enabling survival. FRANZOSENLAGER — business expansion. SCHAUMBERG — workforce crisis communication. Speed consulting under pressure.',
+      meta: 'BAFA · COVID RESPONSE · 3 CRISIS PIVOTS · RAPID' },
+    { year: '2021', tag: 'OVERHAUL', density: 5,
+      text: 'Full marketing overhauls: Trasela Logistik and Avenida-Therme. IST-analysis, brand repositioning, target group redefinition, Leitbild, online strategy, budget planning, implementation roadmaps. Structure from chaos.',
+      meta: 'TRASELA · AVENIDA · FULL OVERHAUL · IMPLEMENTATION' },
+    { year: '2022', tag: 'M.A. + ENTERPRISE', major: true, density: 6,
+      text: 'Master of Arts ZukunftsDesign, grade 1.7. Heinz-Glas: digitalization consulting for Supply Chain Act (LkSG). SAP evaluation, software research across ecovadis, riskmethods, IntegrityNext. Preparing enterprise integration.',
+      meta: 'M.A. 1.7 · HEINZ-GLAS · LKSG · SAP · ENTERPRISE' },
+    { year: '2023', tag: 'SYNTHESIS', major: true, density: 9,
+      text: 'Everything converges. brandmediale GmbH (Agency MD & Art Director), brandnext (Strategic Consulting), Smyvia (Dental tourism startup). AI integration, future systems, signal engineering. Two decades of pattern recognition compressed into one question: What\'s the real problem — and what would clarity look like?',
+      meta: 'BRANDMEDIALE · BRANDNEXT · SMYVIA · AI · NOW' }
+  ];
+
+  var activeIdx = data.length - 1;
+
+  // Render timeline points
+  function renderPoints() {
+    container.innerHTML = '';
+    data.forEach(function (d, i) {
+      var pct = (i / (data.length - 1)) * 100;
+      var el = document.createElement('div');
+      el.className = 'tl-point' + (d.major ? ' major' : '') + (i === activeIdx ? ' active' : '');
+      el.style.left = pct + '%';
+      el.innerHTML = '<span class="tl-point-year">' + d.year + '</span>' +
+        '<div class="tl-point-dot"></div>' +
+        '<span class="tl-point-label">' + d.tag + '</span>';
+      el.addEventListener('click', function () { setActive(i); });
+      el.addEventListener('mouseenter', function () { setActive(i); });
+      container.appendChild(el);
+    });
+  }
+
+  function setActive(idx) {
+    activeIdx = idx;
+    var d = data[idx];
+    // Update points
+    var points = container.querySelectorAll('.tl-point');
+    points.forEach(function (p, i) {
+      if (i === idx) p.classList.add('active');
+      else p.classList.remove('active');
+    });
+    // Update detail
+    detailPanel.style.display = 'block';
+    detailYear.textContent = d.year;
+    detailTag.textContent = d.tag;
+    detailText.textContent = d.text;
+    detailMeta.textContent = d.meta;
+    // Redraw mountain
+    drawMountain(idx);
+  }
+
+  // Draw data mountain
+  function drawMountain(highlightIdx) {
+    var w = canvas.width = canvas.offsetWidth * 2;
+    var h = canvas.height = canvas.offsetHeight * 2;
+    ctx.clearRect(0, 0, w, h);
+
+    // Grid lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+    ctx.lineWidth = 1;
+    for (var gy = 0; gy < h; gy += 30) {
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+    }
+    for (var gx = 0; gx < w; gx += Math.floor(w / data.length)) {
+      ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, h); ctx.stroke();
+    }
+
+    // Mountain shape
+    var points = [];
+    var maxDensity = 10;
+    for (var i = 0; i < data.length; i++) {
+      var x = (i / (data.length - 1)) * w;
+      var peakH = (data[i].density / maxDensity) * (h * 0.85);
+      points.push({ x: x, y: h - peakH });
+    }
+
+    // Draw filled mountain
+    ctx.beginPath();
+    ctx.moveTo(0, h);
+    for (var j = 0; j < points.length; j++) {
+      if (j === 0) {
+        ctx.lineTo(points[j].x, points[j].y);
+      } else {
+        var cx = (points[j - 1].x + points[j].x) / 2;
+        ctx.quadraticCurveTo(points[j - 1].x + (cx - points[j - 1].x) * 0.5, points[j - 1].y,
+          cx, (points[j - 1].y + points[j].y) / 2);
+        ctx.quadraticCurveTo(points[j].x - (points[j].x - cx) * 0.5, points[j].y,
+          points[j].x, points[j].y);
+      }
+    }
+    ctx.lineTo(w, h);
+    ctx.closePath();
+
+    var grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, 'rgba(255,87,90,0.12)');
+    grad.addColorStop(1, 'rgba(255,87,90,0.01)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Mountain outline
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (var k = 1; k < points.length; k++) {
+      var cx2 = (points[k - 1].x + points[k].x) / 2;
+      ctx.quadraticCurveTo(points[k - 1].x + (cx2 - points[k - 1].x) * 0.5, points[k - 1].y,
+        cx2, (points[k - 1].y + points[k].y) / 2);
+      ctx.quadraticCurveTo(points[k].x - (points[k].x - cx2) * 0.5, points[k].y,
+        points[k].x, points[k].y);
+    }
+    ctx.strokeStyle = 'rgba(255,87,90,0.3)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Highlight active point
+    if (highlightIdx !== undefined && points[highlightIdx]) {
+      var hp = points[highlightIdx];
+      // Vertical line
+      ctx.beginPath();
+      ctx.moveTo(hp.x, hp.y);
+      ctx.lineTo(hp.x, h);
+      ctx.strokeStyle = 'rgba(255,87,90,0.25)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Dot
+      ctx.beginPath();
+      ctx.arc(hp.x, hp.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,87,90,0.8)';
+      ctx.fill();
+      // Data label
+      ctx.fillStyle = 'rgba(255,255,255,0.25)';
+      ctx.font = '16px Geist, monospace';
+      ctx.fillText(data[highlightIdx].density + 'x', hp.x + 8, hp.y - 6);
+    }
+
+    // Scatter particles on mountain surface
+    for (var p = 0; p < points.length; p++) {
+      var pp = points[p];
+      for (var s = 0; s < data[p].density; s++) {
+        var px = pp.x + (Math.random() - 0.5) * (w / data.length) * 0.6;
+        var py = pp.y + Math.random() * (h - pp.y) * 0.3;
+        ctx.beginPath();
+        ctx.arc(px, py, Math.random() * 1.5 + 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,' + (Math.random() * 0.15 + 0.05) + ')';
+        ctx.fill();
+      }
+    }
+  }
+
+  renderPoints();
+  setActive(activeIdx);
+
+  // Resize
+  window.addEventListener('resize', function () {
+    drawMountain(activeIdx);
+    renderPoints();
+  });
+})();
+
 /* ── Smooth Anchor Scroll ─────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   anchor.addEventListener('click', function (e) {
