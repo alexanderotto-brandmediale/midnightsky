@@ -64,6 +64,185 @@
   init();
 })();
 
+/* ── Noise → Order Particle Animation ─────────────── */
+(function () {
+  const canvas = document.getElementById('noise-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const section = document.getElementById('signal');
+  const wordNoise = document.getElementById('word-noise');
+  const wordDirection = document.getElementById('word-direction');
+  
+  const PARTICLE_COUNT = 120;
+  const ACCENT = [123, 140, 255]; // #7B8CFF
+  const GRID_COLS = 12;
+  const GRID_ROWS = 10;
+  
+  let w, h, particles, phase, phaseTimer, animId, isVisible = false;
+  
+  // Phases: 'noise' → 'ordering' → 'ordered' → 'pause' → 'scattering' → 'noise'
+  phase = 'noise';
+  
+  function resize() {
+    const rect = section.getBoundingClientRect();
+    w = canvas.width = rect.width;
+    h = canvas.height = rect.height;
+  }
+  
+  function createParticles() {
+    particles = [];
+    const spacingX = w / (GRID_COLS + 1);
+    const spacingY = h / (GRID_ROWS + 1);
+    
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const gridIdx = i % (GRID_COLS * GRID_ROWS);
+      const col = gridIdx % GRID_COLS;
+      const row = Math.floor(gridIdx / GRID_COLS);
+      
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        targetX: spacingX * (col + 1),
+        targetY: spacingY * (row + 1),
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        r: Math.random() * 2 + 1,
+        baseO: Math.random() * 0.4 + 0.2,
+      });
+    }
+  }
+  
+  function setPhase(newPhase) {
+    phase = newPhase;
+    clearTimeout(phaseTimer);
+    
+    if (newPhase === 'noise') {
+      wordNoise.classList.add('active');
+      wordDirection.classList.remove('active');
+      // Scatter particles
+      particles.forEach(function (p) {
+        p.vx = (Math.random() - 0.5) * 3;
+        p.vy = (Math.random() - 0.5) * 3;
+      });
+      phaseTimer = setTimeout(function () { setPhase('ordering'); }, 3000);
+    } else if (newPhase === 'ordering') {
+      // Start moving to grid
+      phaseTimer = setTimeout(function () { setPhase('ordered'); }, 2500);
+    } else if (newPhase === 'ordered') {
+      wordNoise.classList.remove('active');
+      wordDirection.classList.add('active');
+      phaseTimer = setTimeout(function () { setPhase('scattering'); }, 2500);
+    } else if (newPhase === 'scattering') {
+      wordDirection.classList.remove('active');
+      phaseTimer = setTimeout(function () { setPhase('noise'); }, 500);
+    }
+  }
+  
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      
+      if (phase === 'noise' || phase === 'scattering') {
+        // Random drift
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx += (Math.random() - 0.5) * 0.3;
+        p.vy += (Math.random() - 0.5) * 0.3;
+        p.vx *= 0.98;
+        p.vy *= 0.98;
+        // Wrap
+        if (p.x < 0) p.x = w;
+        if (p.x > w) p.x = 0;
+        if (p.y < 0) p.y = h;
+        if (p.y > h) p.y = 0;
+      } else if (phase === 'ordering' || phase === 'ordered') {
+        // Ease toward target
+        const ease = phase === 'ordering' ? 0.04 : 0.08;
+        p.x += (p.targetX - p.x) * ease;
+        p.y += (p.targetY - p.y) * ease;
+        p.vx *= 0.9;
+        p.vy *= 0.9;
+      }
+      
+      // Calculate how close to grid (0 = scattered, 1 = ordered)
+      const dx = p.targetX - p.x;
+      const dy = p.targetY - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const maxDist = Math.sqrt(w * w + h * h) * 0.3;
+      const order = 1 - Math.min(dist / maxDist, 1);
+      
+      // Color: white when scattered, accent when ordered
+      const r = Math.round(255 + (ACCENT[0] - 255) * order);
+      const g = Math.round(255 + (ACCENT[1] - 255) * order);
+      const b = Math.round(255 + (ACCENT[2] - 255) * order);
+      
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (p.baseO * 0.6) + ')';
+      ctx.fill();
+      
+      // Draw connections when ordered
+      if (order > 0.6) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const cdx = p.x - p2.x;
+          const cdy = p.y - p2.y;
+          const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+          if (cdist < 60) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = 'rgba(' + ACCENT[0] + ',' + ACCENT[1] + ',' + ACCENT[2] + ',' + (0.06 * order) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    
+    if (isVisible) {
+      animId = requestAnimationFrame(draw);
+    }
+  }
+  
+  // Only run when section is visible
+  const sectionObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !isVisible) {
+        isVisible = true;
+        resize();
+        createParticles();
+        setPhase('noise');
+        draw();
+      } else if (!entry.isIntersecting && isVisible) {
+        isVisible = false;
+        clearTimeout(phaseTimer);
+        cancelAnimationFrame(animId);
+        wordNoise.classList.remove('active');
+        wordDirection.classList.remove('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  
+  sectionObs.observe(section);
+  
+  window.addEventListener('resize', function () {
+    if (isVisible) {
+      resize();
+      // Recalculate targets
+      const spacingX = w / (GRID_COLS + 1);
+      const spacingY = h / (GRID_ROWS + 1);
+      particles.forEach(function (p, i) {
+        const gridIdx = i % (GRID_COLS * GRID_ROWS);
+        p.targetX = spacingX * (gridIdx % GRID_COLS + 1);
+        p.targetY = spacingY * (Math.floor(gridIdx / GRID_COLS) + 1);
+      });
+    }
+  });
+})();
+
 /* ── Letter-by-Letter Animation Setup ─────────────── */
 (function () {
   document.querySelectorAll('.letter-animate').forEach(function (el) {

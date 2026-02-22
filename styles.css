@@ -377,6 +377,22 @@ a { color: inherit; text-decoration: none; }
   50% { opacity: 1; transform: scaleY(1); }
 }
 
+/* ── Noise Canvas ─────────────────────────────────── */
+#noise-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Accent Words ─────────────────────────────────── */
+.accent-word {
+  transition: color 0.8s ease;
+}
+.accent-word.active {
+  color: #7B8CFF;
+}
+
 /* ── 02 SIGNAL — big statement ────────────────────── */
 .signal-content {
   display: flex;
