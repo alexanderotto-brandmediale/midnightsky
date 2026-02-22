@@ -926,7 +926,13 @@
       var sc = toScreen(nd.x, nd.y);
       var isFocused = focusedNode === nd;
       var isOther = focusedNode && focusedNode !== nd;
-      var nodeOp = isOther ? 0.1 : (isFocused ? 1 : 0.5);
+      // Hover detection (top level only, not zoomed)
+      var isHovered = false;
+      if (!focusedNode) {
+        var hdx = mx * dpr - sc.x, hdy = my * dpr - sc.y;
+        if (Math.sqrt(hdx * hdx + hdy * hdy) < ringR + 10 * cam.zoom * dpr) isHovered = true;
+      }
+      var nodeOp = isOther ? 0.1 : (isFocused ? 1 : (isHovered ? 1 : 0.5));
 
       // Node outer ring — breathing
       var breathe = 1 + Math.sin(time * 2 + n) * 0.1;
@@ -938,16 +944,23 @@
       ctx.stroke();
 
       // Node dot
-      var dotR = (isFocused ? 4 : 2.5) * cam.zoom * dpr;
+      var dotR = (isFocused ? 4 : (isHovered ? 4 : 2.5)) * cam.zoom * dpr;
       ctx.beginPath();
       ctx.arc(sc.x, sc.y, dotR, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,87,90,' + nodeOp + ')';
+      ctx.fillStyle = isHovered && !focusedNode ? 'rgba(255,87,90,1)' : 'rgba(255,87,90,' + nodeOp + ')';
       ctx.fill();
+      // Extra glow on hover
+      if (isHovered && !focusedNode) {
+        ctx.beginPath();
+        ctx.arc(sc.x, sc.y, dotR * 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,87,90,0.08)';
+        ctx.fill();
+      }
 
       // Node label
-      var fontSize = (isFocused ? 13 : 10) * cam.zoom * dpr;
-      ctx.font = (isFocused ? '500 ' : '300 ') + fontSize + 'px Geist, monospace';
-      ctx.fillStyle = 'rgba(249,248,242,' + nodeOp + ')';
+      var fontSize = (isFocused ? 13 : (isHovered ? 11 : 10)) * cam.zoom * dpr;
+      ctx.font = (isFocused || isHovered ? '500 ' : '300 ') + fontSize + 'px Geist, monospace';
+      ctx.fillStyle = isHovered && !focusedNode ? 'rgba(249,248,242,1)' : 'rgba(249,248,242,' + nodeOp + ')';
       ctx.textAlign = 'center';
       ctx.fillText(isFocused ? nd.full : nd.label, sc.x, sc.y - ringR - 6 * cam.zoom * dpr);
 
