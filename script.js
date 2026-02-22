@@ -956,6 +956,20 @@
   var typeTimer = null;
   var fullText = '';
   var charIdx = 0;
+  var tooltipTargetX = 0, tooltipTargetY = 0;
+  var tooltipX = 0, tooltipY = 0;
+  var tooltipVisible = false;
+
+  function animateTooltip() {
+    if (tooltipVisible) {
+      tooltipX += (tooltipTargetX - tooltipX) * 0.15;
+      tooltipY += (tooltipTargetY - tooltipY) * 0.15;
+      tooltip.style.left = tooltipX + 'px';
+      tooltip.style.top = tooltipY + 'px';
+    }
+    requestAnimationFrame(animateTooltip);
+  }
+  animateTooltip();
 
   function typeWrite() {
     if (charIdx <= fullText.length) {
@@ -972,16 +986,18 @@
       charIdx = 0;
       tooltipText.textContent = '';
       tooltip.classList.add('visible');
+      tooltipVisible = true;
       typeWrite();
     });
     item.addEventListener('mouseleave', function () {
       clearTimeout(typeTimer);
       tooltip.classList.remove('visible');
+      tooltipVisible = false;
       tooltipText.textContent = '';
     });
     item.addEventListener('mousemove', function (e) {
-      tooltip.style.left = (e.clientX + 16) + 'px';
-      tooltip.style.top = (e.clientY + 4) + 'px';
+      tooltipTargetX = e.clientX + 20;
+      tooltipTargetY = e.clientY + 4;
     });
   });
 })();
