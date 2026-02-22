@@ -17,6 +17,34 @@ function playSfx(name) {
   } catch(e) {}
 }
 
+/* ── Typewriter Reveal Headings ────────────────────── */
+(function () {
+  document.querySelectorAll('.typewriter-reveal').forEach(function (el) {
+    var fullText = el.textContent;
+    el.textContent = '';
+    el.style.borderRight = '2px solid rgba(255,87,90,0.6)';
+    el.style.minHeight = '1.2em';
+    var played = false;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !played) {
+          played = true;
+          var i = 0;
+          var timer = setInterval(function () {
+            el.textContent = fullText.slice(0, ++i);
+            playSfx('type');
+            if (i >= fullText.length) {
+              clearInterval(timer);
+              setTimeout(function () { el.style.borderRight = '2px solid transparent'; }, 800);
+            }
+          }, 60);
+        }
+      });
+    }, { threshold: 0.5 });
+    obs.observe(el);
+  });
+})();
+
 /* ── Hamburger Menu ───────────────────────────────── */
 (function () {
   var btn = document.getElementById('hamburger');
