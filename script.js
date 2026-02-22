@@ -43,6 +43,42 @@
   }, 3000);
 })();
 
+/* ── Hero Headline Glitch Swap ──────────────────────── */
+(function () {
+  var heroName = document.querySelector('.hero-name');
+  if (!heroName) return;
+  var spans = heroName.querySelectorAll('span');
+  if (spans.length < 2) return;
+
+  var phrases = [
+    ['Transformation', 'Running.'],
+    ['Disruption', 'Incoming.'],
+    ['Systems', 'Shifting.'],
+    ['Signal', 'Found.'],
+    ['Patterns', 'Breaking.'],
+    ['Future', 'Loading.'],
+    ['Noise', 'Clearing.'],
+    ['Reality', 'Updating.'],
+    ['Control', 'Released.'],
+    ['Iteration', 'Ongoing.']
+  ];
+  var idx = 0;
+
+  setInterval(function () {
+    heroName.classList.add('glitching');
+    setTimeout(function () {
+      idx = (idx + 1) % phrases.length;
+      spans[0].textContent = phrases[idx][0];
+      spans[0].setAttribute('data-text', phrases[idx][0]);
+      spans[1].textContent = phrases[idx][1];
+      spans[1].setAttribute('data-text', phrases[idx][1]);
+    }, 200);
+    setTimeout(function () {
+      heroName.classList.remove('glitching');
+    }, 400);
+  }, 5000);
+})();
+
 /* ── Custom Cursor ─────────────────────────────────── */
 (function () {
   var dot = document.getElementById('cursor-dot');
