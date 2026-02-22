@@ -815,7 +815,15 @@
     [20, 11], [20, 2],
     [21, 0], [21, 5],
     [22, 13], [22, 1],
-    [23, 8], [23, 7]
+    [23, 8], [23, 7],
+    [24, 12], [24, 4],
+    [25, 13], [25, 7],
+    [26, 1], [26, 14],
+    [27, 11], [27, 20],
+    [28, 6], [28, 19],
+    [29, 13], [29, 2],
+    [30, 0], [30, 7],
+    [31, 15], [31, 0]
   ];
 
   // Peripheral grey nodes — adjacent topics, not core
@@ -827,7 +835,15 @@
     { id: 20, label: 'Biology', x: 0, y: 0, grey: true },
     { id: 21, label: 'Robotics', x: 0, y: 0, grey: true },
     { id: 22, label: 'Geopolitics', x: 0, y: 0, grey: true },
-    { id: 23, label: 'Neuroscience', x: 0, y: 0, grey: true }
+    { id: 23, label: 'Neuroscience', x: 0, y: 0, grey: true },
+    { id: 24, label: 'Linguistics', x: 0, y: 0, grey: true },
+    { id: 25, label: 'Anthropology', x: 0, y: 0, grey: true },
+    { id: 26, label: 'Theology', x: 0, y: 0, grey: true },
+    { id: 27, label: 'Ecology', x: 0, y: 0, grey: true },
+    { id: 28, label: 'Statistics', x: 0, y: 0, grey: true },
+    { id: 29, label: 'History', x: 0, y: 0, grey: true },
+    { id: 30, label: 'Ethics', x: 0, y: 0, grey: true },
+    { id: 31, label: 'Cybernetics', x: 0, y: 0, grey: true }
   ];
   nodes = nodes.concat(greyNodes);
 
@@ -877,7 +893,15 @@
       { ax: 0.75, ay: 0.7 },    // 20 Biology
       { ax: -0.4, ay: -0.8 },   // 21 Robotics
       { ax: 0.85, ay: 0.5 },    // 22 Geopolitics
-      { ax: -0.85, ay: -0.05 }  // 23 Neuroscience
+      { ax: -0.85, ay: -0.05 }, // 23 Neuroscience
+      { ax: 0.15, ay: -0.9 },   // 24 Linguistics
+      { ax: -0.55, ay: 0.85 },  // 25 Anthropology
+      { ax: 0.9, ay: 0.8 },     // 26 Theology
+      { ax: -0.9, ay: 0.65 },   // 27 Ecology
+      { ax: 0.5, ay: -0.85 },   // 28 Statistics
+      { ax: -0.7, ay: -0.7 },   // 29 History
+      { ax: 0.9, ay: -0.7 },    // 30 Ethics
+      { ax: -0.95, ay: -0.35 }  // 31 Cybernetics
     ];
     var allPos = corePositions.concat(greyPositions);
     nodes.forEach(function (n, i) {
