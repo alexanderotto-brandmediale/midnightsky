@@ -415,11 +415,13 @@
 (function () {
   var container = document.getElementById('tl-points');
   var canvas = document.getElementById('tl-mountain');
+  var track = container ? container.parentElement : null;
   var detailPanel = document.getElementById('tl-detail');
   var detailYear = document.getElementById('tl-detail-year');
   var detailTag = document.getElementById('tl-detail-tag');
   var detailText = document.getElementById('tl-detail-text');
   var detailMeta = document.getElementById('tl-detail-meta');
+  var hudEl = container ? container.closest('.tl-hud') : null;
   if (!container || !canvas) return;
 
   var ctx = canvas.getContext('2d');
@@ -481,6 +483,9 @@
   ];
 
   var activeIdx = data.length - 1;
+  var detailVisible = false;
+  var glowPhase = 0;
+  var glowAnimId = null;
 
   // Render timeline points
   function renderPoints() {
@@ -490,39 +495,80 @@
       var el = document.createElement('div');
       el.className = 'tl-point' + (d.major ? ' major' : '') + (i === activeIdx ? ' active' : '');
       el.style.left = pct + '%';
+      el.setAttribute('role', 'button');
+      el.setAttribute('aria-label', d.year + ' — ' + d.tag);
       el.innerHTML = '<span class="tl-point-year">' + d.year + '</span>' +
         '<div class="tl-point-dot"></div>' +
         '<span class="tl-point-label">' + d.tag + '</span>';
-      el.addEventListener('click', function () { setActive(i); });
-      el.addEventListener('mouseenter', function () { setActive(i); });
+      el.addEventListener('click', function (e) { e.stopPropagation(); setActive(i); });
       container.appendChild(el);
     });
   }
 
   function setActive(idx) {
+    if (idx < 0) idx = 0;
+    if (idx >= data.length) idx = data.length - 1;
+    var changing = idx !== activeIdx;
     activeIdx = idx;
     var d = data[idx];
+
     // Update points
     var points = container.querySelectorAll('.tl-point');
     points.forEach(function (p, i) {
       if (i === idx) p.classList.add('active');
       else p.classList.remove('active');
     });
-    // Update detail
-    detailPanel.style.display = 'block';
-    detailYear.textContent = d.year;
-    detailTag.textContent = d.tag;
-    detailText.textContent = d.text;
-    detailMeta.textContent = d.meta;
-    // Redraw mountain
-    drawMountain(idx);
+
+    // Animate detail panel
+    if (!detailVisible) {
+      // First time: show panel
+      detailPanel.style.display = 'block';
+      detailYear.textContent = d.year;
+      detailTag.textContent = d.tag;
+      detailText.textContent = d.text;
+      detailMeta.textContent = d.meta;
+      // Force reflow then animate in
+      void detailPanel.offsetHeight;
+      detailPanel.classList.add('visible');
+      detailVisible = true;
+    } else if (changing) {
+      // Cross-fade: briefly fade out, update, fade in
+      detailPanel.classList.remove('visible');
+      detailPanel.classList.add('updating');
+      setTimeout(function () {
+        detailYear.textContent = d.year;
+        detailTag.textContent = d.tag;
+        detailText.textContent = d.text;
+        detailMeta.textContent = d.meta;
+        detailPanel.classList.remove('updating');
+        detailPanel.classList.add('visible');
+      }, 180);
+    }
+
+    // Redraw mountain with animated glow
+    startGlowAnimation(idx);
+  }
+
+  // Animated glow on mountain
+  function startGlowAnimation(highlightIdx) {
+    if (glowAnimId) cancelAnimationFrame(glowAnimId);
+    glowPhase = 0;
+    function animateGlow() {
+      glowPhase += 0.03;
+      drawMountain(highlightIdx, glowPhase);
+      if (glowPhase < Math.PI * 60) {
+        glowAnimId = requestAnimationFrame(animateGlow);
+      }
+    }
+    animateGlow();
   }
 
   // Draw data mountain
-  function drawMountain(highlightIdx) {
+  function drawMountain(highlightIdx, phase) {
     var w = canvas.width = canvas.offsetWidth * 2;
     var h = canvas.height = canvas.offsetHeight * 2;
     ctx.clearRect(0, 0, w, h);
+    if (typeof phase === 'undefined') phase = 0;
 
     // Grid lines
     ctx.strokeStyle = 'rgba(255,255,255,0.03)';
@@ -580,27 +626,53 @@
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Highlight active point
+    // Highlight active point with glowing vertical line
     if (highlightIdx !== undefined && points[highlightIdx]) {
       var hp = points[highlightIdx];
-      // Vertical line
+      var pulse = 0.5 + Math.sin(phase) * 0.3;
+
+      // Glowing vertical line — solid, with glow
+      ctx.save();
+      ctx.shadowColor = 'rgba(255,87,90,' + (0.6 * pulse) + ')';
+      ctx.shadowBlur = 20;
+      ctx.beginPath();
+      ctx.moveTo(hp.x, 0);
+      ctx.lineTo(hp.x, h);
+      ctx.strokeStyle = 'rgba(255,87,90,' + (0.35 * pulse) + ')';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([]);
+      ctx.stroke();
+      ctx.restore();
+
+      // Second pass: brighter core line
       ctx.beginPath();
       ctx.moveTo(hp.x, hp.y);
       ctx.lineTo(hp.x, h);
-      ctx.strokeStyle = 'rgba(255,87,90,0.25)';
+      ctx.strokeStyle = 'rgba(255,87,90,' + (0.5 + pulse * 0.3) + ')';
       ctx.lineWidth = 1;
-      ctx.setLineDash([4, 4]);
       ctx.stroke();
-      ctx.setLineDash([]);
-      // Dot
+
+      // Glowing dot
+      ctx.save();
+      ctx.shadowColor = 'rgba(255,87,90,0.8)';
+      ctx.shadowBlur = 16;
       ctx.beginPath();
-      ctx.arc(hp.x, hp.y, 4, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,87,90,0.8)';
+      ctx.arc(hp.x, hp.y, 5 + pulse * 2, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,87,90,' + (0.7 + pulse * 0.3) + ')';
       ctx.fill();
+      ctx.restore();
+
+      // Outer glow ring
+      ctx.beginPath();
+      ctx.arc(hp.x, hp.y, 10 + pulse * 4, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,87,90,' + (0.15 * pulse) + ')';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
       // Data label
-      ctx.fillStyle = 'rgba(255,255,255,0.25)';
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.2 + pulse * 0.15) + ')';
       ctx.font = '16px Geist, monospace';
-      ctx.fillText(data[highlightIdx].density + 'x', hp.x + 8, hp.y - 6);
+      ctx.fillText(data[highlightIdx].density + 'x', hp.x + 14, hp.y - 8);
     }
 
     // Scatter particles on mountain surface
@@ -617,12 +689,50 @@
     }
   }
 
+  // SCRUBBER: click anywhere on the track to find nearest point
+  track.addEventListener('click', function (e) {
+    var rect = track.getBoundingClientRect();
+    var clickX = (e.clientX - rect.left) / rect.width;
+    // Find nearest point
+    var nearest = 0;
+    var nearestDist = Infinity;
+    for (var i = 0; i < data.length; i++) {
+      var pct = i / (data.length - 1);
+      var dist = Math.abs(clickX - pct);
+      if (dist < nearestDist) {
+        nearestDist = dist;
+        nearest = i;
+      }
+    }
+    setActive(nearest);
+  });
+
+  // KEYBOARD NAVIGATION
+  if (hudEl) {
+    hudEl.setAttribute('tabindex', '0');
+    hudEl.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        setActive(activeIdx - 1);
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        setActive(activeIdx + 1);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        setActive(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        setActive(data.length - 1);
+      }
+    });
+  }
+
   renderPoints();
   setActive(activeIdx);
 
   // Resize
   window.addEventListener('resize', function () {
-    drawMountain(activeIdx);
+    drawMountain(activeIdx, glowPhase);
     renderPoints();
   });
 })();
