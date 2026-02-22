@@ -287,6 +287,74 @@ a { color: inherit; text-decoration: none; }
   opacity: 1;
 }
 
+/* ── HUD Elements — Sci-Fi Micro-Typography ───────── */
+.hud {
+  position: absolute;
+  z-index: 10;
+  font-family: 'Geist', monospace;
+  font-size: 0.5rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 87, 90, 0.25);
+  pointer-events: none;
+}
+.hud-tl {
+  top: 2rem;
+  left: 6rem;
+}
+.hud-br {
+  bottom: 2rem;
+  right: 3rem;
+}
+.hud::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(255, 87, 90, 0.3);
+  border-radius: 50%;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  animation: hud-pulse 3s ease-in-out infinite;
+}
+@keyframes hud-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; border-color: var(--secondary); }
+}
+
+/* ── Meta Whisper — Narrative Layer ───────────────── */
+.meta-whisper {
+  font-family: 'Geist', monospace;
+  font-size: 0.6rem;
+  font-weight: 200;
+  font-style: italic;
+  letter-spacing: 0.25em;
+  color: rgba(249, 248, 242, 0.15);
+  margin-bottom: 2rem;
+  text-transform: lowercase;
+}
+
+/* ── Scanning Line Animation ──────────────────────── */
+.scene::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,87,90,0.06) 20%, rgba(255,87,90,0.06) 80%, transparent);
+  z-index: 5;
+  animation: scan-down 8s linear infinite;
+  pointer-events: none;
+}
+@keyframes scan-down {
+  0% { top: 0; opacity: 0; }
+  5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
 /* ── Scenes — fullscreen sections ─────────────────── */
 .scene {
   position: relative;
