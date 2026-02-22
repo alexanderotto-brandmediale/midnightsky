@@ -129,19 +129,31 @@ function playSfx(name) {
       if (vol >= targetVol) clearInterval(fi);
     }, 80);
   }).catch(function () {
-    // Blocked — start on any interaction
+    // Blocked — start on any interaction (but not audio-toggle)
+    function firstInteraction(evt) {
+      if (evt.target.closest('#audio-toggle')) return; // let toggle handle itself
+      removeListeners();
+      startAudio();
+    }
+    function removeListeners() {
+      ['click', 'scroll', 'touchstart', 'keydown'].forEach(function (evt) {
+        document.removeEventListener(evt, firstInteraction);
+      });
+    }
     ['click', 'scroll', 'touchstart', 'keydown'].forEach(function (evt) {
-      document.addEventListener(evt, function h() {
-        document.removeEventListener(evt, h);
-        startAudio();
-      }, { once: true });
+      document.addEventListener(evt, firstInteraction);
     });
   });
 
   // Toggle button
   var btn = document.getElementById('audio-toggle');
   if (btn) {
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (!audioStarted) {
+        startAudio();
+        return;
+      }
       isMuted = !isMuted;
       btn.classList.toggle('playing', !isMuted);
       if (!isMuted) {
@@ -159,9 +171,15 @@ function playSfx(name) {
           if (vol >= targetVol) clearInterval(fi);
         }, 50);
       } else {
+        // Fade out both audio channels
         var fi2 = setInterval(function () {
           activeAudio.volume = Math.max(0, activeAudio.volume - 0.02);
-          if (activeAudio.volume <= 0.01) { activeAudio.volume = 0; clearInterval(fi2); }
+          inactiveAudio.volume = Math.max(0, inactiveAudio.volume - 0.02);
+          if (activeAudio.volume <= 0.01) {
+            activeAudio.volume = 0;
+            inactiveAudio.volume = 0;
+            clearInterval(fi2);
+          }
         }, 50);
       }
       playSfx('click');
