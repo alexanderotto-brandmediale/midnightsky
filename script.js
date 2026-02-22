@@ -1750,6 +1750,79 @@
   });
 })();
 
+/* ── Thinking Wiki Links ───────────────────────────── */
+(function () {
+  var wikiMap = {
+    'Upper Atmosphere': 'https://en.wikipedia.org/wiki/Systems_thinking',
+    'The View From Above': 'https://en.wikipedia.org/wiki/Overview_effect',
+    'Pattern Recognition': 'https://en.wikipedia.org/wiki/Pattern_recognition_(psychology)',
+    'Systemtheorie': 'https://en.wikipedia.org/wiki/Systems_theory',
+    'Feedback Loops': 'https://en.wikipedia.org/wiki/Feedback',
+    'Leverage Points': 'https://en.wikipedia.org/wiki/Twelve_leverage_points',
+    'Entropy': 'https://en.wikipedia.org/wiki/Entropy_(information_theory)',
+    'Alfred Adler': 'https://en.wikipedia.org/wiki/Alfred_Adler',
+    'Gemeinschaftsgefühl': 'https://en.wikipedia.org/wiki/Gemeinschaftsgef%C3%BChl',
+    'Inferiority & Compensation': 'https://en.wikipedia.org/wiki/Inferiority_complex',
+    'Life Style': 'https://en.wikipedia.org/wiki/Individual_psychology#Style_of_life',
+    'Cognitive Biases': 'https://en.wikipedia.org/wiki/Cognitive_bias',
+    "Kahneman's Two Systems": 'https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow',
+    'Narrative Bias': 'https://en.wikipedia.org/wiki/Narrative_fallacy',
+    'Dunning-Kruger Landscape': 'https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect',
+    'Kommunikationswissenschaft': 'https://en.wikipedia.org/wiki/Communication_theory',
+    "Watzlawick's Axioms": 'https://en.wikipedia.org/wiki/Paul_Watzlawick',
+    'Signal vs. Noise': 'https://en.wikipedia.org/wiki/Signal-to-noise_ratio',
+    'Framing': 'https://en.wikipedia.org/wiki/Framing_effect_(psychology)',
+    'UAP & Epistemology': 'https://en.wikipedia.org/wiki/Unidentified_flying_object',
+    'The Nature of Reality': 'https://en.wikipedia.org/wiki/Philosophy_of_physics',
+    'Time': 'https://en.wikipedia.org/wiki/The_Order_of_Time_(book)',
+    'Perception as Construction': 'https://en.wikipedia.org/wiki/Predictive_coding',
+    'Quantum Mechanics': 'https://en.wikipedia.org/wiki/Quantum_mechanics',
+    'Max Tegmark': 'https://en.wikipedia.org/wiki/Max_Tegmark',
+    'Emergence & Complexity': 'https://en.wikipedia.org/wiki/Emergence',
+    'Cosmology': 'https://en.wikipedia.org/wiki/Physical_cosmology',
+    'AI as Amplification': 'https://en.wikipedia.org/wiki/Artificial_intelligence',
+    'Nick Bostrom': 'https://en.wikipedia.org/wiki/Nick_Bostrom',
+    'Human×Machine': 'https://en.wikipedia.org/wiki/Human%E2%80%93computer_interaction',
+    'Post-Digital': 'https://en.wikipedia.org/wiki/Post-digital',
+    'Transformation ≠ Change': 'https://en.wikipedia.org/wiki/Organizational_transformation',
+    'The J-Curve': 'https://en.wikipedia.org/wiki/J_curve',
+    'Cultural Metabolism': 'https://en.wikipedia.org/wiki/Organizational_culture',
+    'Identity Shift': 'https://en.wikipedia.org/wiki/Organizational_identity',
+    'Gesellschaft als System': 'https://en.wikipedia.org/wiki/Niklas_Luhmann',
+    'Collective Intelligence': 'https://en.wikipedia.org/wiki/Collective_intelligence',
+    'Attention Economy': 'https://en.wikipedia.org/wiki/Attention_economy',
+    'Trust Erosion': 'https://en.wikipedia.org/wiki/Trust_(social_science)',
+    'Zukunftsdesign': 'https://en.wikipedia.org/wiki/Futures_studies',
+    'Scenario Thinking': 'https://en.wikipedia.org/wiki/Scenario_planning',
+    'Weak Signals': 'https://en.wikipedia.org/wiki/Weak_signal_(futures_studies)',
+    'Backcasting': 'https://en.wikipedia.org/wiki/Backcasting',
+    'Design Thinking': 'https://en.wikipedia.org/wiki/Design_thinking',
+    'Systems Mapping': 'https://en.wikipedia.org/wiki/System_dynamics',
+    'Prototyping Reality': 'https://en.wikipedia.org/wiki/Prototype',
+    'Structured Dialogue': 'https://en.wikipedia.org/wiki/Dialogue#Structured_dialogue',
+    'Strategy as Navigation': 'https://en.wikipedia.org/wiki/Strategic_management',
+    'Decision Architecture': 'https://en.wikipedia.org/wiki/Choice_architecture',
+    'Tempo': 'https://en.wikipedia.org/wiki/OODA_loop',
+    'Positioning': 'https://en.wikipedia.org/wiki/Positioning_(marketing)',
+    'Clarity Over Certainty': 'https://en.wikipedia.org/wiki/Uncertainty',
+    'Elegance': 'https://en.wikipedia.org/wiki/Elegance#In_engineering_and_science',
+    'Re-Entry': 'https://en.wikipedia.org/wiki/Praxis_(process)',
+    'The Long Game': 'https://en.wikipedia.org/wiki/Long-term_thinking'
+  };
+  document.querySelectorAll('.thinking-item h3').forEach(function (h3) {
+    var url = wikiMap[h3.textContent.trim()];
+    if (url) {
+      var a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'thinking-wiki';
+      a.textContent = 'W';
+      h3.appendChild(a);
+    }
+  });
+})();
+
 /* ── Thinking Tabs ─────────────────────────────────── */
 (function () {
   var tabs = document.querySelectorAll('.thinking-tab');

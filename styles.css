@@ -1933,6 +1933,26 @@ a { color: inherit; text-decoration: none; }
   color: rgba(249,248,242,0.5);
   line-height: 1.8;
 }
+.thinking-wiki {
+  display: inline-block;
+  font-family: 'Geist', monospace;
+  font-size: 0.45rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: rgba(249,248,242,0.15);
+  text-decoration: none;
+  border: 1px solid rgba(249,248,242,0.08);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  margin-left: 0.6rem;
+  transition: color 0.3s, border-color 0.3s;
+  vertical-align: middle;
+}
+.thinking-wiki:hover {
+  color: rgba(249,248,242,0.5);
+  border-color: rgba(249,248,242,0.2);
+}
+
 .thinking-counter {
   font-family: 'Geist', monospace;
   font-size: 0.5rem;
