@@ -886,7 +886,7 @@
   obs.observe(section);
 
   window.addEventListener('resize', function () { if (isVisible) resize(); });
-})()
+})();
 
 /* ── HUD Interactive Timeline ─────────────────────── */
 (function () {
