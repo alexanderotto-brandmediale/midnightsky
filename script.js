@@ -806,8 +806,30 @@
     [12, 4], [12, 7], [12, 13], [12, 15],
     [13, 6], [13, 14], [13, 5],
     [14, 10], [14, 1], [14, 7],
-    [15, 3], [15, 9], [15, 2], [15, 0]
+    [15, 3], [15, 9], [15, 2], [15, 0],
+    // Peripheral grey nodes
+    [16, 7], [16, 12],
+    [17, 3], [17, 6],
+    [18, 4], [18, 9],
+    [19, 10], [19, 14],
+    [20, 11], [20, 2],
+    [21, 0], [21, 5],
+    [22, 13], [22, 1],
+    [23, 8], [23, 7]
   ];
+
+  // Peripheral grey nodes — adjacent topics, not core
+  var greyNodes = [
+    { id: 16, label: 'Philosophy', x: 0, y: 0, grey: true },
+    { id: 17, label: 'Law', x: 0, y: 0, grey: true },
+    { id: 18, label: 'Architecture', x: 0, y: 0, grey: true },
+    { id: 19, label: 'Mathematics', x: 0, y: 0, grey: true },
+    { id: 20, label: 'Biology', x: 0, y: 0, grey: true },
+    { id: 21, label: 'Robotics', x: 0, y: 0, grey: true },
+    { id: 22, label: 'Geopolitics', x: 0, y: 0, grey: true },
+    { id: 23, label: 'Neuroscience', x: 0, y: 0, grey: true }
+  ];
+  nodes = nodes.concat(greyNodes);
 
   // Ambient particles
   var particles = [];
@@ -827,10 +849,42 @@
     var cx = w / (2 * dpr), cy = h / (2 * dpr);
     var spreadX = w / (2 * dpr) * 0.85;
     var spreadY = h / (2 * dpr) * 0.8;
+    // Organic positions for core nodes (16) — hand-tuned offsets
+    var corePositions = [
+      { ax: -0.15, ay: -0.55 },  // 0 AI
+      { ax: 0.65, ay: -0.25 },   // 1 UAP
+      { ax: -0.55, ay: -0.1 },   // 2 Future
+      { ax: 0.1, ay: 0.15 },     // 3 Consulting
+      { ax: -0.35, ay: 0.45 },   // 4 Brand
+      { ax: 0.35, ay: -0.6 },    // 5 Transform
+      { ax: 0.55, ay: 0.35 },    // 6 Economy
+      { ax: -0.6, ay: 0.55 },    // 7 Psychology
+      { ax: -0.75, ay: -0.45 },  // 8 Music
+      { ax: 0.2, ay: 0.55 },     // 9 Design
+      { ax: 0.7, ay: -0.55 },    // 10 Cosmos
+      { ax: 0.45, ay: 0.6 },     // 11 Energy
+      { ax: -0.25, ay: 0.2 },    // 12 Comm
+      { ax: 0.6, ay: 0.1 },      // 13 Society
+      { ax: 0.8, ay: -0.1 },     // 14 Time
+      { ax: -0.45, ay: -0.35 }   // 15 Strategy
+    ];
+    // Grey peripheral — further out
+    var greyPositions = [
+      { ax: -0.9, ay: 0.3 },    // 16 Philosophy
+      { ax: 0.3, ay: 0.85 },    // 17 Law
+      { ax: -0.1, ay: 0.85 },   // 18 Architecture
+      { ax: 0.9, ay: -0.35 },   // 19 Mathematics
+      { ax: 0.75, ay: 0.7 },    // 20 Biology
+      { ax: -0.4, ay: -0.8 },   // 21 Robotics
+      { ax: 0.85, ay: 0.5 },    // 22 Geopolitics
+      { ax: -0.85, ay: -0.05 }  // 23 Neuroscience
+    ];
+    var allPos = corePositions.concat(greyPositions);
     nodes.forEach(function (n, i) {
-      var a = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
-      n.x = cx + Math.cos(a) * spreadX;
-      n.y = cy + Math.sin(a) * spreadY;
+      if (i < allPos.length) {
+        n.x = cx + allPos[i].ax * spreadX;
+        n.y = cy + allPos[i].ay * spreadY;
+      }
     });
   }
 
@@ -932,14 +986,15 @@
         var hdx = mx * dpr - sc.x, hdy = my * dpr - sc.y;
         if (Math.sqrt(hdx * hdx + hdy * hdy) < ringR + 10 * cam.zoom * dpr) isHovered = true;
       }
-      var nodeOp = isOther ? 0.1 : (isFocused ? 1 : (isHovered ? 1 : 0.5));
+      var isGrey = nd.grey;
+      var nodeOp = isOther ? 0.1 : (isFocused ? 1 : (isHovered ? 1 : (isGrey ? 0.2 : 0.5)));
 
       // Node outer ring — breathing
       var breathe = 1 + Math.sin(time * 2 + n) * 0.1;
       var ringR = (isFocused ? 22 : 14) * cam.zoom * dpr * breathe;
       ctx.beginPath();
       ctx.arc(sc.x, sc.y, ringR, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255,87,90,' + (nodeOp * 0.2) + ')';
+      ctx.strokeStyle = isGrey ? 'rgba(249,248,242,' + (nodeOp * 0.1) + ')' : 'rgba(255,87,90,' + (nodeOp * 0.2) + ')';
       ctx.lineWidth = 0.5 * cam.zoom * dpr;
       ctx.stroke();
 
@@ -947,7 +1002,7 @@
       var dotR = (isFocused ? 4 : (isHovered ? 4 : 2.5)) * cam.zoom * dpr;
       ctx.beginPath();
       ctx.arc(sc.x, sc.y, dotR, 0, Math.PI * 2);
-      ctx.fillStyle = isHovered && !focusedNode ? 'rgba(255,87,90,1)' : 'rgba(255,87,90,' + nodeOp + ')';
+      ctx.fillStyle = isGrey ? 'rgba(249,248,242,' + nodeOp + ')' : (isHovered && !focusedNode ? 'rgba(255,87,90,1)' : 'rgba(255,87,90,' + nodeOp + ')');
       ctx.fill();
       // Extra glow on hover
       if (isHovered && !focusedNode) {
@@ -960,7 +1015,7 @@
       // Node label
       var fontSize = (isFocused ? 13 : (isHovered ? 11 : 10)) * cam.zoom * dpr;
       ctx.font = (isFocused || isHovered ? '500 ' : '300 ') + fontSize + 'px Geist, monospace';
-      ctx.fillStyle = isHovered && !focusedNode ? 'rgba(249,248,242,1)' : 'rgba(249,248,242,' + nodeOp + ')';
+      ctx.fillStyle = isGrey ? 'rgba(249,248,242,' + (nodeOp * 0.5) + ')' : (isHovered && !focusedNode ? 'rgba(249,248,242,1)' : 'rgba(249,248,242,' + nodeOp + ')');
       ctx.textAlign = 'center';
       ctx.fillText(isFocused ? nd.full : nd.label, sc.x, sc.y - ringR - 6 * cam.zoom * dpr);
 
