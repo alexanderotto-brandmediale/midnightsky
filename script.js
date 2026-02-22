@@ -394,16 +394,20 @@
   
   const observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
+      // Find the video-bg inside the observed scene
+      var vbg = entry.target.querySelector('.video-bg');
+      if (!vbg) return;
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+        vbg.classList.add('visible');
       } else {
-        entry.target.classList.remove('visible');
+        vbg.classList.remove('visible');
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold: 0.15, rootMargin: '0px 0px -5% 0px' });
   
   videoBgs.forEach(function (bg) {
-    observer.observe(bg.closest('.scene') || bg);
+    var scene = bg.closest('.scene');
+    if (scene) observer.observe(scene);
   });
 })();
 
