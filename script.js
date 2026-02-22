@@ -1561,7 +1561,7 @@ function playSfx(name) {
     if (idx < 0) idx = 0;
     if (idx >= data.length) idx = data.length - 1;
     var changing = idx !== activeIdx;
-    if (changing) playSfx('hover');
+    if (changing) playSfx('tick');
     activeIdx = idx;
     var d = data[idx];
 
