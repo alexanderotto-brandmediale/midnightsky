@@ -946,8 +946,8 @@
       tooltip.classList.remove('visible');
     });
     item.addEventListener('mousemove', function (e) {
-      tooltip.style.left = (e.clientX + 20) + 'px';
-      tooltip.style.top = (e.clientY - 20) + 'px';
+      tooltip.style.left = (e.clientX + 8) + 'px';
+      tooltip.style.top = (e.clientY + 8) + 'px';
     });
   });
 })();
