@@ -432,8 +432,10 @@ function playSfx(name) {
     const parallax = scrollY * 0.15;
     for (let i = 0; i < stars.length; i++) {
       const s = stars[i];
+      var energy = typeof window._getAudioEnergy === 'function' ? window._getAudioEnergy() : 0;
+      var pulse = 1 + energy * 1.5;
       const twinkle = Math.sin(time * s.speed + s.phase) * 0.3 + 0.7;
-      const opacity = s.baseO * twinkle;
+      const opacity = Math.min(1, s.baseO * twinkle * pulse);
       const y = (s.y - parallax + h) % h;
       ctx.beginPath();
       ctx.arc(s.x, y, s.r, 0, Math.PI * 2);
@@ -3062,4 +3064,123 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     ctx.shadowBlur = 0;
   }
   draw();
+})();
+
+/* ── Feature: Interstitials ────────────────────────── */
+(function () {
+  document.querySelectorAll('.interstitial').forEach(function (el) {
+    var span = document.createElement('span');
+    span.className = 'interstitial-text';
+    span.textContent = el.dataset.text;
+    el.appendChild(span);
+  });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      e.target.classList.toggle('visible', e.isIntersecting);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.interstitial').forEach(function (el) { io.observe(el); });
+})();
+
+/* ── Feature: Section Number Overlay ───────────────── */
+(function () {
+  var overlay = document.getElementById('section-number-overlay');
+  if (!overlay) return;
+  var sections = document.querySelectorAll('.scene');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        var idx = Array.prototype.indexOf.call(sections, e.target);
+        var num = String(idx + 1).padStart(2, '0');
+        overlay.textContent = num;
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(function (s) { io.observe(s); });
+})();
+
+/* ── Feature: Currently Reading/Listening Widget ──── */
+(function () {
+  var widget = document.getElementById('currently-widget');
+  var typeEl = document.getElementById('currently-type');
+  var valueEl = document.getElementById('currently-value');
+  if (!widget || !typeEl || !valueEl) return;
+
+  var items = [
+    { type: 'READING', value: 'Superintelligence — Nick Bostrom' },
+    { type: 'READING', value: 'The Master and His Emissary — Iain McGilchrist' },
+    { type: 'LISTENING', value: 'M83 — Oblivion Soundtrack' },
+    { type: 'THINKING', value: 'How do you encode values into systems that surpass understanding?' },
+    { type: 'READING', value: 'Antifragile — Nassim Taleb' },
+    { type: 'LISTENING', value: 'Brian Eno — Music for Installations' },
+    { type: 'EXPLORING', value: 'The alignment problem as philosophy, not engineering' },
+    { type: 'READING', value: 'Finite and Infinite Games — James P. Carse' }
+  ];
+
+  var current = Math.floor(Math.random() * items.length);
+
+  function show() {
+    var item = items[current];
+    typeEl.textContent = item.type;
+    valueEl.textContent = item.value;
+    widget.classList.add('visible');
+  }
+
+  function cycle() {
+    widget.classList.remove('visible');
+    setTimeout(function () {
+      current = (current + 1) % items.length;
+      show();
+    }, 1000);
+  }
+
+  setTimeout(show, 3000);
+  setInterval(cycle, 12000);
+})();
+
+/* ── Feature: RGB Glitch Reveal ────────────────────── */
+(function () {
+  var glitchTargets = document.querySelectorAll('.section-heading, .statement--accent, .contact-heading');
+  glitchTargets.forEach(function (el) { el.classList.add('rgb-glitch-reveal'); });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting && !e.target._rgbDone) {
+        e.target._rgbDone = true;
+        e.target.classList.add('glitching');
+        playSfx('glitch');
+        setTimeout(function () { e.target.classList.remove('glitching'); }, 400);
+      }
+    });
+  }, { threshold: 0.5 });
+  glitchTargets.forEach(function (el) { io.observe(el); });
+})();
+
+/* ── Feature: Audio-Reactive Starfield ─────────────── */
+(function () {
+  var audioCtx, analyser, dataArray, source, connected = false;
+  function connectAudio() {
+    if (connected) return;
+    var audio = window._activeAudio || document.querySelector('audio');
+    if (!audio) return;
+    try {
+      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 64;
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+      if (!audio._mediaSource) {
+        audio._mediaSource = audioCtx.createMediaElementSource(audio);
+      }
+      audio._mediaSource.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      connected = true;
+    } catch (e) { /* silent */ }
+  }
+  window._getAudioEnergy = function () {
+    if (!connected) connectAudio();
+    if (!analyser) return 0;
+    analyser.getByteFrequencyData(dataArray);
+    var sum = 0;
+    for (var i = 0; i < dataArray.length; i++) sum += dataArray[i];
+    return sum / (dataArray.length * 255);
+  };
 })();

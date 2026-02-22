@@ -2714,3 +2714,100 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
     color: rgba(249,248,242,0.5) !important;
   }
 }
+
+/* ── Interstitials ─────────────────────────────────── */
+.interstitial {
+  position: relative;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.interstitial-text {
+  font-family: 'Tomorrow', var(--font);
+  font-size: clamp(1rem, 3vw, 2.2rem);
+  font-weight: 200;
+  letter-spacing: 0.15em;
+  color: rgba(249,248,242,0);
+  text-align: center;
+  transition: color 1.2s ease, transform 1.2s ease;
+  transform: translateY(20px);
+  padding: 0 2rem;
+}
+.interstitial.visible .interstitial-text {
+  color: rgba(249,248,242,0.6);
+  transform: translateY(0);
+}
+
+/* ── Section Number Overlay ────────────────────────── */
+.section-number-overlay {
+  position: fixed;
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Tomorrow', var(--font);
+  font-size: clamp(6rem, 15vw, 14rem);
+  font-weight: 100;
+  color: rgba(249,248,242,0.025);
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 0.6s ease;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* ── Currently Widget ──────────────────────────────── */
+.currently-widget {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.currently-widget.visible { opacity: 1; }
+.currently-label {
+  font-family: 'Geist', monospace;
+  font-size: 0.45rem;
+  letter-spacing: 0.3em;
+  color: rgba(255,87,90,0.4);
+  text-transform: uppercase;
+}
+.currently-type {
+  font-family: 'Tomorrow', var(--font);
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  color: rgba(249,248,242,0.3);
+  text-transform: uppercase;
+}
+.currently-value {
+  font-family: 'Geist', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 300;
+  color: rgba(249,248,242,0.5);
+  max-width: 180px;
+  line-height: 1.4;
+}
+
+/* ── RGB Glitch Reveal ─────────────────────────────── */
+@keyframes rgb-glitch {
+  0% { text-shadow: -2px 0 #FF575A, 2px 0 #7B8CFF; transform: translate(0); }
+  10% { text-shadow: 2px 0 #FF575A, -2px 0 #7B8CFF; transform: translate(-1px, 1px); }
+  20% { text-shadow: -1px 1px #FF575A, 1px -1px #7B8CFF; transform: translate(1px, -1px); }
+  30% { text-shadow: 1px -1px #FF575A, -1px 1px #7B8CFF; transform: translate(0); }
+  40% { text-shadow: none; transform: translate(0); }
+  100% { text-shadow: none; transform: translate(0); }
+}
+.rgb-glitch-reveal.glitching {
+  animation: rgb-glitch 0.4s ease-out;
+}
+
+@media (pointer: coarse) {
+  .section-number-overlay { right: 1rem; font-size: clamp(4rem, 20vw, 8rem); }
+  .currently-widget { display: none; }
+}
