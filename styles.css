@@ -788,6 +788,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* Glitch burst — triggered by JS on word swap */
+.glitch-on-reveal.visible {
+  animation: glitch-burst 0.5s linear forwards;
+}
+
 .hero-name.glitching {
   animation: glitch-burst 0.5s linear forwards;
 }
