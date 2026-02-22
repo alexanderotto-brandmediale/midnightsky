@@ -1015,16 +1015,18 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Accent Words ─────────────────────────────────── */
-#word-noise {
+#word-direction {
   display: inline-block;
-  animation: noise-glitch 4s infinite;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid rgba(255,87,90,0.6);
+  vertical-align: bottom;
 }
-@keyframes noise-glitch {
-  0%, 85%, 93%, 100% { transform: translate(0); filter: none; }
-  87% { transform: translate(-2px, 1px) skewX(-6deg); filter: drop-shadow(2px 0 rgba(255,87,90,0.7)) drop-shadow(-2px 0 rgba(123,140,255,0.7)); }
-  89% { transform: translate(3px, -1px) skewX(4deg); filter: drop-shadow(-1px 0 rgba(52,10,34,0.8)); }
-  90% { transform: translate(-1px, 0) skewX(-3deg); filter: drop-shadow(1px 0 rgba(255,87,90,0.4)); }
-  91% { transform: translate(0); filter: none; }
+#word-direction.typing {
+  animation: direction-cursor 0.5s step-end infinite;
+}
+@keyframes direction-cursor {
+  50% { border-color: transparent; }
 }
 
 .accent-word {

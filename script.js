@@ -1305,9 +1305,22 @@
     activeIdx = idx;
     var d = data[idx];
 
-    // Update direction word
+    // Update direction word — typewriter effect
     if (directionEl && yearConcepts[d.year]) {
-      directionEl.textContent = yearConcepts[d.year];
+      var newWord = yearConcepts[d.year];
+      if (directionEl.textContent !== newWord) {
+        directionEl.textContent = '';
+        directionEl.classList.add('typing');
+        var ci = 0;
+        if (window._dirTypeTimer) clearInterval(window._dirTypeTimer);
+        window._dirTypeTimer = setInterval(function () {
+          directionEl.textContent = newWord.slice(0, ++ci);
+          if (ci >= newWord.length) {
+            clearInterval(window._dirTypeTimer);
+            setTimeout(function () { directionEl.classList.remove('typing'); }, 600);
+          }
+        }, 40);
+      }
     }
 
     // Update points
@@ -1668,8 +1681,20 @@
       dpActive = false;
       detailPanel.classList.remove('visible');
       hideMilestones();
-      // Reset direction word
-      if (directionEl) directionEl.textContent = directionDefault;
+      // Reset direction word — typewriter
+      if (directionEl && directionEl.textContent !== directionDefault) {
+        directionEl.textContent = '';
+        directionEl.classList.add('typing');
+        var ri = 0;
+        if (window._dirTypeTimer) clearInterval(window._dirTypeTimer);
+        window._dirTypeTimer = setInterval(function () {
+          directionEl.textContent = directionDefault.slice(0, ++ri);
+          if (ri >= directionDefault.length) {
+            clearInterval(window._dirTypeTimer);
+            setTimeout(function () { directionEl.classList.remove('typing'); }, 600);
+          }
+        }, 40);
+      }
     });
   }
   
