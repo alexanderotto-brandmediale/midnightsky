@@ -958,12 +958,13 @@
   var charIdx = 0;
   var ttX = 0, ttY = 0, ttTX = 0, ttTY = 0, ttActive = false;
 
-  // Smooth follow loop — always running
+  // Smooth follow loop
   (function ttLoop() {
     if (ttActive) {
       ttX += (ttTX - ttX) * 0.12;
       ttY += (ttTY - ttY) * 0.12;
-      tooltip.style.transform = 'translate(' + ttX + 'px,' + ttY + 'px)';
+      tooltip.style.left = Math.round(ttX) + 'px';
+      tooltip.style.top = Math.round(ttY) + 'px';
     }
     requestAnimationFrame(ttLoop);
   })();
@@ -986,7 +987,8 @@
       ttTY = e.clientY;
       ttX = ttTX;
       ttY = ttTY;
-      tooltip.style.transform = 'translate(' + ttX + 'px,' + ttY + 'px)';
+      tooltip.style.left = Math.round(ttX) + 'px';
+      tooltip.style.top = Math.round(ttY) + 'px';
       tooltip.classList.add('visible');
       ttActive = true;
       typeWrite();

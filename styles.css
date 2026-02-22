@@ -1227,31 +1227,28 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* HUD Hover Tooltip — text at cursor */
-.tl-hover-tooltip {
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 9000;
-  pointer-events: none;
+#tl-hover-tooltip {
+  position: fixed !important;
+  z-index: 99999 !important;
+  pointer-events: none !important;
   max-width: 220px;
   display: none;
 }
-.tl-hover-tooltip.visible {
-  display: block;
+#tl-hover-tooltip.visible {
+  display: block !important;
 }
-.tl-hover-frame {
+#tl-hover-tooltip .tl-hover-frame {
   background: none;
   border: none;
   padding: 0;
 }
-.tl-hover-text {
+#tl-hover-tooltip .tl-hover-text {
   font-family: 'Geist', monospace;
   font-size: 0.5rem;
   font-weight: 300;
   line-height: 1.5;
   letter-spacing: 0.03em;
-  color: rgba(255,255,255,0.45);
-  white-space: pre-wrap;
+  color: rgba(255,255,255,0.5);
 }
 
 /* Sub Tracks */
