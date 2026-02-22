@@ -947,35 +947,32 @@
     }, 2500);
   }
 
-  // HUD Hover Tooltip
+  // HUD Hover Tooltip — follows cursor with typewriter
   var tooltip = document.getElementById('tl-hover-tooltip');
   var tooltipText = document.getElementById('tl-hover-text');
-  if (!tooltip || !tooltipText) return;
+  if (!tooltip || !tooltipText) { console.log('tooltip not found'); return; }
 
   var items = document.querySelectorAll('.tl-side-item[data-hover]');
   var typeTimer = null;
   var fullText = '';
   var charIdx = 0;
-  var tooltipTargetX = 0, tooltipTargetY = 0;
-  var tooltipX = 0, tooltipY = 0;
-  var tooltipVisible = false;
+  var ttX = 0, ttY = 0, ttTX = 0, ttTY = 0, ttActive = false;
 
-  function animateTooltip() {
-    if (tooltipVisible) {
-      tooltipX += (tooltipTargetX - tooltipX) * 0.15;
-      tooltipY += (tooltipTargetY - tooltipY) * 0.15;
-      tooltip.style.left = tooltipX + 'px';
-      tooltip.style.top = tooltipY + 'px';
+  // Smooth follow loop — always running
+  (function ttLoop() {
+    if (ttActive) {
+      ttX += (ttTX - ttX) * 0.12;
+      ttY += (ttTY - ttY) * 0.12;
+      tooltip.style.transform = 'translate(' + ttX + 'px,' + ttY + 'px)';
     }
-    requestAnimationFrame(animateTooltip);
-  }
-  animateTooltip();
+    requestAnimationFrame(ttLoop);
+  })();
 
   function typeWrite() {
     if (charIdx <= fullText.length) {
       tooltipText.textContent = fullText.slice(0, charIdx);
       charIdx++;
-      typeTimer = setTimeout(typeWrite, 12);
+      typeTimer = setTimeout(typeWrite, 14);
     }
   }
 
@@ -985,25 +982,24 @@
       fullText = item.dataset.hover;
       charIdx = 0;
       tooltipText.textContent = '';
-      tooltipTargetX = e.clientX + 20;
-      tooltipTargetY = e.clientY + 4;
-      tooltipX = tooltipTargetX;
-      tooltipY = tooltipTargetY;
-      tooltip.style.left = tooltipX + 'px';
-      tooltip.style.top = tooltipY + 'px';
+      ttTX = e.clientX + 20;
+      ttTY = e.clientY;
+      ttX = ttTX;
+      ttY = ttTY;
+      tooltip.style.transform = 'translate(' + ttX + 'px,' + ttY + 'px)';
       tooltip.classList.add('visible');
-      tooltipVisible = true;
+      ttActive = true;
       typeWrite();
     });
     item.addEventListener('mouseleave', function () {
       clearTimeout(typeTimer);
       tooltip.classList.remove('visible');
-      tooltipVisible = false;
+      ttActive = false;
       tooltipText.textContent = '';
     });
     item.addEventListener('mousemove', function (e) {
-      tooltipTargetX = e.clientX + 20;
-      tooltipTargetY = e.clientY + 4;
+      ttTX = e.clientX + 20;
+      ttTY = e.clientY;
     });
   });
 })();

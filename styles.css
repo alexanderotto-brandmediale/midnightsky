@@ -1229,39 +1229,29 @@ a { color: inherit; text-decoration: none; }
 /* HUD Hover Tooltip — text at cursor */
 .tl-hover-tooltip {
   position: fixed;
-  z-index: 500;
+  left: 0;
+  top: 0;
+  z-index: 9000;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.15s ease;
   max-width: 220px;
-  transform: translate(0, 0);
+  display: none;
 }
 .tl-hover-tooltip.visible {
-  opacity: 1;
+  display: block;
 }
 .tl-hover-frame {
   background: none;
   border: none;
   padding: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-}
-.tl-hover-frame::before {
-  content: '—';
-  font-family: 'Geist', monospace;
-  font-size: 0.45rem;
-  color: rgba(255,255,255,0.2);
-  flex-shrink: 0;
-  margin-top: 1px;
 }
 .tl-hover-text {
   font-family: 'Geist', monospace;
-  font-size: 0.45rem;
+  font-size: 0.5rem;
   font-weight: 300;
   line-height: 1.5;
   letter-spacing: 0.03em;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.45);
+  white-space: pre-wrap;
 }
 
 /* Sub Tracks */
