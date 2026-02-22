@@ -1000,6 +1000,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Noise Canvas ─────────────────────────────────── */
+.tl-diamond {
+  color: var(--secondary);
+}
+
 /* ── Accent Words ─────────────────────────────────── */
 .accent-word {
   transition: all 0.8s ease;

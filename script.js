@@ -550,7 +550,7 @@
     if (window._yearTypeTimer) clearTimeout(window._yearTypeTimer);
     
     // Year typewriter
-    var yearStr = '◈ ' + d.year + ' — ' + d.tag;
+    var yearStr = d.year + ' — ' + d.tag;
     var yIdx = 0;
     detailYear.textContent = '';
     detailTag.textContent = '';
@@ -559,11 +559,11 @@
     
     function yearType() {
       if (yIdx <= yearStr.length) {
-        detailYear.textContent = yearStr.slice(0, yIdx) + '█';
+        detailYear.innerHTML = '<span class="tl-diamond">◈</span> ' + yearStr.slice(0, yIdx) + '█';
         yIdx++;
         window._yearTypeTimer = setTimeout(yearType, 30);
       } else {
-        detailYear.textContent = yearStr;
+        detailYear.innerHTML = '<span class="tl-diamond">◈</span> ' + yearStr;
         // Then type the description
         var dtFullText = d.text;
         var dtIdx = 0;
@@ -588,7 +588,7 @@
     var mText = document.getElementById('tl-mobile-text');
     var mMeta = document.getElementById('tl-mobile-meta');
     if (mYear) {
-      mYear.textContent = '◈ ' + d.year + ' — ' + d.tag;
+      mYear.innerHTML = '<span class="tl-diamond">◈</span> ' + d.year + ' — ' + d.tag;
       mTag.textContent = '';
       mText.textContent = d.text;
       mMeta.textContent = d.meta;
