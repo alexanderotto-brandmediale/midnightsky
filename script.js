@@ -333,6 +333,7 @@ function playSfx(name) {
 
   setInterval(function () {
     heroName.classList.add('glitching');
+    playSfx('glitch');
     setTimeout(function () {
       idx = (idx + 1) % phrases.length;
       spans[0].textContent = phrases[idx][0];
