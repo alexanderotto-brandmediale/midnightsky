@@ -1279,6 +1279,28 @@
     '2024': 'transformation', '2025': 'emergence', '2026': 'amplification'
   };
 
+  // Timeline reveal animation
+  var track = document.querySelector('.tl-track');
+  if (track) {
+    var tlObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          track.classList.add('visible');
+          // Stagger points
+          var pts = track.querySelectorAll('.tl-point');
+          pts.forEach(function (p, i) {
+            p.style.transitionDelay = (0.5 + i * 0.05) + 's';
+          });
+        } else {
+          track.classList.remove('visible');
+          var pts = track.querySelectorAll('.tl-point');
+          pts.forEach(function (p) { p.style.transitionDelay = '0s'; });
+        }
+      });
+    }, { threshold: 0.3 });
+    tlObserver.observe(track);
+  }
+
   // Render timeline points
   function renderPoints() {
     container.innerHTML = '';

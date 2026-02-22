@@ -1058,7 +1058,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .statement {
-  font-family: var(--font);
+  font-family: 'Tomorrow', var(--font);
   font-size: clamp(1.8rem, 4.5vw, 4rem);
   font-weight: 200;
   line-height: 1.35;
@@ -1170,6 +1170,12 @@ a { color: inherit; text-decoration: none; }
   right: 0;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 5%, rgba(255,255,255,0.2) 95%, transparent);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.5s ease-out;
+}
+.tl-track.visible .tl-line {
+  transform: scaleX(1);
 }
 
 .tl-point {
@@ -1182,6 +1188,11 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
   align-items: center;
   gap: 0.3rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.tl-track.visible .tl-point {
+  opacity: 1;
   transition: all 0.3s ease;
   /* Big invisible hit area */
   padding: 16px 12px;
