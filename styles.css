@@ -803,6 +803,77 @@ a { color: inherit; text-decoration: none; }
   color: var(--dim);
 }
 
+/* ── 02 SIGNAL — expanded root story ──────────────── */
+.signal-content--expanded {
+  min-height: auto;
+  padding-top: 15vh;
+  padding-bottom: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.root-story {
+  margin-top: 5rem;
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+  padding-left: 3rem;
+}
+
+.root-story::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(255,87,90,0.2) 10%, rgba(255,87,90,0.2) 90%, transparent);
+}
+
+.root-chapter {
+  position: relative;
+  margin-bottom: 3rem;
+  padding-left: 1.5rem;
+}
+
+.root-chapter::before {
+  content: '';
+  position: absolute;
+  left: -3.35rem;
+  top: 0.4rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid var(--secondary);
+  background: var(--black);
+}
+
+.root-year {
+  display: block;
+  font-family: 'Geist', monospace;
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  color: var(--secondary);
+  opacity: 0.6;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+
+.root-chapter p {
+  font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+  font-weight: 300;
+  color: var(--dim);
+  line-height: 1.9;
+}
+
+/* ── Remove scroll-snap for expanded sections ─────── */
+#signal {
+  min-height: auto;
+  scroll-snap-align: none;
+}
+
 /* ── 03 ABOUT — split layout ─────────────────────── */
 .scene--split {
   display: grid;
