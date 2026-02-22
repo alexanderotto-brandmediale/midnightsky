@@ -2623,7 +2623,7 @@ function playSfx(name) {
 
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
-      playSfx('tab');
+      playSfx('nav');
       var cat = tab.dataset.tab;
       tabs.forEach(function (t) { t.classList.remove('active'); });
       tab.classList.add('active');
