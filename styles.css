@@ -1912,6 +1912,8 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
 }
 
 /* ── 06 HOW HE THINKS ────────────────────────────── */
+.tab-nav-wrapper { display: contents; }
+.tab-arrow { display: none; }
 .thinking-tabs {
   display: flex;
   gap: 0;
@@ -2695,6 +2697,14 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   .thinking-header .section-heading > span { display: block; }
   .thinking-header .section-heading > span > .letter { display: inline-block; }
   .thinking-header .micro-label { display: none !important; }
+  .tab-nav-wrapper { display: flex; align-items: center; gap: 0; }
+  .tab-arrow {
+    background: none; border: none; color: rgba(255,87,90,0.7);
+    font-size: 1.8rem; padding: 0 0.3rem; cursor: pointer;
+    flex-shrink: 0; line-height: 1;
+  }
+  .tab-arrow:active { color: rgba(255,87,90,1); }
+  .thinking-tabs { flex: 1; min-width: 0; }
   .cosmos-heading-small {
     top: auto !important;
     bottom: 2rem !important;

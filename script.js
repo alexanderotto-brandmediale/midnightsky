@@ -2948,6 +2948,16 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   }
 })();
 
+/* ── Tab Arrow Navigation (Mobile) ─────────────────── */
+(function () {
+  var tabs = document.getElementById('thinking-tabs');
+  var left = document.getElementById('tab-arrow-left');
+  var right = document.getElementById('tab-arrow-right');
+  if (!tabs || !left || !right) return;
+  left.addEventListener('click', function () { tabs.scrollBy({ left: -120, behavior: 'smooth' }); playSfx('nav'); });
+  right.addEventListener('click', function () { tabs.scrollBy({ left: 120, behavior: 'smooth' }); playSfx('nav'); });
+})();
+
 /* ── Glitch-on-Reveal Sound ────────────────────────── */
 (function () {
   document.querySelectorAll('.glitch-on-reveal').forEach(function (el) {
