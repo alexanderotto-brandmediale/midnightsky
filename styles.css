@@ -412,7 +412,14 @@ a { color: inherit; text-decoration: none; }
   opacity: 1;
 }
 
-.indicator:hover {
+.section-indicators:hover .indicator {
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+.section-indicators:hover .indicator.active {
+  opacity: 1;
+}
+.section-indicators:hover .indicator:hover {
   opacity: 0.7;
 }
 
