@@ -1004,9 +1004,9 @@
       var sc = toScreen(nd.x, nd.y);
       var isFocused = focusedNode === nd;
       var isOther = focusedNode && focusedNode !== nd;
-      // Hover detection (top level only, not zoomed)
+      // Hover detection (top level only, not zoomed, not grey)
       var isHovered = false;
-      if (!focusedNode) {
+      if (!focusedNode && !isGrey) {
         var hdx = mx * dpr - sc.x, hdy = my * dpr - sc.y;
         if (Math.sqrt(hdx * hdx + hdy * hdy) < ringR + 10 * cam.zoom * dpr) isHovered = true;
       }
