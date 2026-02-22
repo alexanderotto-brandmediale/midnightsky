@@ -96,22 +96,40 @@
     animId = requestAnimationFrame(draw);
   }
 
+  var starfieldRunning = false;
+  function startStarfield() {
+    if (starfieldRunning) return;
+    starfieldRunning = true;
+    draw(0);
+  }
+  function stopStarfield() {
+    starfieldRunning = false;
+    cancelAnimationFrame(animId);
+  }
+
   function init() {
     resize();
     createStars();
-    draw(0);
   }
+
+  // Only animate when visible
+  var sfObs = new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) startStarfield(); else stopStarfield();
+  }, { threshold: 0 });
+  sfObs.observe(canvas);
 
   let resizeTimer;
   window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
-      cancelAnimationFrame(animId);
+      stopStarfield();
       init();
+      if (canvas.getBoundingClientRect().bottom > 0) startStarfield();
     }, 250);
   });
 
   init();
+  startStarfield();
 })();
 
 /* ── Noise → Order Particle Animation ─────────────── */
@@ -627,7 +645,7 @@
     function animateGlow() {
       glowPhase += 0.03;
       drawMountain(highlightIdx, glowPhase);
-      if (glowPhase < Math.PI * 60) {
+      if (glowPhase < Math.PI * 4) {
         glowAnimId = requestAnimationFrame(animateGlow);
       }
     }
