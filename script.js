@@ -848,7 +848,11 @@
       camTarget.y = clicked.y;
       camTarget.zoom = 2.5;
       if (bigH) bigH.classList.add('hidden');
-      if (smallH) smallH.classList.add('visible');
+      if (smallH) {
+        smallH.classList.remove('visible');
+        void smallH.offsetWidth; // force reflow to restart animation
+        smallH.classList.add('visible');
+      }
     } else {
       // Zoom out
       focusedNode = null;
