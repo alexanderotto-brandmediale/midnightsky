@@ -575,7 +575,7 @@
         { label: 'Human×Machine', ox: 70, oy: 50 },
         { label: 'Workflow Auto', ox: -20, oy: 70 }
       ],
-      desc: 'Creative partner, operational multiplier, perceptual lens.'
+      desc: 'My creative partner, operational multiplier, perceptual lens.'
     },
     { id: 1, label: 'UAP', full: 'UAP & Reality', x: 0, y: 0,
       sub: [
@@ -605,7 +605,7 @@
         { label: 'Drift', ox: 50, oy: 55 },
         { label: 'Self-Awareness', ox: -5, oy: 70 }
       ],
-      desc: 'Why people do what they do.'
+      desc: 'Why people do what they do — and why I care.'
     },
     { id: 4, label: 'Brand', full: 'Brand Strategy', x: 0, y: 0,
       sub: [
@@ -615,7 +615,7 @@
         { label: 'Coherence', ox: 60, oy: 40 },
         { label: 'Differentiation', ox: 0, oy: 65 }
       ],
-      desc: 'Brands as systems of meaning.'
+      desc: 'I see brands as systems of meaning.'
     },
     { id: 5, label: 'Music', full: 'Music & Creativity', x: 0, y: 0,
       sub: [
@@ -625,7 +625,7 @@
         { label: 'Flow State', ox: 55, oy: 50 },
         { label: 'Expression', ox: -5, oy: 65 }
       ],
-      desc: 'Creativity as counterweight.'
+      desc: 'My counterweight. Where structure meets improvisation.'
     },
     { id: 6, label: 'Physics', full: 'Physics & Origin', x: 0, y: 0,
       sub: [
@@ -635,7 +635,7 @@
         { label: 'Complexity', ox: 60, oy: 45 },
         { label: 'Patterns', ox: 0, oy: 70 }
       ],
-      desc: 'The big questions.'
+      desc: 'The big questions I keep returning to.'
     }
   ];
 
