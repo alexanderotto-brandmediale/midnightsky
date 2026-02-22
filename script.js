@@ -770,6 +770,87 @@
   renderPoints();
   setActive(activeIdx);
 
+  // Mouse crosshair on mountain canvas
+  var mouseX = -1;
+  var crosshairRunning = false;
+  
+  canvas.style.pointerEvents = 'auto';
+  canvas.style.cursor = 'none';
+  
+  canvas.addEventListener('mousemove', function (e) {
+    var rect = canvas.getBoundingClientRect();
+    mouseX = ((e.clientX - rect.left) / rect.width) * canvas.width;
+    if (!crosshairRunning) { crosshairRunning = true; drawCrosshair(); }
+  });
+  
+  canvas.addEventListener('mouseleave', function () {
+    mouseX = -1;
+    crosshairRunning = false;
+    drawMountain(activeIdx, glowPhase);
+  });
+  
+  canvas.addEventListener('click', function (e) {
+    var rect = canvas.getBoundingClientRect();
+    var clickPct = (e.clientX - rect.left) / rect.width;
+    var nearest = Math.round(clickPct * (data.length - 1));
+    nearest = Math.max(0, Math.min(data.length - 1, nearest));
+    setActive(nearest);
+  });
+  
+  function drawCrosshair() {
+    if (mouseX < 0) { crosshairRunning = false; return; }
+    drawMountain(activeIdx, glowPhase);
+    
+    var w = canvas.width, h = canvas.height;
+    
+    ctx.beginPath();
+    ctx.moveTo(mouseX, 0);
+    ctx.lineTo(mouseX, h);
+    ctx.strokeStyle = 'rgba(255,87,90,0.2)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([2, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    
+    var pct = mouseX / w;
+    var idx = pct * (data.length - 1);
+    var lo = Math.floor(idx), hi = Math.min(lo + 1, data.length - 1);
+    var t = idx - lo;
+    var loY = h - (data[lo].density / 10) * (h * 0.85);
+    var hiY = h - (data[hi].density / 10) * (h * 0.85);
+    var crossY = loY + (hiY - loY) * t;
+    
+    ctx.beginPath();
+    ctx.moveTo(0, crossY);
+    ctx.lineTo(w, crossY);
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.arc(mouseX, crossY, 5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,87,90,0.7)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(mouseX, crossY, 8, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(255,87,90,0.3)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    
+    var yearIdx = Math.round(pct * (data.length - 1));
+    yearIdx = Math.max(0, Math.min(data.length - 1, yearIdx));
+    ctx.fillStyle = 'rgba(255,255,255,0.45)';
+    ctx.font = '18px Geist, monospace';
+    ctx.fillText(data[yearIdx].year, mouseX + 12, crossY - 12);
+    
+    var densityVal = (data[lo].density + (data[hi].density - data[lo].density) * t).toFixed(1);
+    ctx.fillStyle = 'rgba(255,87,90,0.4)';
+    ctx.font = '14px Geist, monospace';
+    ctx.fillText(densityVal + 'x', mouseX + 12, crossY + 20);
+    
+    requestAnimationFrame(drawCrosshair);
+  }
+
   // Resize
   window.addEventListener('resize', function () {
     drawMountain(activeIdx, glowPhase);
