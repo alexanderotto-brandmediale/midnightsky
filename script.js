@@ -1817,7 +1817,7 @@
       a.target = '_blank';
       a.rel = 'noopener';
       a.className = 'thinking-wiki';
-      a.textContent = 'W';
+      a.textContent = 'more on wikipedia';
       h3.appendChild(a);
     }
   });
