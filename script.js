@@ -549,7 +549,7 @@
   });
 })();
 
-/* ── Cosmos Sphere — Interest Gravity Visualization ── */
+/* ── Cosmos Network — Interest Map with Zoom ─────── */
 (function () {
   var canvas = document.getElementById('cosmos-canvas');
   if (!canvas) return;
@@ -557,27 +557,97 @@
   var tooltip = document.getElementById('cosmos-tooltip');
   var section = document.getElementById('gravity');
   var isVisible = false, animId;
-  var w, h, cx, cy, radius;
+  var w, h, dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   var mx = -999, my = -999;
-  var hoveredNode = null;
-  var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
 
-  // Interest fields — nodes on the sphere
-  var fields = [
-    { label: 'AI as\nAmplification', angle: 0.3, r: 0.72, sub: ['LLMs', 'Agents', 'Prompt Design', 'Human×Machine', 'Workflow Automation'], desc: 'Creative partner, operational multiplier, perceptual lens.' },
-    { label: 'UAP &\nReality', angle: 1.1, r: 0.65, sub: ['Epistemology', 'Perception', 'Evidence', 'Narrative', 'Wonder'], desc: 'When the data doesn\'t fit the model. Where epistemology meets wonder.' },
-    { label: 'Future\nThinking', angle: 2.0, r: 0.78, sub: ['Scenarios', 'Weak Signals', 'Tensions', 'Optionality', 'Resilience'], desc: 'Not prediction — preparation. Scenario thinking as design discipline.' },
-    { label: 'Systems\nPsychology', angle: 2.9, r: 0.70, sub: ['Adler', 'Behavioral Design', 'Leadership', 'Drift', 'Self-Awareness'], desc: 'Why people do what they do — and why organizations drift.' },
-    { label: 'Brand\nStrategy', angle: 3.7, r: 0.75, sub: ['Positioning', 'Tonality', 'Experience', 'Coherence', 'Differentiation'], desc: 'Brands as systems of meaning. Coherence across every touchpoint.' },
-    { label: 'Music &\nCreativity', angle: 4.5, r: 0.68, sub: ['Piano', 'Production', 'Synthesis', 'Flow State', 'Expression'], desc: 'Creativity as counterweight. Where structure meets improvisation.' },
-    { label: 'Physics &\nOrigin', angle: 5.3, r: 0.73, sub: ['Cosmology', 'Astronomy', 'Emergence', 'Complexity', 'Patterns'], desc: 'The big questions. From quantum to cosmic scale.' }
+  // Camera state
+  var cam = { x: 0, y: 0, zoom: 1 };
+  var camTarget = { x: 0, y: 0, zoom: 1 };
+  var focusedNode = null;
+
+  // Interest field nodes
+  var nodes = [
+    { id: 0, label: 'AI', full: 'AI as Amplification', x: 0, y: 0,
+      sub: [
+        { label: 'LLMs', ox: -70, oy: -50 },
+        { label: 'Agents', ox: 60, oy: -40 },
+        { label: 'Prompt Design', ox: -80, oy: 30 },
+        { label: 'Human×Machine', ox: 70, oy: 50 },
+        { label: 'Workflow Auto', ox: -20, oy: 70 }
+      ],
+      desc: 'Creative partner, operational multiplier, perceptual lens.'
+    },
+    { id: 1, label: 'UAP', full: 'UAP & Reality', x: 0, y: 0,
+      sub: [
+        { label: 'Epistemology', ox: -65, oy: -45 },
+        { label: 'Perception', ox: 55, oy: -35 },
+        { label: 'Evidence', ox: -50, oy: 40 },
+        { label: 'Narrative', ox: 60, oy: 45 },
+        { label: 'Wonder', ox: 0, oy: 65 }
+      ],
+      desc: 'When the data doesn\'t fit the model.'
+    },
+    { id: 2, label: 'Future', full: 'Future Thinking', x: 0, y: 0,
+      sub: [
+        { label: 'Scenarios', ox: -60, oy: -50 },
+        { label: 'Weak Signals', ox: 65, oy: -30 },
+        { label: 'Tensions', ox: -70, oy: 25 },
+        { label: 'Optionality', ox: 55, oy: 50 },
+        { label: 'Resilience', ox: -10, oy: 70 }
+      ],
+      desc: 'Not prediction — preparation.'
+    },
+    { id: 3, label: 'Systems', full: 'Systems Psychology', x: 0, y: 0,
+      sub: [
+        { label: 'Adler', ox: -55, oy: -45 },
+        { label: 'Behavioral Design', ox: 70, oy: -30 },
+        { label: 'Leadership', ox: -65, oy: 35 },
+        { label: 'Drift', ox: 50, oy: 55 },
+        { label: 'Self-Awareness', ox: -5, oy: 70 }
+      ],
+      desc: 'Why people do what they do.'
+    },
+    { id: 4, label: 'Brand', full: 'Brand Strategy', x: 0, y: 0,
+      sub: [
+        { label: 'Positioning', ox: -60, oy: -40 },
+        { label: 'Tonality', ox: 55, oy: -45 },
+        { label: 'Experience', ox: -70, oy: 30 },
+        { label: 'Coherence', ox: 60, oy: 40 },
+        { label: 'Differentiation', ox: 0, oy: 65 }
+      ],
+      desc: 'Brands as systems of meaning.'
+    },
+    { id: 5, label: 'Music', full: 'Music & Creativity', x: 0, y: 0,
+      sub: [
+        { label: 'Piano', ox: -50, oy: -45 },
+        { label: 'Production', ox: 60, oy: -35 },
+        { label: 'Synthesis', ox: -65, oy: 30 },
+        { label: 'Flow State', ox: 55, oy: 50 },
+        { label: 'Expression', ox: -5, oy: 65 }
+      ],
+      desc: 'Creativity as counterweight.'
+    },
+    { id: 6, label: 'Physics', full: 'Physics & Origin', x: 0, y: 0,
+      sub: [
+        { label: 'Cosmology', ox: -60, oy: -40 },
+        { label: 'Astronomy', ox: 55, oy: -45 },
+        { label: 'Emergence', ox: -70, oy: 35 },
+        { label: 'Complexity', ox: 60, oy: 45 },
+        { label: 'Patterns', ox: 0, oy: 70 }
+      ],
+      desc: 'The big questions.'
+    }
   ];
 
-  // Flowing particles along curved paths
-  var streams = [];
-  var STREAM_COUNT = 160;
-  var dots = [];
-  var DOT_COUNT = 400;
+  // Edges between related nodes
+  var edges = [
+    [0, 2], [0, 3], [0, 4], [1, 6], [1, 3], [2, 3], [2, 6],
+    [3, 5], [4, 0], [4, 2], [5, 1], [5, 6], [6, 0]
+  ];
+
+  // Ambient particles
+  var particles = [];
+  var PARTICLE_COUNT = 300;
 
   function resize() {
     var rect = canvas.parentElement.getBoundingClientRect();
@@ -585,253 +655,238 @@
     h = canvas.height = rect.height * dpr;
     canvas.style.width = rect.width + 'px';
     canvas.style.height = rect.height + 'px';
-    cx = w / 2;
-    cy = h / 2;
-    radius = Math.min(w, h) * 0.48;
-    initStreams();
-    initDots();
-    computeNodePositions();
+    layoutNodes();
+    initParticles();
   }
 
-  function computeNodePositions() {
-    fields.forEach(function (f) {
-      var a = f.angle;
-      var r = f.r * radius;
-      f.x = cx + Math.cos(a) * r;
-      f.y = cy + Math.sin(a) * r;
-      // Sub-topics orbit around node
-      f.subPos = f.sub.map(function (s, i) {
-        var sa = a + (i - 2) * 0.35;
-        var sr = r + 30 + i * 12;
-        return { label: s, x: cx + Math.cos(sa) * sr, y: cy + Math.sin(sa) * sr };
-      });
+  function layoutNodes() {
+    var cx = w / (2 * dpr), cy = h / (2 * dpr);
+    var spread = Math.min(w, h) / (2 * dpr) * 0.7;
+    nodes.forEach(function (n, i) {
+      var a = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
+      n.x = cx + Math.cos(a) * spread;
+      n.y = cy + Math.sin(a) * spread;
     });
   }
 
-  function initStreams() {
-    streams = [];
-    for (var i = 0; i < STREAM_COUNT; i++) {
-      var baseAngle = Math.random() * Math.PI * 2;
-      var pts = [];
-      var numPts = 40 + Math.floor(Math.random() * 30);
-      var r0 = radius * (0.1 + Math.random() * 0.9);
-      var escapes = Math.random() > 0.4; // 60% of streams extend beyond sphere
-      for (var j = 0; j < numPts; j++) {
-        var t = j / numPts;
-        var a = baseAngle + t * (1.2 + Math.random() * 2.5) + Math.sin(t * 3) * 0.4;
-        var r = r0 + Math.sin(t * Math.PI) * radius * 0.4 + Math.sin(t * 5) * 20;
-        if (!escapes) {
-          var distFromCenter = Math.sqrt(Math.pow(Math.cos(a) * r, 2) + Math.pow(Math.sin(a) * r, 2));
-          if (distFromCenter > radius) r = radius * radius / distFromCenter;
-        } else {
-          // Let streams branch out beyond sphere, up to edge
-          r = Math.min(r * 1.3, Math.min(w, h) * 0.49);
-        }
-        pts.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
-      }
-      streams.push({
-        pts: pts,
-        offset: Math.random() * 100,
-        speed: 0.15 + Math.random() * 0.35,
-        opacity: 0.025 + Math.random() * 0.055,
-        width: 0.2 + Math.random() * 0.7
+  function initParticles() {
+    particles = [];
+    for (var i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push({
+        x: Math.random() * w / dpr,
+        y: Math.random() * h / dpr,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        r: 0.3 + Math.random() * 1,
+        opacity: 0.05 + Math.random() * 0.2,
+        pulse: Math.random() * Math.PI * 2
       });
     }
   }
 
-  function initDots() {
-    dots = [];
-    for (var i = 0; i < DOT_COUNT; i++) {
-      var a = Math.random() * Math.PI * 2;
-      var r = Math.random() * radius * (Math.random() > 0.3 ? 1.3 : 1);
-      dots.push({
-        x: cx + Math.cos(a) * r,
-        y: cy + Math.sin(a) * r,
-        r: 0.3 + Math.random() * 1.2,
-        opacity: 0.1 + Math.random() * 0.4,
-        pulse: Math.random() * Math.PI * 2,
-        speed: 0.005 + Math.random() * 0.02
-      });
-    }
+  // Transform world coords to screen coords
+  function toScreen(x, y) {
+    return {
+      x: (x - cam.x) * cam.zoom * dpr + w / 2,
+      y: (y - cam.y) * cam.zoom * dpr + h / 2
+    };
+  }
+
+  // Screen to world
+  function toWorld(sx, sy) {
+    return {
+      x: (sx * dpr - w / 2) / (cam.zoom * dpr) + cam.x,
+      y: (sy * dpr - h / 2) / (cam.zoom * dpr) + cam.y
+    };
   }
 
   var time = 0;
-
   function draw() {
     ctx.clearRect(0, 0, w, h);
-    time += 0.01;
+    time += 0.008;
 
-    // Flowing streams
-    for (var s = 0; s < streams.length; s++) {
-      var st = streams[s];
-      var pts = st.pts;
-      var off = (time * st.speed * 60 + st.offset) % pts.length;
+    // Lerp camera
+    cam.x += (camTarget.x - cam.x) * 0.06;
+    cam.y += (camTarget.y - cam.y) * 0.06;
+    cam.zoom += (camTarget.zoom - cam.zoom) * 0.06;
 
-      var col = '249,248,242';
-
+    // Ambient particles
+    for (var p = 0; p < particles.length; p++) {
+      var pt = particles[p];
+      pt.x += pt.vx;
+      pt.y += pt.vy;
+      pt.pulse += 0.02;
+      if (pt.x < -20) pt.x = w / dpr + 20;
+      if (pt.x > w / dpr + 20) pt.x = -20;
+      if (pt.y < -20) pt.y = h / dpr + 20;
+      if (pt.y > h / dpr + 20) pt.y = -20;
+      var sc = toScreen(pt.x, pt.y);
+      var po = pt.opacity * (0.5 + 0.5 * Math.sin(pt.pulse));
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(' + col + ',' + st.opacity + ')';
-      ctx.lineWidth = st.width;
-
-      var started = false;
-      for (var p = 0; p < pts.length; p++) {
-        var idx = Math.floor((p + off) % pts.length);
-        var pt = pts[idx];
-        // Fade at edges of stream
-        var fade = Math.sin((p / pts.length) * Math.PI);
-        if (!started) { ctx.moveTo(pt.x, pt.y); started = true; }
-        else ctx.lineTo(pt.x, pt.y);
-      }
-      ctx.stroke();
-    }
-
-    // Scattered dots — pulsing
-    for (var d = 0; d < dots.length; d++) {
-      var dot = dots[d];
-      dot.pulse += dot.speed;
-      var po = dot.opacity * (0.5 + 0.5 * Math.sin(dot.pulse));
-      ctx.beginPath();
-      ctx.arc(dot.x, dot.y, dot.r * dpr, 0, Math.PI * 2);
+      ctx.arc(sc.x, sc.y, pt.r * cam.zoom * dpr, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(249,248,242,' + po + ')';
       ctx.fill();
     }
 
-    // Connection lines between nodes — filigree
-    ctx.lineWidth = 0.5;
-    for (var i = 0; i < fields.length; i++) {
-      for (var j = i + 1; j < fields.length; j++) {
-        var fi = fields[i], fj = fields[j];
-        var dist = Math.sqrt(Math.pow(fi.x - fj.x, 2) + Math.pow(fi.y - fj.y, 2));
-        if (dist < radius * 1.2) {
-          var op = 0.04 * (1 - dist / (radius * 1.2));
-          ctx.beginPath();
-          ctx.moveTo(fi.x, fi.y);
-          // Curved connection through center
-          var mx2 = cx + (fi.x + fj.x - 2 * cx) * 0.3;
-          var my2 = cy + (fi.y + fj.y - 2 * cy) * 0.3;
-          ctx.quadraticCurveTo(mx2, my2, fj.x, fj.y);
-          ctx.strokeStyle = 'rgba(249,248,242,' + op + ')';
-          ctx.stroke();
-        }
-      }
+    // Edges — filigree lines
+    ctx.lineWidth = 0.5 * cam.zoom * dpr;
+    for (var e = 0; e < edges.length; e++) {
+      var a = nodes[edges[e][0]], b = nodes[edges[e][1]];
+      var sa = toScreen(a.x, a.y), sb = toScreen(b.x, b.y);
+      // Curved line
+      var mcx = (sa.x + sb.x) / 2 + Math.sin(time + e) * 8 * cam.zoom * dpr;
+      var mcy = (sa.y + sb.y) / 2 + Math.cos(time + e) * 8 * cam.zoom * dpr;
+      ctx.beginPath();
+      ctx.moveTo(sa.x, sa.y);
+      ctx.quadraticCurveTo(mcx, mcy, sb.x, sb.y);
+      ctx.strokeStyle = 'rgba(249,248,242,0.06)';
+      ctx.stroke();
+
+      // Traveling dot along edge
+      var t = (time * 0.5 + e * 0.3) % 1;
+      var tx = (1-t)*(1-t)*sa.x + 2*(1-t)*t*mcx + t*t*sb.x;
+      var ty = (1-t)*(1-t)*sa.y + 2*(1-t)*t*mcy + t*t*sb.y;
+      ctx.beginPath();
+      ctx.arc(tx, ty, 1.5 * cam.zoom * dpr, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(249,248,242,0.15)';
+      ctx.fill();
     }
 
-    // Node rendering
-    hoveredNode = null;
-    for (var n = 0; n < fields.length; n++) {
-      var f = fields[n];
-      var dx = mx * dpr - f.x;
-      var dy = my * dpr - f.y;
-      var isHover = Math.sqrt(dx * dx + dy * dy) < 40 * dpr;
-      if (isHover) hoveredNode = f;
+    // Nodes
+    for (var n = 0; n < nodes.length; n++) {
+      var nd = nodes[n];
+      var sc = toScreen(nd.x, nd.y);
+      var isFocused = focusedNode === nd;
+      var isOther = focusedNode && focusedNode !== nd;
+      var nodeOp = isOther ? 0.1 : (isFocused ? 1 : 0.5);
 
-      var nodeR = isHover ? 5 * dpr : 3 * dpr;
-      var nodeOp = isHover ? 0.9 : 0.5;
-
-      // Node glow
-      if (isHover) {
-        var grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, 50 * dpr);
-        grad.addColorStop(0, 'rgba(255,87,90,0.15)');
-        grad.addColorStop(1, 'rgba(255,87,90,0)');
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(f.x, f.y, 50 * dpr, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      // Node outer ring — breathing
+      var breathe = 1 + Math.sin(time * 2 + n) * 0.1;
+      var ringR = (isFocused ? 22 : 14) * cam.zoom * dpr * breathe;
+      ctx.beginPath();
+      ctx.arc(sc.x, sc.y, ringR, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255,87,90,' + (nodeOp * 0.2) + ')';
+      ctx.lineWidth = 0.5 * cam.zoom * dpr;
+      ctx.stroke();
 
       // Node dot
+      var dotR = (isFocused ? 4 : 2.5) * cam.zoom * dpr;
       ctx.beginPath();
-      ctx.arc(f.x, f.y, nodeR, 0, Math.PI * 2);
+      ctx.arc(sc.x, sc.y, dotR, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255,87,90,' + nodeOp + ')';
       ctx.fill();
 
-      // Node ring
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, nodeR + 4 * dpr, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(255,87,90,' + (nodeOp * 0.3) + ')';
-      ctx.lineWidth = 0.5;
-      ctx.stroke();
-
       // Node label
-      var labelOp = isHover ? 0.9 : 0.25;
-      ctx.font = (isHover ? '500 ' : '300 ') + (10 * dpr) + 'px Geist, monospace';
-      ctx.fillStyle = 'rgba(249,248,242,' + labelOp + ')';
+      var fontSize = (isFocused ? 13 : 10) * cam.zoom * dpr;
+      ctx.font = (isFocused ? '500 ' : '300 ') + fontSize + 'px Geist, monospace';
+      ctx.fillStyle = 'rgba(249,248,242,' + nodeOp + ')';
       ctx.textAlign = 'center';
-      var lines = f.label.split('\n');
-      for (var l = 0; l < lines.length; l++) {
-        ctx.fillText(lines[l], f.x, f.y - 15 * dpr + l * 12 * dpr - (lines.length - 1) * 6 * dpr);
-      }
+      ctx.fillText(isFocused ? nd.full : nd.label, sc.x, sc.y - ringR - 6 * cam.zoom * dpr);
 
-      // Sub-topics on hover
-      if (isHover) {
-        for (var si = 0; si < f.subPos.length; si++) {
-          var sp = f.subPos[si];
+      // Sub-topics when focused
+      if (isFocused) {
+        for (var s = 0; s < nd.sub.length; s++) {
+          var sub = nd.sub[s];
+          var sx = nd.x + sub.ox * 1.8;
+          var sy = nd.y + sub.oy * 1.8;
+          var ss = toScreen(sx, sy);
+
           // Line from node to sub
           ctx.beginPath();
-          ctx.moveTo(f.x, f.y);
-          ctx.lineTo(sp.x, sp.y);
-          ctx.strokeStyle = 'rgba(123,140,255,0.12)';
-          ctx.lineWidth = 0.5;
+          ctx.moveTo(sc.x, sc.y);
+          ctx.lineTo(ss.x, ss.y);
+          ctx.strokeStyle = 'rgba(249,248,242,0.08)';
+          ctx.lineWidth = 0.5 * cam.zoom * dpr;
           ctx.stroke();
 
           // Sub dot
           ctx.beginPath();
-          ctx.arc(sp.x, sp.y, 1.5 * dpr, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(123,140,255,0.6)';
+          ctx.arc(ss.x, ss.y, 1.5 * cam.zoom * dpr, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(249,248,242,0.5)';
           ctx.fill();
 
           // Sub label
-          ctx.font = '300 ' + (8 * dpr) + 'px Geist, monospace';
-          ctx.fillStyle = 'rgba(123,140,255,0.5)';
+          ctx.font = '300 ' + (9 * cam.zoom * dpr) + 'px Geist, monospace';
+          ctx.fillStyle = 'rgba(249,248,242,0.4)';
           ctx.textAlign = 'center';
-          ctx.fillText(sp.label, sp.x, sp.y - 6 * dpr);
+          ctx.fillText(sub.label, ss.x, ss.y - 8 * cam.zoom * dpr);
         }
-      }
-    }
 
-    // Tooltip
-    if (hoveredNode && tooltip) {
-      tooltip.innerHTML = '<strong>' + hoveredNode.label.replace('\n', ' ') + '</strong>' + hoveredNode.desc;
-      tooltip.classList.add('visible');
-      var tx = (hoveredNode.x / dpr) + 20;
-      var ty = (hoveredNode.y / dpr) - 40;
-      if (tx + 220 > canvas.parentElement.offsetWidth) tx = (hoveredNode.x / dpr) - 240;
-      tooltip.style.left = tx + 'px';
-      tooltip.style.top = ty + 'px';
-    } else if (tooltip) {
-      tooltip.classList.remove('visible');
+        // Description text
+        ctx.font = '300 ' + (8 * cam.zoom * dpr) + 'px Geist, monospace';
+        ctx.fillStyle = 'rgba(255,87,90,0.5)';
+        ctx.fillText(nd.desc, sc.x, sc.y + ringR + 16 * cam.zoom * dpr);
+      }
     }
 
     if (isVisible) animId = requestAnimationFrame(draw);
   }
 
-  // Mouse tracking
-  canvas.addEventListener('mousemove', function (e) {
+  // Click handler
+  canvas.addEventListener('click', function (e) {
     var rect = canvas.getBoundingClientRect();
-    mx = e.clientX - rect.left;
-    my = e.clientY - rect.top;
-  });
-  canvas.addEventListener('mouseleave', function () {
-    mx = -999; my = -999;
+    var world = toWorld(e.clientX - rect.left, e.clientY - rect.top);
+
+    // Check if clicking a node
+    var clicked = null;
+    for (var i = 0; i < nodes.length; i++) {
+      var dx = world.x - nodes[i].x;
+      var dy = world.y - nodes[i].y;
+      if (Math.sqrt(dx * dx + dy * dy) < 40 / cam.zoom) {
+        clicked = nodes[i];
+        break;
+      }
+    }
+
+    if (clicked && clicked !== focusedNode) {
+      // Zoom in
+      focusedNode = clicked;
+      camTarget.x = clicked.x;
+      camTarget.y = clicked.y;
+      camTarget.zoom = 2.5;
+    } else {
+      // Zoom out
+      focusedNode = null;
+      camTarget.x = w / (2 * dpr);
+      camTarget.y = h / (2 * dpr);
+      camTarget.zoom = 1;
+    }
   });
 
-  // Visibility observer
+  // Hover cursor
+  canvas.addEventListener('mousemove', function (e) {
+    var rect = canvas.getBoundingClientRect();
+    var world = toWorld(e.clientX - rect.left, e.clientY - rect.top);
+    var onNode = false;
+    for (var i = 0; i < nodes.length; i++) {
+      var dx = world.x - nodes[i].x;
+      var dy = world.y - nodes[i].y;
+      if (Math.sqrt(dx * dx + dy * dy) < 40 / cam.zoom) { onNode = true; break; }
+    }
+    canvas.style.cursor = onNode ? 'pointer' : 'none';
+  });
+
+  // Visibility
   var obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting && !isVisible) {
         isVisible = true;
         resize();
+        camTarget.x = cam.x = w / (2 * dpr);
+        camTarget.y = cam.y = h / (2 * dpr);
         draw();
       } else if (!entry.isIntersecting && isVisible) {
         isVisible = false;
         cancelAnimationFrame(animId);
+        focusedNode = null;
+        camTarget.zoom = cam.zoom = 1;
       }
     });
   }, { threshold: 0.2 });
   obs.observe(section);
 
   window.addEventListener('resize', function () { if (isVisible) resize(); });
-})();
+})()
 
 /* ── HUD Interactive Timeline ─────────────────────── */
 (function () {
