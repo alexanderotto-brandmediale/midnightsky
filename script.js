@@ -858,6 +858,22 @@
   });
 })();
 
+/* ── Lazy Video: pause when off-screen ─────────────── */
+(function () {
+  var videos = document.querySelectorAll('.video-bg video');
+  if (!videos.length) return;
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.play();
+      } else {
+        entry.target.pause();
+      }
+    });
+  }, { threshold: 0.05 });
+  videos.forEach(function (v) { observer.observe(v); });
+})();
+
 /* ── Smooth Anchor Scroll + URL Hash ───────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   anchor.addEventListener('click', function (e) {
