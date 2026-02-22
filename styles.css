@@ -2820,7 +2820,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
 .ambient-toggle {
   position: fixed;
   bottom: 2rem;
-  right: 2rem;
+  right: 5rem;
   z-index: 60;
   background: none;
   border: 1px solid rgba(249,248,242,0.08);
