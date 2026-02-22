@@ -4,6 +4,7 @@
   var overlay = document.getElementById('menu-overlay');
   if (!btn || !overlay) return;
   btn.addEventListener('click', function () {
+    playSfx('click');
     btn.classList.toggle('active');
     overlay.classList.toggle('active');
     document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
@@ -34,7 +35,7 @@
 
   function goToSection(num) {
     var target = document.getElementById(sections[num - 1]);
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    if (target) { playSfx('click'); target.scrollIntoView({ behavior: 'smooth' }); }
   }
 
   // Keyboard
@@ -1124,6 +1125,7 @@
       // Zoom in
       focusedNode = clicked;
       focusedNode._focusTime = performance.now();
+      playSfx('click');
       camTarget.x = clicked.x;
       camTarget.y = clicked.y;
       camTarget.zoom = 2.5;
@@ -1135,6 +1137,7 @@
       }
     } else {
       // Zoom out
+      playSfx('pulse');
       focusedNode = null;
       camTarget.x = w / (2 * dpr);
       camTarget.y = h / (2 * dpr);
@@ -1266,37 +1269,26 @@
   var glowPhase = 0;
   var glowAnimId = null;
 
-  // Sci-fi typewriter sound via Web Audio API
-  var audioCtx = null;
-  function playTypeClick() {
-    if (!audioCtx) {
-      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { return; }
-    }
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-    var t = audioCtx.currentTime;
-    // Short click — filtered noise burst
-    var bufLen = audioCtx.sampleRate * 0.03;
-    var buf = audioCtx.createBuffer(1, bufLen, audioCtx.sampleRate);
-    var data = buf.getChannelData(0);
-    for (var i = 0; i < bufLen; i++) {
-      var env = Math.exp(-i / (bufLen * 0.15));
-      data[i] = (Math.random() * 2 - 1) * env * 0.12;
-    }
-    var src = audioCtx.createBufferSource();
-    src.buffer = buf;
-    // Bandpass for sci-fi tone
-    var filter = audioCtx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.frequency.value = 3500 + Math.random() * 2000;
-    filter.Q.value = 5;
-    var gain = audioCtx.createGain();
-    gain.gain.value = 0.15;
-    src.connect(filter);
-    filter.connect(gain);
-    gain.connect(audioCtx.destination);
-    src.start(t);
-    src.stop(t + 0.03);
+  // Sci-fi sound system
+  var sfxPool = {};
+  function playSfx(name) {
+    try {
+      if (!sfxPool[name]) sfxPool[name] = [];
+      // Pool of 3 audio instances per sound for overlap
+      var pool = sfxPool[name];
+      var audio = pool.find(function(a) { return a.paused || a.ended; });
+      if (!audio) {
+        if (pool.length >= 3) { audio = pool[0]; } else {
+          audio = new Audio('sfx/' + name + '.mp3');
+          audio.volume = name === 'type' ? 0.25 : (name === 'pulse' ? 0.15 : 0.2);
+          pool.push(audio);
+        }
+      }
+      audio.currentTime = 0;
+      audio.play().catch(function(){});
+    } catch(e) {}
   }
+  function playTypeClick() { playSfx('type'); }
 
   // Direction word changes with timeline hover
   var directionEl = document.getElementById('word-direction');
@@ -2396,6 +2388,7 @@
 
   tabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
+      playSfx('tab');
       var cat = tab.dataset.tab;
       tabs.forEach(function (t) { t.classList.remove('active'); });
       tab.classList.add('active');
