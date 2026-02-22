@@ -885,6 +885,73 @@
   updateBg();
 })();
 
+/* ── Side Data: Count-Up, Enterprise Cycle, Hover ──── */
+(function () {
+  // Count-up animation
+  var countups = document.querySelectorAll('.tl-countup');
+  var counted = false;
+  function runCountup() {
+    if (counted) return;
+    counted = true;
+    countups.forEach(function (el) {
+      var target = parseInt(el.dataset.target);
+      var suffix = el.dataset.suffix || '';
+      var duration = 2000;
+      var start = performance.now();
+      function step(now) {
+        var progress = Math.min((now - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  // Trigger when side-data visible
+  var sideData = document.querySelector('.tl-side-data');
+  if (sideData) {
+    var obs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { runCountup(); obs.disconnect(); }
+    }, { threshold: 0.3 });
+    obs.observe(sideData);
+  }
+
+  // Enterprise cycling
+  var enterprises = ['BSH', 'Nestlé', 'Barmenia', 'Heinz-Glas', 'PORR', 'Avenida-Therme'];
+  var entEl = document.getElementById('tl-enterprise');
+  if (entEl) {
+    var entIdx = 0;
+    setInterval(function () {
+      entEl.style.opacity = '0';
+      setTimeout(function () {
+        entIdx = (entIdx + 1) % enterprises.length;
+        entEl.textContent = enterprises[entIdx];
+        entEl.style.opacity = '1';
+      }, 400);
+    }, 2500);
+  }
+
+  // HUD Hover Tooltip
+  var tooltip = document.getElementById('tl-hover-tooltip');
+  var tooltipText = document.getElementById('tl-hover-text');
+  if (!tooltip || !tooltipText) return;
+
+  var items = document.querySelectorAll('.tl-side-item[data-hover]');
+  items.forEach(function (item) {
+    item.addEventListener('mouseenter', function () {
+      tooltipText.textContent = item.dataset.hover;
+      tooltip.classList.add('visible');
+    });
+    item.addEventListener('mouseleave', function () {
+      tooltip.classList.remove('visible');
+    });
+    item.addEventListener('mousemove', function (e) {
+      tooltip.style.left = (e.clientX + 20) + 'px';
+      tooltip.style.top = (e.clientY - 20) + 'px';
+    });
+  });
+})();
+
 /* ── Swipe Cards Navigation ────────────────────────── */
 (function () {
   var track = document.getElementById('swipe-track');
