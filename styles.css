@@ -665,7 +665,7 @@ a { color: inherit; text-decoration: none; }
 
 .hero-name {
   font-family: var(--font);
-  font-size: clamp(3rem, 10vw, 8rem);
+  font-size: clamp(2.5rem, 8vw, 6rem);
   font-weight: 200;
   line-height: 0.9;
   letter-spacing: 0.04em;
@@ -675,6 +675,27 @@ a { color: inherit; text-decoration: none; }
 
 .hero-name span {
   display: block;
+}
+
+.hero-verb {
+  font-family: var(--font);
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 200;
+  font-style: italic;
+  letter-spacing: 0.1em;
+  color: var(--secondary);
+  opacity: 0.6;
+  margin-bottom: 1.5rem;
+  height: 2.5rem;
+  overflow: hidden;
+}
+.hero-verb-cycle {
+  display: inline-block;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.hero-verb-cycle.out {
+  opacity: 0;
+  transform: translateY(-100%);
 }
 
 .hero-tagline {

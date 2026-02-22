@@ -1,3 +1,19 @@
+/* ── Hero Verb Cycle ───────────────────────────────── */
+(function () {
+  var el = document.getElementById('hero-verb-cycle');
+  if (!el) return;
+  var verbs = ['designs', 'builds', 'transforms', 'questions', 'creates', 'clarifies', 'strategizes', 'connects', 'reimagines'];
+  var idx = 0;
+  setInterval(function () {
+    el.classList.add('out');
+    setTimeout(function () {
+      idx = (idx + 1) % verbs.length;
+      el.textContent = verbs[idx];
+      el.classList.remove('out');
+    }, 400);
+  }, 3000);
+})();
+
 /* ── Custom Cursor ─────────────────────────────────── */
 (function () {
   var dot = document.getElementById('cursor-dot');
