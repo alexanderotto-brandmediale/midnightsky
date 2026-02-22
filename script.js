@@ -835,7 +835,7 @@ function playSfx(name) {
   var canvas = document.getElementById('cosmos-canvas');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
-  var tooltip = document.getElementById('cosmos-tooltip');
+  // tooltip moved to body-level #cosmos-tooltip
   var section = document.getElementById('gravity');
   var isVisible = false, animId;
   var w, h, dpr = Math.min(window.devicePixelRatio || 1, 1.5);
