@@ -636,7 +636,7 @@
         { label: 'Effizienz', ox: 0, oy: 70 }
       ],
       desc: 'Understanding the systems that move everything.',
-      companies: ['BSH', 'brandnext']
+      companies: []
     },
     { id: 7, label: 'Psychology', full: 'Systems Psychology', x: 0, y: 0,
       sub: [
@@ -669,7 +669,7 @@
         { label: 'Accessibility', ox: 0, oy: 70 }
       ],
       desc: 'Designing what people actually use.',
-      companies: ['Avenida-Therme', 'BÜCHEL', 'ProQura']
+      companies: []
     },
     { id: 10, label: 'Cosmos', full: 'Physics & Origin', x: 0, y: 0,
       sub: [
@@ -691,17 +691,17 @@
         { label: 'Infrastructure', ox: -5, oy: 70 }
       ],
       desc: 'Where technology meets urgency.',
-      companies: ['BSH', 'SENEC']
+      companies: []
     }
   ];
 
   // Add companies to existing nodes
-  nodes[0].companies = ['brandmediale', 'brandnext'];  // AI
-  nodes[1].companies = [];  // UAP
-  nodes[2].companies = ['brandnext'];  // Future
-  nodes[3].companies = ['BSH', 'febana group', 'MICROSTEP'];  // Consulting
-  nodes[4].companies = ['brandmediale', 'Schaumberg', 'BÜCHEL'];  // Brand
-  nodes[5].companies = ['BSH', 'brandnext'];  // Transformation
+  nodes[0].companies = [];
+  nodes[1].companies = [];
+  nodes[2].companies = [];
+  nodes[3].companies = [];
+  nodes[4].companies = [];
+  nodes[5].companies = [];
 
   // Edges between related nodes
   var edges = [
