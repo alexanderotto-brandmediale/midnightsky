@@ -635,14 +635,88 @@
         { label: 'Systeme', ox: 60, oy: 45 },
         { label: 'Effizienz', ox: 0, oy: 70 }
       ],
-      desc: 'Understanding the systems that move everything.'
+      desc: 'Understanding the systems that move everything.',
+      companies: ['BSH', 'brandnext']
+    },
+    { id: 7, label: 'Psychology', full: 'Systems Psychology', x: 0, y: 0,
+      sub: [
+        { label: 'Adler', ox: -55, oy: -45 },
+        { label: 'Behavioral Design', ox: 65, oy: -30 },
+        { label: 'Self-Awareness', ox: -60, oy: 35 },
+        { label: 'Motivation', ox: 50, oy: 55 },
+        { label: 'Perception', ox: -5, oy: 70 }
+      ],
+      desc: 'Why people do what they do — and why organizations drift.',
+      companies: []
+    },
+    { id: 8, label: 'Music', full: 'Music & Creativity', x: 0, y: 0,
+      sub: [
+        { label: 'Piano', ox: -50, oy: -45 },
+        { label: 'Production', ox: 60, oy: -35 },
+        { label: 'Synthesis', ox: -65, oy: 30 },
+        { label: 'Flow State', ox: 55, oy: 50 },
+        { label: 'Improvisation', ox: -5, oy: 65 }
+      ],
+      desc: 'My counterweight. Where structure meets expression.',
+      companies: []
+    },
+    { id: 9, label: 'Design', full: 'Digital Experience', x: 0, y: 0,
+      sub: [
+        { label: 'UX/UI', ox: -55, oy: -40 },
+        { label: 'Interfaces', ox: 60, oy: -45 },
+        { label: 'Prototyping', ox: -70, oy: 30 },
+        { label: 'Systems Design', ox: 55, oy: 50 },
+        { label: 'Accessibility', ox: 0, oy: 70 }
+      ],
+      desc: 'Designing what people actually use.',
+      companies: ['Avenida-Therme', 'BÜCHEL', 'ProQura']
+    },
+    { id: 10, label: 'Cosmos', full: 'Physics & Origin', x: 0, y: 0,
+      sub: [
+        { label: 'Cosmology', ox: -60, oy: -40 },
+        { label: 'Astronomy', ox: 55, oy: -45 },
+        { label: 'Emergence', ox: -70, oy: 35 },
+        { label: 'Complexity', ox: 60, oy: 45 },
+        { label: 'Patterns', ox: 0, oy: 70 }
+      ],
+      desc: 'The big questions I keep returning to.',
+      companies: []
+    },
+    { id: 11, label: 'Energy', full: 'Energy & Climate', x: 0, y: 0,
+      sub: [
+        { label: 'Solar', ox: -55, oy: -45 },
+        { label: 'Storage', ox: 60, oy: -35 },
+        { label: 'Transition', ox: -65, oy: 30 },
+        { label: 'Policy', ox: 50, oy: 55 },
+        { label: 'Infrastructure', ox: -5, oy: 70 }
+      ],
+      desc: 'Where technology meets urgency.',
+      companies: ['BSH', 'SENEC']
     }
   ];
 
+  // Add companies to existing nodes
+  nodes[0].companies = ['brandmediale', 'brandnext'];  // AI
+  nodes[1].companies = [];  // UAP
+  nodes[2].companies = ['brandnext'];  // Future
+  nodes[3].companies = ['BSH', 'febana group', 'MICROSTEP'];  // Consulting
+  nodes[4].companies = ['brandmediale', 'Schaumberg', 'BÜCHEL'];  // Brand
+  nodes[5].companies = ['BSH', 'brandnext'];  // Transformation
+
   // Edges between related nodes
   var edges = [
-    [0, 2], [0, 3], [0, 4], [1, 6], [1, 3], [2, 3], [2, 6],
-    [3, 5], [4, 0], [4, 2], [5, 1], [5, 6], [6, 0]
+    [0, 2], [0, 3], [0, 4], [0, 5], [0, 9],
+    [1, 7], [1, 10],
+    [2, 3], [2, 5], [2, 6], [2, 11],
+    [3, 4], [3, 5], [3, 6],
+    [4, 9], [4, 3],
+    [5, 0], [5, 6], [5, 11],
+    [6, 3], [6, 11],
+    [7, 3], [7, 8],
+    [8, 7], [8, 10],
+    [9, 4], [9, 0],
+    [10, 1], [10, 8],
+    [11, 2], [11, 6]
   ];
 
   // Ambient particles
@@ -816,6 +890,22 @@
         ctx.font = '300 ' + (8 * cam.zoom * dpr) + 'px Geist, monospace';
         ctx.fillStyle = 'rgba(255,87,90,0.5)';
         ctx.fillText(nd.desc, sc.x, sc.y + ringR + 16 * cam.zoom * dpr);
+
+        // Companies — animated fade-in
+        if (nd.companies && nd.companies.length) {
+          if (!nd._companyAlpha) nd._companyAlpha = 0;
+          nd._companyAlpha = Math.min(nd._companyAlpha + 0.02, 1);
+          var compY = sc.y + ringR + 32 * cam.zoom * dpr;
+          ctx.font = '400 ' + (7 * cam.zoom * dpr) + 'px Geist, monospace';
+          for (var ci = 0; ci < nd.companies.length; ci++) {
+            var cAlpha = Math.max(0, nd._companyAlpha - ci * 0.15);
+            ctx.fillStyle = 'rgba(123,140,255,' + (cAlpha * 0.45) + ')';
+            var cx2 = sc.x + (ci - (nd.companies.length - 1) / 2) * 70 * cam.zoom * dpr;
+            ctx.fillText(nd.companies[ci], cx2, compY);
+          }
+        }
+      } else if (nd._companyAlpha) {
+        nd._companyAlpha = 0;
       }
     }
 
