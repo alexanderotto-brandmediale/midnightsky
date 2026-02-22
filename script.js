@@ -971,24 +971,28 @@
 /* ── Swipe Cards Navigation ────────────────────────── */
 (function () {
   var track = document.getElementById('swipe-track');
-  var prev = document.getElementById('swipe-prev');
-  var next = document.getElementById('swipe-next');
-  var counter = document.getElementById('swipe-counter');
-  if (!track || !prev || !next) return;
+  var dotsContainer = document.getElementById('swipe-dots');
+  if (!track || !dotsContainer) return;
 
   var cards = track.querySelectorAll('.swipe-card');
   var total = cards.length;
   var current = 0;
 
-  function scrollTo(idx) {
-    idx = Math.max(0, Math.min(total - 1, idx));
-    current = idx;
-    cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    counter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+  // Generate dots
+  var dots = [];
+  for (var d = 0; d < total; d++) {
+    var dot = document.createElement('div');
+    dot.className = 'swipe-dot' + (d === 0 ? ' active' : '');
+    dot.innerHTML = '<div class="swipe-dot-circle"></div><span class="swipe-dot-label">6.' + (d + 1) + '</span>';
+    dot.dataset.idx = d;
+    dot.addEventListener('click', (function (idx) {
+      return function () {
+        cards[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      };
+    })(d));
+    dotsContainer.appendChild(dot);
+    dots.push(dot);
   }
-
-  prev.addEventListener('click', function () { scrollTo(current - 1); });
-  next.addEventListener('click', function () { scrollTo(current + 1); });
 
   function updateActiveCard() {
     var trackRect = track.getBoundingClientRect();
@@ -1004,7 +1008,9 @@
     cards.forEach(function (card, i) {
       card.classList.toggle('active', i === closest);
     });
-    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    dots.forEach(function (dot, i) {
+      dot.classList.toggle('active', i === closest);
+    });
   }
 
   track.addEventListener('scroll', updateActiveCard, { passive: true });
