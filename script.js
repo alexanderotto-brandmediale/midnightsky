@@ -751,16 +751,17 @@
     [4, 9], [4, 3],
     [5, 0], [5, 6], [5, 11],
     [6, 3], [6, 11],
-    [7, 3], [7, 8],
-    [8, 7], [8, 10],
-    [9, 4], [9, 0],
-    [10, 1], [10, 8],
-    [11, 2], [11, 6]
+    [7, 3], [7, 8], [7, 0],
+    [8, 7], [8, 10], [8, 9],
+    [9, 4], [9, 0], [9, 5],
+    [10, 1], [10, 8], [10, 2],
+    [11, 2], [11, 6], [11, 0], [11, 3],
+    [1, 2], [4, 6], [3, 9], [5, 7]
   ];
 
   // Ambient particles
   var particles = [];
-  var PARTICLE_COUNT = 300;
+  var PARTICLE_COUNT = 500;
 
   function resize() {
     var rect = canvas.parentElement.getBoundingClientRect();
@@ -774,11 +775,12 @@
 
   function layoutNodes() {
     var cx = w / (2 * dpr), cy = h / (2 * dpr);
-    var spread = Math.min(w, h) / (2 * dpr) * 0.7;
+    var spreadX = w / (2 * dpr) * 0.85;
+    var spreadY = h / (2 * dpr) * 0.8;
     nodes.forEach(function (n, i) {
       var a = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
-      n.x = cx + Math.cos(a) * spread;
-      n.y = cy + Math.sin(a) * spread;
+      n.x = cx + Math.cos(a) * spreadX;
+      n.y = cy + Math.sin(a) * spreadY;
     });
   }
 
