@@ -1858,6 +1858,86 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── 06 HOW HE THINKS ────────────────────────────── */
+.thinking-tabs {
+  display: flex;
+  gap: 0;
+  margin: 2rem 0 2.5rem;
+  border-bottom: 1px solid rgba(249,248,242,0.06);
+}
+.thinking-tab {
+  background: none;
+  border: none;
+  color: rgba(249,248,242,0.25);
+  font-family: 'Geist', monospace;
+  font-size: 0.55rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+  border-bottom: 1px solid transparent;
+  margin-bottom: -1px;
+}
+.thinking-tab:hover { color: rgba(249,248,242,0.5); }
+.thinking-tab.active {
+  color: rgba(255,87,90,0.9);
+  border-bottom-color: rgba(255,87,90,0.4);
+}
+
+.thinking-stream {
+  max-width: 700px;
+}
+.thinking-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.thinking-item {
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(249,248,242,0.04);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: thinking-fade-in 0.5s ease forwards;
+}
+.thinking-item:nth-child(2) { animation-delay: 0.08s; }
+.thinking-item:nth-child(3) { animation-delay: 0.16s; }
+.thinking-item:nth-child(4) { animation-delay: 0.24s; }
+@keyframes thinking-fade-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+.thinking-num {
+  font-family: 'Geist', monospace;
+  font-size: 0.5rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  color: rgba(255,87,90,0.35);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.thinking-item h3 {
+  font-family: 'Geist', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(249,248,242,0.85);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
+}
+.thinking-item p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: rgba(249,248,242,0.5);
+  line-height: 1.8;
+}
+.thinking-counter {
+  font-family: 'Geist', monospace;
+  font-size: 0.5rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: rgba(249,248,242,0.15);
+  margin-top: 1.5rem;
+}
+
 .thinking-content {
   display: flex;
   flex-direction: column;

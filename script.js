@@ -1750,7 +1750,37 @@
   });
 })();
 
-/* ── Swipe Cards Navigation ────────────────────────── */
+/* ── Thinking Tabs ─────────────────────────────────── */
+(function () {
+  var tabs = document.querySelectorAll('.thinking-tab');
+  var blocks = document.querySelectorAll('.thinking-block');
+  var counter = document.getElementById('thinking-current');
+  var ranges = { perspective: '01–04', systems: '05–08', strategy: '09–12', human: '13–16', future: '17–20' };
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var cat = tab.dataset.tab;
+      tabs.forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      blocks.forEach(function (b) {
+        if (b.dataset.category === cat) {
+          b.style.display = '';
+          // Re-trigger animations
+          b.querySelectorAll('.thinking-item').forEach(function (item) {
+            item.style.animation = 'none';
+            void item.offsetWidth;
+            item.style.animation = '';
+          });
+        } else {
+          b.style.display = 'none';
+        }
+      });
+      if (counter) counter.textContent = ranges[cat] || '';
+    });
+  });
+})();
+
+/* ── Swipe Cards Navigation (legacy) ──────────────── */
 (function () {
   var track = document.getElementById('swipe-track');
   var dotsContainer = document.getElementById('swipe-dots');

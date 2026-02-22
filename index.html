@@ -390,62 +390,141 @@
           <span class="section-num reveal reveal-left">06</span>
           <h2 class="section-heading reveal reveal-left letter-animate blur-type glitch-on-reveal">How I Think</h2>
         </div>
-        <div class="swipe-track" id="swipe-track">
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">01</span>
-            <h3>Upper Atmosphere</h3>
-            <p>I prefer distance over noise. Not to escape the system — but to see its shape. Up here, urgency dissolves. Deadlines become weather. Trends become currents. What looked chaotic from inside begins to reveal structure. Patterns appear where others see events.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">02</span>
-            <h3>Orbit</h3>
-            <p>I move into orbit around problems. Not rushing toward them, not fighting them, but observing their gravity. Every organization generates a field: of expectations, fears, ambitions, unspoken rules. Decisions curve within this field like trajectories through space. Change does not come from pushing harder. It comes from altering the field itself.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">03</span>
-            <h3>The View From Above</h3>
-            <p>From altitude, hierarchies flatten. Departments become ecosystems. Processes become flows. Conflicts become signals of misalignment. You see where energy accumulates. Where it leaks. Where the system protects itself. Where it quietly sabotages its own intentions. A small adjustment in the right place can redirect everything below.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">04</span>
-            <h3>Weather Systems</h3>
-            <p>Organizations have climates, not just cultures. Periods of pressure. Calm surfaces hiding deep turbulence. Sudden storms triggered by seemingly minor events. I read these conditions like atmospheric data — not to predict perfectly, but to understand what kinds of movement are possible right now. Strategy, in this sense, is navigation.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">05</span>
-            <h3>Signal</h3>
-            <p>Most communication is noise echoing inside a closed system. True signal is rare. It carries direction, not volume. It reduces uncertainty instead of amplifying it. My work is often to extract that signal — the few sentences, decisions, or principles that suddenly make everything else legible. Clarity feels quiet, not loud.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">06</span>
-            <h3>Human Gravity</h3>
-            <p>Systems are built by people, and people carry invisible mass: identity, status, memory, fear, hope. These forces bend decisions long before logic enters the room. Ignoring them creates elegant plans that never land. Working with them turns change into something the system can accept without tearing itself apart.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">07</span>
-            <h3>Future Air</h3>
-            <p>The future is not a destination ahead. It is a pressure system already forming around us. Technologies, narratives, expectations — they arrive gradually, like changes in air density, until flight paths must adjust whether we planned for it or not. I prepare organizations not for one forecast, but for continuous shifts in conditions. Stability comes from adaptability, not rigidity.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">08</span>
-            <h3>Leverage Points</h3>
-            <p>Some places in a system are structurally quiet but strategically loud. Change them, and cascades follow. Ignore them, and effort multiplies without progress. Finding these points is less like solving a puzzle and more like listening for resonance. When the right intervention happens, the system moves almost by itself.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">09</span>
-            <h3>Clarity</h3>
-            <p>I don't promise certainty. Fog is part of complex terrain. Anyone claiming perfect visibility is either naive or selling something. What I offer instead is orientation: a sense of where you are, what matters, and which direction will still make sense tomorrow. Clarity is not the removal of uncertainty. It is the ability to move within it.</p>
-          </div>
-          <div class="swipe-card glass-panel">
-            <span class="swipe-num">10</span>
-            <h3>Re-Entry</h3>
-            <p>Eventually, every orbit ends. Insights must return to ground level, translated into structures, decisions, language, and action. Ideas that cannot survive re-entry were never useful. Concepts that do become architecture. That is the real work: turning perspective into something that holds.</p>
-          </div>
+
+        <div class="thinking-tabs" id="thinking-tabs">
+          <button class="thinking-tab active" data-tab="perspective">Perspective</button>
+          <button class="thinking-tab" data-tab="systems">Systems</button>
+          <button class="thinking-tab" data-tab="strategy">Strategy</button>
+          <button class="thinking-tab" data-tab="human">Human</button>
+          <button class="thinking-tab" data-tab="future">Future</button>
         </div>
-        <div class="swipe-nav-bar">
-          <button class="swipe-arrow swipe-arrow-left" id="swipe-prev" aria-label="Previous card">&#8249;</button>
-          <div class="swipe-dots" id="swipe-dots"></div>
-          <button class="swipe-arrow swipe-arrow-right" id="swipe-next" aria-label="Next card">&#8250;</button>
+
+        <div class="thinking-stream" id="thinking-stream">
+
+          <!-- PERSPECTIVE -->
+          <div class="thinking-block" data-category="perspective">
+            <div class="thinking-item reveal">
+              <span class="thinking-num">01</span>
+              <h3>Upper Atmosphere</h3>
+              <p>I prefer distance over noise. Not to escape the system — but to see its shape. Up here, urgency dissolves. Deadlines become weather. Trends become currents. What looked chaotic from inside begins to reveal structure.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">02</span>
+              <h3>The View From Above</h3>
+              <p>From altitude, hierarchies flatten. Departments become ecosystems. Processes become flows. Conflicts become signals of misalignment. You see where energy accumulates. Where it leaks. Where the system protects itself. Where it quietly sabotages its own intentions.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">03</span>
+              <h3>Orbit</h3>
+              <p>I move into orbit around problems. Not rushing toward them, not fighting them, but observing their gravity. Every organization generates a field: of expectations, fears, ambitions, unspoken rules. Decisions curve within this field like trajectories through space.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">04</span>
+              <h3>Pattern Recognition</h3>
+              <p>Patterns don't announce themselves. They emerge sideways — in the repeated complaint, the avoided topic, the thing that's obvious but never said. I've learned to listen for what isn't there. Silence in an organization often carries more information than all its dashboards combined.</p>
+            </div>
+          </div>
+
+          <!-- SYSTEMS -->
+          <div class="thinking-block" data-category="systems" style="display:none">
+            <div class="thinking-item reveal">
+              <span class="thinking-num">05</span>
+              <h3>Weather Systems</h3>
+              <p>Organizations have climates, not just cultures. Periods of pressure. Calm surfaces hiding deep turbulence. Sudden storms triggered by seemingly minor events. I read these conditions like atmospheric data — not to predict perfectly, but to understand what kinds of movement are possible right now.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">06</span>
+              <h3>Leverage Points</h3>
+              <p>Some places in a system are structurally quiet but strategically loud. Change them, and cascades follow. Ignore them, and effort multiplies without progress. Finding these points is less like solving a puzzle and more like listening for resonance.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">07</span>
+              <h3>Feedback Loops</h3>
+              <p>Every system talks to itself. Sales informs marketing informs product informs leadership informs sales again. Most loops reinforce what already exists — confirmation disguised as insight. Breaking a loop means introducing a new signal. Sometimes one question, asked to the right person at the right time, rewires the whole circuit.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">08</span>
+              <h3>Entropy</h3>
+              <p>Left alone, systems don't stay organized. They drift. Roles blur. Responsibilities overlap. Communication thickens into noise. The second law applies to organizations too: without deliberate energy input, structure degrades. My work often begins by naming what has quietly decayed.</p>
+            </div>
+          </div>
+
+          <!-- STRATEGY -->
+          <div class="thinking-block" data-category="strategy" style="display:none">
+            <div class="thinking-item reveal">
+              <span class="thinking-num">09</span>
+              <h3>Signal</h3>
+              <p>Most communication is noise echoing inside a closed system. True signal is rare. It carries direction, not volume. It reduces uncertainty instead of amplifying it. My work is often to extract that signal — the few sentences, decisions, or principles that suddenly make everything else legible.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">10</span>
+              <h3>Clarity</h3>
+              <p>I don't promise certainty. Fog is part of complex terrain. Anyone claiming perfect visibility is either naive or selling something. What I offer instead is orientation: a sense of where you are, what matters, and which direction will still make sense tomorrow.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">11</span>
+              <h3>Decision Architecture</h3>
+              <p>Most bad decisions aren't made by bad people. They're made inside bad structures. When the decision point is unclear, when accountability is diffuse, when information arrives too late — even brilliant minds produce mediocre outcomes. I redesign the architecture before I critique the choices.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">12</span>
+              <h3>Tempo</h3>
+              <p>Strategy has rhythm. Some moments demand speed — decisive action before the window closes. Others demand patience — waiting while the landscape reshapes itself. The mistake is applying one tempo to everything. I help organizations sense which mode they're in and switch deliberately, not reactively.</p>
+            </div>
+          </div>
+
+          <!-- HUMAN -->
+          <div class="thinking-block" data-category="human" style="display:none">
+            <div class="thinking-item reveal">
+              <span class="thinking-num">13</span>
+              <h3>Human Gravity</h3>
+              <p>Systems are built by people, and people carry invisible mass: identity, status, memory, fear, hope. These forces bend decisions long before logic enters the room. Ignoring them creates elegant plans that never land. Working with them turns change into something the system can accept.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">14</span>
+              <h3>The Unspoken Contract</h3>
+              <p>Every team operates on two levels: the formal structure and the invisible agreements nobody signed. Who's really in charge. What can't be said in meetings. Which failures are tolerated and which end careers. Until you see the unspoken contract, you're only managing the surface.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">15</span>
+              <h3>Identity as Infrastructure</h3>
+              <p>People don't resist change because they're stubborn. They resist because change threatens what they've built their identity around. A brand strategist told to "think more like a data analyst" doesn't hear opportunity — they hear erasure. Transformation that ignores identity isn't transformation. It's violence wearing a roadmap.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">16</span>
+              <h3>Trust Velocity</h3>
+              <p>Trust isn't a binary. It builds at different speeds in different directions. Technical trust can arrive in a single meeting. Emotional trust takes months. Strategic trust — the kind where someone lets you reshape their organization — takes years. I've learned to calibrate which layer I'm working with and not rush the deeper ones.</p>
+            </div>
+          </div>
+
+          <!-- FUTURE -->
+          <div class="thinking-block" data-category="future" style="display:none">
+            <div class="thinking-item reveal">
+              <span class="thinking-num">17</span>
+              <h3>Future Air</h3>
+              <p>The future is not a destination ahead. It is a pressure system already forming around us. Technologies, narratives, expectations — they arrive gradually, like changes in air density, until flight paths must adjust whether we planned for it or not.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">18</span>
+              <h3>AI as Amplification</h3>
+              <p>AI doesn't replace thinking. It amplifies whatever thinking was already there — including the bad kind. Organizations that lacked clarity before AI will now lack clarity faster. Those with genuine strategic intelligence will move at speeds previously impossible. The tool is neutral. The mind behind it is not.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">19</span>
+              <h3>Post-Digital</h3>
+              <p>We've passed the point where "digital transformation" means anything. Everything is digital now. The real question has shifted: what remains distinctly human? What can't be automated, templated, or generated? The answer is judgment, taste, relationships, and the courage to make decisions under uncertainty. That's where I focus.</p>
+            </div>
+            <div class="thinking-item reveal">
+              <span class="thinking-num">20</span>
+              <h3>Re-Entry</h3>
+              <p>Eventually, every orbit ends. Insights must return to ground level, translated into structures, decisions, language, and action. Ideas that cannot survive re-entry were never useful. Concepts that do become architecture. That is the real work: turning perspective into something that holds.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="thinking-counter" id="thinking-counter">
+          <span id="thinking-current">01–04</span> / 20
         </div>
       </div>
     </section>
