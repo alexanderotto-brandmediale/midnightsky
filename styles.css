@@ -1015,6 +1015,18 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ── Accent Words ─────────────────────────────────── */
+#word-noise {
+  display: inline-block;
+  animation: noise-glitch 4s infinite;
+}
+@keyframes noise-glitch {
+  0%, 85%, 93%, 100% { transform: translate(0); filter: none; }
+  87% { transform: translate(-2px, 1px) skewX(-6deg); filter: drop-shadow(2px 0 rgba(255,87,90,0.7)) drop-shadow(-2px 0 rgba(123,140,255,0.7)); }
+  89% { transform: translate(3px, -1px) skewX(4deg); filter: drop-shadow(-1px 0 rgba(52,10,34,0.8)); }
+  90% { transform: translate(-1px, 0) skewX(-3deg); filter: drop-shadow(1px 0 rgba(255,87,90,0.4)); }
+  91% { transform: translate(0); filter: none; }
+}
+
 .accent-word {
   transition: all 0.8s ease;
   position: relative;
