@@ -846,6 +846,127 @@ function playSfx(name) {
   var camTarget = { x: 0, y: 0, zoom: 1 };
   var focusedNode = null;
 
+  // Sub-topic descriptions: what it is + why it matters to me
+  var subDesc = {
+    // AI
+    'LLMs': 'Large Language Models — the most disruptive technology since the internet. I use them daily as thinking partners, writing tools, and creative amplifiers.',
+    'Agents': 'Autonomous AI systems that act on your behalf. I build these — they\'re reshaping how I work and think about delegation.',
+    'Prompt Design': 'The art of communicating with machines. Precision in language becomes precision in output. A new literacy.',
+    'Human×Machine': 'The interface between human intuition and machine capability. Not replacement — symbiosis.',
+    'Workflow Auto': 'Automating the repetitive so humans can focus on what matters. Every workflow I touch, I ask: what can an agent do here?',
+    'Superintelligence': 'Bostrom\'s question: what happens when machines surpass us? Not science fiction — a strategic reality I think about.',
+    'Alignment': 'How do you encode human values into something that might surpass human understanding? The most important unsolved problem.',
+    // UAP
+    'Epistemology': 'How do we know what we know? UAP forces this question wide open. Evidence, belief, authority — all in flux.',
+    'Perception': 'What we see is constructed. UAP phenomena challenge the boundaries of perception itself.',
+    'Evidence': 'What counts as evidence when the phenomenon defies categories? A deep epistemological puzzle.',
+    'Disclosure': 'The slow unraveling of decades of secrecy. Watching institutional truth-telling in real time.',
+    'Wonder': 'The irreducible feeling when confronted with genuine mystery. I never want to lose this.',
+    'Consciousness': 'Is consciousness fundamental to the universe? UAP and physics both point toward this question.',
+    'Non-Human Intel.': 'The possibility that we\'re not alone — and what that means for everything we assume about reality.',
+    // Future
+    'Scenarios': 'Not predicting the future — preparing for multiple futures. Scenario thinking as a discipline.',
+    'Weak Signals': 'The barely visible patterns that precede major shifts. Training yourself to notice them is a superpower.',
+    'Backcasting': 'Start with the desired future, work backwards. The opposite of forecasting — and often more useful.',
+    'Optionality': 'Keeping doors open. Taleb taught me: the value of options increases with uncertainty.',
+    'Resilience': 'Not just surviving disruption — being strengthened by it. Antifragility in practice.',
+    'Speculative Design': 'Using design to explore possible futures. Dunne & Raby opened this world for me.',
+    // Consulting
+    'Process Design': 'How work actually flows through an organization. Most problems are process problems in disguise.',
+    'Growth Strategy': 'Not growth for its own sake — growth with direction. Finding the lever that moves everything.',
+    'Leadership': 'Leadership as creating conditions, not commanding outcomes. Adler\'s influence runs deep here.',
+    'Change Mgmt': 'Why change fails: not because of strategy, but because of identity. The J-Curve is real.',
+    'Decision Logic': 'How organizations actually make decisions vs. how they think they do. The gap is where I work.',
+    'Org Architecture': 'The invisible structure that determines behavior. Change the architecture, change the culture.',
+    'Stakeholder Mgmt': 'Understanding that every organization is a web of interests, fears, and unspoken agreements.',
+    // Brand
+    'Positioning': 'Where you stand in someone\'s mind. Not what you say — what they remember. Ries & Trout.',
+    'Tonality': 'The voice behind the brand. Consistency across every touchpoint creates trust.',
+    'Experience': 'Brands are experienced, not consumed. Every interaction is a moment of truth.',
+    'Coherence': 'When everything — visual, verbal, behavioral — tells the same story. Rare and powerful.',
+    'Differentiation': 'Not being different for its own sake — being different in a way that matters.',
+    'Semiotics': 'The hidden language of signs and symbols. Brands speak in semiotics whether they know it or not.',
+    'Cultural Codes': 'The unwritten rules that govern perception. Miss them and your brand feels foreign.',
+    // Transform
+    'Digital': 'Digital transformation isn\'t about technology — it\'s about organizational readiness for continuous change.',
+    'Cultural': 'The hardest transformation. You can change tools overnight. Culture takes years.',
+    'Structural': 'Reorganizing the bones of an organization. Painful, necessary, often botched.',
+    'Identity Shift': 'When transformation requires letting go of who you were. The deepest kind of change.',
+    'J-Curve': 'Things get worse before they get better. Every transformation has this valley. Knowing it helps survive it.',
+    'Metabolism': 'How fast an organization can absorb change. Some can sprint. Most need to learn to walk first.',
+    // Economy
+    'Vermögensaufbau': 'Building wealth systematically. Compound interest is the eighth wonder — not just in finance.',
+    'Märkte': 'Markets as information systems. Price is a signal. Trends are narratives. Understanding both matters.',
+    'Investment': 'Not speculation — conviction backed by analysis. Long-term thinking in a short-term world.',
+    'Makroökonomie': 'The big picture: monetary policy, cycles, structural shifts. Context for everything else.',
+    'Effizienz': 'Doing more with less — but never at the cost of meaning. Efficiency without purpose is just speed.',
+    'Compound Effect': 'Small, consistent actions over time create extraordinary results. Applies to money, skills, relationships.',
+    'Behavioral Econ': 'Humans are not rational actors. Kahneman, Thaler, Ariely — understanding this changes everything.',
+    // Psychology
+    'Adler': 'Alfred Adler — the most underrated psychologist. Community feeling, inferiority, life style. My deepest influence.',
+    'Behavioral Design': 'Designing for how people actually behave, not how we wish they would.',
+    'Self-Awareness': 'The foundation of everything. You can\'t navigate if you don\'t know where you are.',
+    'Motivation': 'What drives people? Not rewards — meaning, belonging, the feeling of contribution. Adler again.',
+    'Cognitive Bias': 'The systematic errors in human thinking. Knowing them doesn\'t make you immune, but it helps.',
+    'Kahneman': 'System 1 and System 2. Fast and slow thinking. The framework that explains most decision-making errors.',
+    'Compensation': 'Adler\'s insight: every strength is a compensation for a perceived weakness. Profound and uncomfortable.',
+    // Music
+    'Piano': 'My instrument. Where I go when words aren\'t enough. Pure expression without strategy.',
+    'Production': 'Creating music with technology. Synthesis, arrangement, mixing — a different kind of systems thinking.',
+    'Synthesis': 'Sound design from scratch. Building textures, atmospheres, worlds. The ultimate creative freedom.',
+    'Flow State': 'Music reliably puts me in flow. That state where time dissolves and you\'re fully present.',
+    'Improvisation': 'Playing without a plan. Trusting your fingers, your ears, the moment. A practice in letting go.',
+    'Harmony': 'The mathematics of beauty. How notes relate to each other creates tension, resolution, emotion.',
+    // Design
+    'UX/UI': 'The interface between human need and digital capability. Good design is invisible.',
+    'Interfaces': 'Where systems meet people. The quality of this boundary determines everything.',
+    'Prototyping': 'Think with your hands. Build rough, test early, iterate fast. Knapp\'s Sprint method.',
+    'Systems Design': 'Designing not just screens but entire systems of interaction. The whole, not the parts.',
+    'Information Arch.': 'How information is organized determines how it\'s understood. Structure creates meaning.',
+    'Motion Design': 'Movement communicates. A well-timed animation says more than a paragraph of copy.',
+    // Cosmos
+    'Quantum': 'The universe at its smallest is deeply strange. Superposition, entanglement, measurement — reality is not what it seems.',
+    'Astronomy': 'Looking up and feeling small in the best possible way. Perspective by scale.',
+    'Emergence': 'Simple rules creating complex behavior. Consciousness from neurons. Markets from trades. Life from chemistry.',
+    'Complexity': 'The science of interconnected systems. Where reductionism fails, complexity theory begins.',
+    'Tegmark': 'The mathematical universe hypothesis — reality as pure mathematics. Mind-expanding.',
+    'Rovelli': 'Carlo Rovelli — the poet of physics. Time, loops, relational quantum mechanics. Beautiful thinking.',
+    'Entropy': 'The arrow of time. Why things fall apart. And why that makes life possible.',
+    // Energy
+    'Solar': 'The most abundant energy source we have. 17 years with BSH taught me the industry inside out.',
+    'Storage': 'Energy storage is the bottleneck. Solve this and you solve the energy transition.',
+    'Transition': 'Moving from fossil to renewable. Not just technical — political, social, psychological.',
+    'Policy': 'Energy policy shapes markets, behavior, and futures. Where I\'ve seen strategy meet reality.',
+    'Infrastructure': 'The invisible backbone. Grid, distribution, smart systems — unsexy but essential.',
+    'Grid': 'The electrical grid is a living system. Balancing supply and demand in real time across continents.',
+    // Comm
+    'Watzlawick': 'You cannot not communicate. His axioms rewired how I understand every interaction.',
+    'Luhmann': 'Systems theory applied to society. Communication communicates — not people. Radical and clarifying.',
+    'Framing': 'How you frame a problem determines which solutions become visible. Lakoff opened this door.',
+    'Signal Theory': 'Shannon\'s information theory. Noise, signal, bandwidth — applies far beyond engineering.',
+    'Rhetoric': 'The ancient art of persuasion. Still the most powerful technology humans have invented.',
+    'Narrative': 'Stories are how humans make sense of the world. Control the narrative, shape the reality.',
+    // Society
+    'Attention Economy': 'Attention is the new currency. Whoever captures it, shapes culture. Hari\'s "Stolen Focus" hit hard.',
+    'Trust': 'The invisible infrastructure of society. When trust erodes, everything becomes expensive and slow.',
+    'Collective Intel.': 'Groups can be smarter than individuals — under the right conditions. Surowiecki\'s four criteria.',
+    'Power Structures': 'Who decides, who benefits, who pays. Understanding power is understanding reality.',
+    'Institutions': 'The rules we live by — formal and informal. How they evolve, decay, and sometimes transform.',
+    // Time
+    'Relativität': 'Einstein showed time is relative. Rovelli went further: maybe time doesn\'t exist at all.',
+    'Subjective Time': 'Why an hour can feel like a minute or a lifetime. Time as experience, not measurement.',
+    'Arrow of Time': 'Why does time flow in one direction? Entropy, memory, causality — all connected.',
+    'Deep Time': 'Thinking in millions and billions of years. It changes how you see everything human.',
+    'Presentism': 'Only the present is real. The past is memory, the future is imagination. What does that mean for planning?',
+    // Strategy
+    'OODA Loop': 'Boyd\'s decision cycle: Observe, Orient, Decide, Act. Speed of iteration beats quality of plan.',
+    'Positioning': 'Strategic positioning — not where you are, but where you choose to compete. And where you don\'t.',
+    'Systems Mapping': 'Visualizing how parts connect. Once you see the system, you see the leverage points.',
+    'Design Thinking': 'Human-centered problem solving. Empathy first, solution second. Brown and IDEO.',
+    'Prototyping': 'Don\'t plan it — build it. A rough prototype teaches more than a polished strategy deck.',
+    'Decision Arch.': 'Designing the context in which decisions are made. Nudge theory meets organizational design.'
+  };
+
   // Interest field nodes
   var nodes = [
     { id: 0, label: 'AI', full: 'AI as Amplification', x: 0, y: 0,
@@ -1186,9 +1307,16 @@ function playSfx(name) {
   }
 
   var time = 0;
+  var hoveredSub = null;
+  var cosmosTooltip = document.getElementById('cosmos-tooltip');
+  var cosmosTooltipTitle = document.getElementById('cosmos-tooltip-title');
+  var cosmosTooltipText = document.getElementById('cosmos-tooltip-text');
+  var lastHoveredLabel = '';
+
   function draw() {
     ctx.clearRect(0, 0, w, h);
     time += 0.008;
+    hoveredSub = null;
 
     // Lerp camera
     cam.x += (camTarget.x - cam.x) * 0.06;
@@ -1285,7 +1413,7 @@ function playSfx(name) {
       ctx.textAlign = 'center';
       ctx.fillText(isFocused ? nd.full : nd.label, sc.x, sc.y - ringR - 6 * cam.zoom * dpr);
 
-      // Sub-topics when focused — staggered fade-in
+      // Sub-topics when focused — staggered fade-in + hover detection
       if (isFocused) {
         var elapsed = (performance.now() - (nd._focusTime || 0)) / 1000;
         for (var s = 0; s < nd.sub.length; s++) {
@@ -1312,9 +1440,31 @@ function playSfx(name) {
 
           // Sub label
           ctx.font = '300 ' + (9 * cam.zoom * dpr) + 'px Geist, monospace';
-          ctx.fillStyle = 'rgba(249,248,242,' + (0.4 * subAlpha) + ')';
+
+          // Hover detection for sub-topic
+          var subHover = false;
+          var shdx = mx * dpr - ss.x, shdy = my * dpr - ss.y;
+          if (Math.sqrt(shdx * shdx + shdy * shdy) < 20 * cam.zoom * dpr) {
+            subHover = true;
+            hoveredSub = { label: sub.label, screenX: ss.x / dpr, screenY: ss.y / dpr };
+          }
+
+          ctx.fillStyle = subHover
+            ? 'rgba(255,87,90,' + (0.8 * subAlpha) + ')'
+            : 'rgba(249,248,242,' + (0.4 * subAlpha) + ')';
           ctx.textAlign = 'center';
           ctx.fillText(sub.label, ss.x, ss.y - 8 * cam.zoom * dpr);
+
+          // Brighter dot on hover
+          if (subHover) {
+            ctx.beginPath();
+            ctx.arc(ss.x, ss.y, 3 * cam.zoom * dpr, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,87,90,' + (0.6 * subAlpha) + ')';
+            ctx.shadowColor = 'rgba(255,87,90,0.4)';
+            ctx.shadowBlur = 6;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
         }
 
         // Description text
@@ -1338,6 +1488,26 @@ function playSfx(name) {
       } else if (nd._companyAlpha) {
         nd._companyAlpha = 0;
       }
+    }
+
+    // Sub-topic tooltip
+    if (hoveredSub && subDesc[hoveredSub.label] && cosmosTooltip) {
+      if (hoveredSub.label !== lastHoveredLabel) {
+        lastHoveredLabel = hoveredSub.label;
+        cosmosTooltipTitle.textContent = hoveredSub.label.toUpperCase();
+        cosmosTooltipText.textContent = subDesc[hoveredSub.label];
+        playSfx('hover');
+      }
+      var rect = canvas.getBoundingClientRect();
+      var tx = rect.left + hoveredSub.screenX + 20;
+      var ty = rect.top + hoveredSub.screenY - 40;
+      if (tx + 280 > window.innerWidth) tx = rect.left + hoveredSub.screenX - 300;
+      cosmosTooltip.style.left = tx + 'px';
+      cosmosTooltip.style.top = ty + 'px';
+      cosmosTooltip.style.display = 'block';
+    } else {
+      if (cosmosTooltip) cosmosTooltip.style.display = 'none';
+      lastHoveredLabel = '';
     }
 
     if (isVisible) animId = requestAnimationFrame(draw);
