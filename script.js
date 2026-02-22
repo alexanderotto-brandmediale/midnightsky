@@ -540,6 +540,7 @@
       el.innerHTML = '<span class="tl-point-year">' + d.year + '</span>' +
         '<div class="tl-point-dot"></div>' +
         '<span class="tl-point-label">' + d.tag + '</span>';
+      // click kept as fallback for mobile tap
       el.addEventListener('click', function (e) { e.stopPropagation(); setActive(i); });
       container.appendChild(el);
     });
@@ -729,22 +730,22 @@
     }
   }
 
-  // SCRUBBER: click anywhere on the track to find nearest point
-  track.addEventListener('click', function (e) {
+  // SCRUBBER: mousemove over track selects nearest point
+  function findNearest(clientX) {
     var rect = track.getBoundingClientRect();
-    var clickX = (e.clientX - rect.left) / rect.width;
-    // Find nearest point
-    var nearest = 0;
-    var nearestDist = Infinity;
+    var pct = (clientX - rect.left) / rect.width;
+    var nearest = 0, nearestDist = Infinity;
     for (var i = 0; i < data.length; i++) {
-      var pct = i / (data.length - 1);
-      var dist = Math.abs(clickX - pct);
-      if (dist < nearestDist) {
-        nearestDist = dist;
-        nearest = i;
-      }
+      var d = Math.abs(pct - i / (data.length - 1));
+      if (d < nearestDist) { nearestDist = d; nearest = i; }
     }
-    setActive(nearest);
+    return nearest;
+  }
+  track.addEventListener('mousemove', function (e) {
+    setActive(findNearest(e.clientX));
+  });
+  track.addEventListener('click', function (e) {
+    setActive(findNearest(e.clientX));
   });
 
   // KEYBOARD NAVIGATION
@@ -789,12 +790,14 @@
     drawMountain(activeIdx, glowPhase);
   });
   
-  canvas.addEventListener('click', function (e) {
+  canvas.addEventListener('mousemove', function (e) {
     var rect = canvas.getBoundingClientRect();
-    var clickPct = (e.clientX - rect.left) / rect.width;
-    var nearest = Math.round(clickPct * (data.length - 1));
+    mouseX = ((e.clientX - rect.left) / rect.width) * canvas.width;
+    // Also update active point when scrubbing over chart
+    var nearest = Math.round(((e.clientX - rect.left) / rect.width) * (data.length - 1));
     nearest = Math.max(0, Math.min(data.length - 1, nearest));
     setActive(nearest);
+    if (!crosshairRunning) { crosshairRunning = true; drawCrosshair(); }
   });
   
   function drawCrosshair() {

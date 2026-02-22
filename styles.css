@@ -1076,12 +1076,11 @@ a { color: inherit; text-decoration: none; }
 /* Detail Panel */
 .tl-detail-panel {
   position: relative;
-  margin-bottom: 1.5rem;
-  padding: 1.5rem 2rem;
-  min-height: 120px;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 1rem;
+  padding: 1.2rem 2rem;
+  min-height: 100px;
+  opacity: 1;
+  transition: opacity 0.25s ease;
   text-align: center;
 }
 
