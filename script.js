@@ -612,27 +612,32 @@
         { label: 'Agents', ox: 60, oy: -40 },
         { label: 'Prompt Design', ox: -80, oy: 30 },
         { label: 'Human×Machine', ox: 70, oy: 50 },
-        { label: 'Workflow Auto', ox: -20, oy: 70 }
+        { label: 'Workflow Auto', ox: -20, oy: 70 },
+        { label: 'Superintelligence', ox: 85, oy: -10 },
+        { label: 'Alignment', ox: -60, oy: 60 }
       ],
       desc: 'My creative partner, operational multiplier, perceptual lens.'
     },
-    { id: 1, label: 'UAP', full: 'UAP & Reality', x: 0, y: 0,
+    { id: 1, label: 'UAP', full: 'UAP & Epistemology', x: 0, y: 0,
       sub: [
         { label: 'Epistemology', ox: -65, oy: -45 },
         { label: 'Perception', ox: 55, oy: -35 },
         { label: 'Evidence', ox: -50, oy: 40 },
-        { label: 'Narrative', ox: 60, oy: 45 },
-        { label: 'Wonder', ox: 0, oy: 65 }
+        { label: 'Disclosure', ox: 60, oy: 45 },
+        { label: 'Wonder', ox: 0, oy: 65 },
+        { label: 'Consciousness', ox: -75, oy: 10 },
+        { label: 'Non-Human Intel.', ox: 80, oy: 10 }
       ],
       desc: 'When the data doesn\'t fit the model.'
     },
-    { id: 2, label: 'Future', full: 'Future Thinking', x: 0, y: 0,
+    { id: 2, label: 'Future', full: 'Future Design', x: 0, y: 0,
       sub: [
         { label: 'Scenarios', ox: -60, oy: -50 },
         { label: 'Weak Signals', ox: 65, oy: -30 },
-        { label: 'Tensions', ox: -70, oy: 25 },
+        { label: 'Backcasting', ox: -70, oy: 25 },
         { label: 'Optionality', ox: 55, oy: 50 },
-        { label: 'Resilience', ox: -10, oy: 70 }
+        { label: 'Resilience', ox: -10, oy: 70 },
+        { label: 'Speculative Design', ox: 80, oy: 15 }
       ],
       desc: 'Not prediction — preparation.'
     },
@@ -642,7 +647,9 @@
         { label: 'Growth Strategy', ox: 70, oy: -30 },
         { label: 'Leadership', ox: -65, oy: 35 },
         { label: 'Change Mgmt', ox: 50, oy: 55 },
-        { label: 'Decision Logic', ox: -5, oy: 70 }
+        { label: 'Decision Logic', ox: -5, oy: 70 },
+        { label: 'Org Architecture', ox: -80, oy: 10 },
+        { label: 'Stakeholder Mgmt', ox: 85, oy: 15 }
       ],
       desc: 'Helping organizations find the leverage point.'
     },
@@ -652,41 +659,46 @@
         { label: 'Tonality', ox: 55, oy: -45 },
         { label: 'Experience', ox: -70, oy: 30 },
         { label: 'Coherence', ox: 60, oy: 40 },
-        { label: 'Differentiation', ox: 0, oy: 65 }
+        { label: 'Differentiation', ox: 0, oy: 65 },
+        { label: 'Semiotics', ox: -80, oy: -10 },
+        { label: 'Cultural Codes', ox: 80, oy: -15 }
       ],
-      desc: 'I see brands as systems of meaning.'
+      desc: 'Brands as systems of meaning.'
     },
     { id: 5, label: 'Transform', full: 'Transformation', x: 0, y: 0,
       sub: [
         { label: 'Digital', ox: -50, oy: -45 },
         { label: 'Cultural', ox: 60, oy: -35 },
         { label: 'Structural', ox: -65, oy: 30 },
-        { label: 'Mindset', ox: 55, oy: 50 },
-        { label: 'VUCA', ox: -5, oy: 65 }
+        { label: 'Identity Shift', ox: 55, oy: 50 },
+        { label: 'J-Curve', ox: -5, oy: 65 },
+        { label: 'Metabolism', ox: 80, oy: 5 }
       ],
       desc: 'Navigating disruption — in real time.'
     },
-    { id: 6, label: 'Economy', full: 'Ökonomie', x: 0, y: 0,
+    { id: 6, label: 'Economy', full: 'Ökonomie & Vermögen', x: 0, y: 0,
       sub: [
-        { label: 'Vermögen', ox: -60, oy: -40 },
+        { label: 'Vermögensaufbau', ox: -70, oy: -40 },
         { label: 'Märkte', ox: 55, oy: -45 },
         { label: 'Investment', ox: -70, oy: 35 },
-        { label: 'Systeme', ox: 60, oy: 45 },
-        { label: 'Effizienz', ox: 0, oy: 70 }
+        { label: 'Makroökonomie', ox: 60, oy: 45 },
+        { label: 'Effizienz', ox: 0, oy: 70 },
+        { label: 'Compound Effect', ox: -80, oy: 5 },
+        { label: 'Behavioral Econ', ox: 85, oy: 0 }
       ],
-      desc: 'Understanding the systems that move everything.',
-      companies: []
+      desc: 'Understanding the systems that move everything.'
     },
     { id: 7, label: 'Psychology', full: 'Systems Psychology', x: 0, y: 0,
       sub: [
         { label: 'Adler', ox: -55, oy: -45 },
-        { label: 'Behavioral Design', ox: 65, oy: -30 },
+        { label: 'Behavioral Design', ox: 75, oy: -30 },
         { label: 'Self-Awareness', ox: -60, oy: 35 },
         { label: 'Motivation', ox: 50, oy: 55 },
-        { label: 'Perception', ox: -5, oy: 70 }
+        { label: 'Cognitive Bias', ox: -5, oy: 70 },
+        { label: 'Kahneman', ox: -80, oy: 10 },
+        { label: 'Compensation', ox: 80, oy: 15 }
       ],
-      desc: 'Why people do what they do — and why organizations drift.',
-      companies: []
+      desc: 'Why people do what they do — and why organizations drift.'
     },
     { id: 8, label: 'Music', full: 'Music & Creativity', x: 0, y: 0,
       sub: [
@@ -694,10 +706,10 @@
         { label: 'Production', ox: 60, oy: -35 },
         { label: 'Synthesis', ox: -65, oy: 30 },
         { label: 'Flow State', ox: 55, oy: 50 },
-        { label: 'Improvisation', ox: -5, oy: 65 }
+        { label: 'Improvisation', ox: -5, oy: 65 },
+        { label: 'Harmony', ox: -75, oy: 5 }
       ],
-      desc: 'My counterweight. Where structure meets expression.',
-      companies: []
+      desc: 'My counterweight. Where structure meets expression.'
     },
     { id: 9, label: 'Design', full: 'Digital Experience', x: 0, y: 0,
       sub: [
@@ -705,21 +717,22 @@
         { label: 'Interfaces', ox: 60, oy: -45 },
         { label: 'Prototyping', ox: -70, oy: 30 },
         { label: 'Systems Design', ox: 55, oy: 50 },
-        { label: 'Accessibility', ox: 0, oy: 70 }
+        { label: 'Information Arch.', ox: 0, oy: 70 },
+        { label: 'Motion Design', ox: 80, oy: 0 }
       ],
-      desc: 'Designing what people actually use.',
-      companies: []
+      desc: 'Designing what people actually use.'
     },
     { id: 10, label: 'Cosmos', full: 'Physics & Origin', x: 0, y: 0,
       sub: [
-        { label: 'Cosmology', ox: -60, oy: -40 },
+        { label: 'Quantum', ox: -60, oy: -40 },
         { label: 'Astronomy', ox: 55, oy: -45 },
         { label: 'Emergence', ox: -70, oy: 35 },
         { label: 'Complexity', ox: 60, oy: 45 },
-        { label: 'Patterns', ox: 0, oy: 70 }
+        { label: 'Tegmark', ox: 0, oy: 70 },
+        { label: 'Rovelli', ox: -80, oy: 5 },
+        { label: 'Entropy', ox: 80, oy: -10 }
       ],
-      desc: 'The big questions I keep returning to.',
-      companies: []
+      desc: 'The big questions I keep returning to.'
     },
     { id: 11, label: 'Energy', full: 'Energy & Climate', x: 0, y: 0,
       sub: [
@@ -727,36 +740,73 @@
         { label: 'Storage', ox: 60, oy: -35 },
         { label: 'Transition', ox: -65, oy: 30 },
         { label: 'Policy', ox: 50, oy: 55 },
-        { label: 'Infrastructure', ox: -5, oy: 70 }
+        { label: 'Infrastructure', ox: -5, oy: 70 },
+        { label: 'Grid', ox: 75, oy: 5 }
       ],
-      desc: 'Where technology meets urgency.',
-      companies: []
+      desc: 'Where technology meets urgency.'
+    },
+    { id: 12, label: 'Comm', full: 'Kommunikation', x: 0, y: 0,
+      sub: [
+        { label: 'Watzlawick', ox: -65, oy: -40 },
+        { label: 'Luhmann', ox: 55, oy: -45 },
+        { label: 'Framing', ox: -70, oy: 30 },
+        { label: 'Signal Theory', ox: 60, oy: 40 },
+        { label: 'Rhetoric', ox: 0, oy: 65 },
+        { label: 'Narrative', ox: -80, oy: 5 }
+      ],
+      desc: 'Communication communicates. Not people.'
+    },
+    { id: 13, label: 'Society', full: 'Gesellschaft & Systeme', x: 0, y: 0,
+      sub: [
+        { label: 'Attention Economy', ox: -75, oy: -40 },
+        { label: 'Trust', ox: 55, oy: -45 },
+        { label: 'Collective Intel.', ox: -65, oy: 35 },
+        { label: 'Power Structures', ox: 70, oy: 40 },
+        { label: 'Institutions', ox: 0, oy: 70 }
+      ],
+      desc: 'How societies organize, evolve, and fail.'
+    },
+    { id: 14, label: 'Time', full: 'Zeit & Realität', x: 0, y: 0,
+      sub: [
+        { label: 'Relativität', ox: -60, oy: -40 },
+        { label: 'Subjective Time', ox: 65, oy: -35 },
+        { label: 'Arrow of Time', ox: -70, oy: 30 },
+        { label: 'Deep Time', ox: 55, oy: 50 },
+        { label: 'Presentism', ox: 0, oy: 65 }
+      ],
+      desc: 'Is time fundamental — or emergent?'
+    },
+    { id: 15, label: 'Strategy', full: 'Strategie & Methoden', x: 0, y: 0,
+      sub: [
+        { label: 'OODA Loop', ox: -60, oy: -45 },
+        { label: 'Positioning', ox: 55, oy: -35 },
+        { label: 'Systems Mapping', ox: -70, oy: 30 },
+        { label: 'Design Thinking', ox: 65, oy: 45 },
+        { label: 'Prototyping', ox: 0, oy: 70 },
+        { label: 'Decision Arch.', ox: -80, oy: 10 }
+      ],
+      desc: 'Strategy as navigation, not planning.'
     }
   ];
 
-  // Add companies to existing nodes
-  nodes[0].companies = [];
-  nodes[1].companies = [];
-  nodes[2].companies = [];
-  nodes[3].companies = [];
-  nodes[4].companies = [];
-  nodes[5].companies = [];
-
   // Edges between related nodes
   var edges = [
-    [0, 2], [0, 3], [0, 4], [0, 5], [0, 9],
-    [1, 7], [1, 10],
-    [2, 3], [2, 5], [2, 6], [2, 11],
-    [3, 4], [3, 5], [3, 6],
-    [4, 9], [4, 3],
-    [5, 0], [5, 6], [5, 11],
-    [6, 3], [6, 11],
-    [7, 3], [7, 8], [7, 0],
+    [0, 2], [0, 3], [0, 4], [0, 5], [0, 9], [0, 15],
+    [1, 7], [1, 10], [1, 14], [1, 13],
+    [2, 3], [2, 5], [2, 6], [2, 11], [2, 15], [2, 13],
+    [3, 4], [3, 5], [3, 6], [3, 12], [3, 15],
+    [4, 9], [4, 12], [4, 7],
+    [5, 0], [5, 6], [5, 11], [5, 7], [5, 13],
+    [6, 3], [6, 11], [6, 13],
+    [7, 3], [7, 8], [7, 0], [7, 12], [7, 14],
     [8, 7], [8, 10], [8, 9],
-    [9, 4], [9, 0], [9, 5],
-    [10, 1], [10, 8], [10, 2],
-    [11, 2], [11, 6], [11, 0], [11, 3],
-    [1, 2], [4, 6], [3, 9], [5, 7]
+    [9, 4], [9, 0], [9, 15],
+    [10, 1], [10, 14], [10, 8],
+    [11, 2], [11, 6], [11, 0], [11, 13],
+    [12, 4], [12, 7], [12, 13], [12, 15],
+    [13, 6], [13, 14], [13, 5],
+    [14, 10], [14, 1], [14, 7],
+    [15, 3], [15, 9], [15, 2], [15, 0]
   ];
 
   // Ambient particles
@@ -848,9 +898,12 @@
     for (var e = 0; e < edges.length; e++) {
       var a = nodes[edges[e][0]], b = nodes[edges[e][1]];
       var sa = toScreen(a.x, a.y), sb = toScreen(b.x, b.y);
-      // Curved line
-      var mcx = (sa.x + sb.x) / 2 + Math.sin(time + e) * 8 * cam.zoom * dpr;
-      var mcy = (sa.y + sb.y) / 2 + Math.cos(time + e) * 8 * cam.zoom * dpr;
+      // Curved diagonal line — approaches at angle
+      var dx = sb.x - sa.x, dy = sb.y - sa.y;
+      var perpX = -dy * 0.25, perpY = dx * 0.25;
+      var sway = Math.sin(time * 0.3 + e * 1.7) * 15 * cam.zoom * dpr;
+      var mcx = (sa.x + sb.x) / 2 + perpX + sway;
+      var mcy = (sa.y + sb.y) / 2 + perpY + Math.cos(time * 0.2 + e) * 10 * cam.zoom * dpr;
       ctx.beginPath();
       ctx.moveTo(sa.x, sa.y);
       ctx.quadraticCurveTo(mcx, mcy, sb.x, sb.y);
@@ -858,7 +911,7 @@
       ctx.stroke();
 
       // Traveling dot along edge
-      var t = (time * 0.5 + e * 0.3) % 1;
+      var t = (time * 0.4 + e * 0.2) % 1;
       var tx = (1-t)*(1-t)*sa.x + 2*(1-t)*t*mcx + t*t*sb.x;
       var ty = (1-t)*(1-t)*sa.y + 2*(1-t)*t*mcy + t*t*sb.y;
       ctx.beginPath();
