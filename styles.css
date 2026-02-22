@@ -404,7 +404,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 200;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.15rem;
   opacity: 0;
   animation: nav-fade-in 1.5s ease 0.8s forwards;
 }
@@ -475,7 +475,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.4rem 0;
+  padding: 0.2rem 0;
   opacity: 0.25;
   transition: opacity 0.4s;
   cursor: pointer;
