@@ -80,35 +80,17 @@
     ]
   };
 
-  // Live news from local JSON
-  var newsHeadlines = [];
-  fetch('news.json?' + Date.now())
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      newsHeadlines = data.headlines.map(function (h) {
-        return h.date + '  ' + h.text + '  (' + h.source + ')';
-      });
-      if (newsLayer.length) {
-        newsLayer.forEach(function (n, i) {
-          n.text = newsHeadlines[i % newsHeadlines.length];
-        });
-      }
-    })
-    .catch(function () {});
-
   // Particles
   var deepLayer = [];
   var midLayer = [];
-  var newsLayer = [];
   var flashLayer = [];
   var synapses = [];
-  var DEEP_COUNT = 120;
-  var MID_COUNT = 18;
-  var NEWS_COUNT = 10;
-  var FLASH_MAX = 3;
+  var DEEP_COUNT = 60;
+  var MID_COUNT = 12;
+  var FLASH_MAX = 2;
 
   function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     w = window.innerWidth;
     h = window.innerHeight * 2.5;
     canvas.width = w * dpr;
@@ -154,22 +136,6 @@
 
 
 
-  function createNews() {
-    newsLayer = [];
-    for (var i = 0; i < NEWS_COUNT; i++) {
-      newsLayer.push({
-        text: newsHeadlines.length ? newsHeadlines[i % newsHeadlines.length] : '',
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.06,
-        vy: -0.03 - Math.random() * 0.04,
-        size: 12 + Math.random() * 3,
-        opacity: 0.04 + Math.random() * 0.025,
-        rot: (Math.random() - 0.5) * 0.01
-      });
-    }
-  }
-
   function spawnFlash() {
     if (flashLayer.length >= FLASH_MAX) return;
     flashLayer.push({
@@ -187,8 +153,8 @@
   function updateSynapses() {
     synapses = [];
     var maxDist = 120;
-    for (var i = 0; i < deepLayer.length; i += 3) {
-      for (var j = i + 3; j < deepLayer.length; j += 3) {
+    for (var i = 0; i < deepLayer.length; i += 5) {
+      for (var j = i + 5; j < deepLayer.length; j += 5) {
         var dx = deepLayer[i].x - deepLayer[j].x;
         var dy = deepLayer[i].y - deepLayer[j].y;
         var d = Math.sqrt(dx * dx + dy * dy);
@@ -216,7 +182,7 @@
     // Spawn flash occasionally
     if (frameCount % 90 === 0) spawnFlash();
     // Update synapses every 30 frames
-    if (frameCount % 30 === 0) updateSynapses();
+    if (frameCount % 60 === 0) updateSynapses();
 
     // Draw synapses
     for (var s = 0; s < synapses.length; s++) {
@@ -266,29 +232,6 @@
       ctx.restore();
     }
 
-    // News layer (real headlines from news.json)
-    for (var n = 0; n < newsLayer.length; n++) {
-      var nl = newsLayer[n];
-      if (!nl.text) continue;
-      nl.x += nl.vx;
-      nl.y += nl.vy;
-      if (nl.y < -30) {
-        nl.y = h + 30;
-        nl.x = Math.random() * w;
-        if (newsHeadlines.length) nl.text = newsHeadlines[Math.floor(Math.random() * newsHeadlines.length)];
-      }
-      if (nl.x < -600) nl.x = w + 100;
-      if (nl.x > w + 600) nl.x = -600;
-
-      ctx.save();
-      ctx.translate(nl.x, (nl.y - parallax * 0.35 + h) % h);
-      ctx.rotate(nl.rot);
-      ctx.font = '300 ' + nl.size + 'px Geist, monospace';
-      ctx.fillStyle = 'rgba(255,255,255,' + nl.opacity + ')';
-      ctx.fillText(nl.text, 0, 0);
-      ctx.restore();
-    }
-
     // Flash layer
     for (var f = flashLayer.length - 1; f >= 0; f--) {
       var fl = flashLayer[f];
@@ -317,7 +260,6 @@
     resize();
     createDeep();
     createMid();
-    createNews();
     flashLayer = [];
   }
 
@@ -407,7 +349,7 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let w, h, stars, animId;
-  const STAR_COUNT = 200;
+  const STAR_COUNT = 100;
 
   function resize() {
     w = canvas.width = window.innerWidth;
