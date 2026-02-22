@@ -387,6 +387,26 @@
   });
 })();
 
+/* ── Video Bokeh Reveal on Scroll ──────────────────── */
+(function () {
+  const videoBgs = document.querySelectorAll('.video-bg');
+  if (!videoBgs.length) return;
+  
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      } else {
+        entry.target.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  videoBgs.forEach(function (bg) {
+    observer.observe(bg.closest('.scene') || bg);
+  });
+})();
+
 /* ── Smooth Anchor Scroll ─────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   anchor.addEventListener('click', function (e) {
