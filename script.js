@@ -1,3 +1,32 @@
+/* ── Hamburger Menu ───────────────────────────────── */
+(function () {
+  var btn = document.getElementById('hamburger');
+  var overlay = document.getElementById('menu-overlay');
+  if (!btn || !overlay) return;
+  btn.addEventListener('click', function () {
+    btn.classList.toggle('active');
+    overlay.classList.toggle('active');
+    document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
+  });
+  overlay.querySelectorAll('.menu-link').forEach(function (link) {
+    link.addEventListener('click', function () {
+      btn.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      btn.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+  window.addEventListener('scroll', function () {
+    btn.classList.toggle('scrolled', window.scrollY > 100);
+  }, { passive: true });
+})();
+
 /* ── Hero Verb Cycle ───────────────────────────────── */
 (function () {
   var el = document.getElementById('hero-verb-cycle');
