@@ -1554,7 +1554,7 @@ function playSfx(name) {
       camTarget.x = clicked.x;
       camTarget.y = clicked.y;
       camTarget.zoom = 2.5;
-      if (bigH) bigH.classList.add('hidden');
+      if (bigH) { bigH.classList.add('hidden'); bigH.classList.add('fade-scroll'); }
       if (smallH) {
         smallH.classList.remove('visible');
         void smallH.offsetWidth; // force reflow to restart animation
