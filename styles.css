@@ -1184,7 +1184,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(249,248,242,0.5) 5%, rgba(249,248,242,0.5) 95%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(249,248,242,0.7) 5%, rgba(249,248,242,0.7) 95%, transparent);
   transform-origin: left;
   transform: scaleX(0);
   transition: transform 3s ease-out;
@@ -1232,7 +1232,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.5);
+  border: 1.5px solid rgba(255,255,255,0.7);
   background: transparent;
   transition: all 0.3s ease;
   position: relative;
@@ -1261,7 +1261,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   font-size: 0.45rem;
   font-weight: 400;
   letter-spacing: 0.2em;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.65);
   transition: color 0.3s, transform 0.3s;
   white-space: nowrap;
   position: relative;
@@ -1314,10 +1314,10 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
 .tl-point.major .tl-point-dot {
   width: 12px;
   height: 12px;
-  border-color: rgba(255,255,255,0.6);
+  border-color: rgba(255,255,255,0.85);
 }
 .tl-point.major .tl-point-year {
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.75);
   font-weight: 500;
 }
 
@@ -1716,7 +1716,7 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.12;
+  opacity: 0.08;
   transform: scale(1.2);
   transition: transform 12s ease-out;
 }
