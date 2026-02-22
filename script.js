@@ -576,11 +576,23 @@
       else p.classList.remove('active');
     });
 
-    // Update detail panel content
+    // Update detail panel content with typewriter
     detailYear.textContent = d.year;
     detailTag.textContent = d.tag;
-    detailText.textContent = d.text;
     detailMeta.textContent = d.meta;
+    // Typewriter for detail text
+    if (window._detailTypeTimer) clearTimeout(window._detailTypeTimer);
+    var dtFullText = d.text;
+    var dtIdx = 0;
+    detailText.textContent = '';
+    function dtType() {
+      if (dtIdx <= dtFullText.length) {
+        detailText.textContent = dtFullText.slice(0, dtIdx);
+        dtIdx++;
+        window._detailTypeTimer = setTimeout(dtType, 8);
+      }
+    }
+    dtType();
 
     // Redraw mountain with animated glow
     startGlowAnimation(idx);
@@ -773,6 +785,37 @@
   
   canvas.style.pointerEvents = 'auto';
   canvas.style.cursor = 'none';
+
+  // Detail panel follows cursor
+  var dpX = 0, dpY = 0, dpTX = 0, dpTY = 0, dpActive = false;
+  (function dpLoop() {
+    if (dpActive) {
+      dpX += (dpTX - dpX) * 0.12;
+      dpY += (dpTY - dpY) * 0.12;
+      detailPanel.style.left = Math.round(dpX) + 'px';
+      detailPanel.style.top = Math.round(dpY) + 'px';
+    }
+    requestAnimationFrame(dpLoop);
+  })();
+
+  var interactive = document.querySelector('.tl-interactive');
+  if (interactive) {
+    interactive.addEventListener('mousemove', function (e) {
+      dpTX = e.clientX + 24;
+      dpTY = e.clientY - 20;
+      if (!dpActive) {
+        dpX = dpTX; dpY = dpTY;
+        detailPanel.style.left = dpX + 'px';
+        detailPanel.style.top = dpY + 'px';
+      }
+      dpActive = true;
+      detailPanel.classList.add('visible');
+    });
+    interactive.addEventListener('mouseleave', function () {
+      dpActive = false;
+      detailPanel.classList.remove('visible');
+    });
+  }
   
   canvas.addEventListener('mousemove', function (e) {
     var rect = canvas.getBoundingClientRect();

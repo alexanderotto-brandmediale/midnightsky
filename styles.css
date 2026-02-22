@@ -1092,22 +1092,17 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-detail-panel {
-  position: absolute;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  max-width: 90%;
-  padding: 1.2rem 2rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  text-align: center;
-  z-index: 10;
+  position: fixed !important;
+  z-index: 99998 !important;
+  pointer-events: none !important;
+  max-width: 280px;
+  padding: 0;
+  text-align: left;
+  display: none;
 }
 
-.tl-interactive:hover .tl-detail-panel {
-  opacity: 1;
+.tl-detail-panel.visible {
+  display: block;
 }
 
 .tl-detail-panel.visible {
@@ -1139,7 +1134,7 @@ a { color: inherit; text-decoration: none; }
 
 .tl-detail-year {
   font-family: 'Geist', monospace;
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-weight: 200;
   color: var(--secondary);
   letter-spacing: 0.05em;
@@ -1157,12 +1152,12 @@ a { color: inherit; text-decoration: none; }
 }
 
 .tl-detail-text {
-  font-size: clamp(0.82rem, 1vw, 0.92rem);
+  font-size: 0.5rem;
   font-weight: 300;
-  color: var(--cream);
-  line-height: 1.85;
-  max-width: 800px;
-  margin: 0 auto;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+  font-family: 'Geist', monospace;
+  letter-spacing: 0.02em;
 }
 
 .tl-detail-meta {
