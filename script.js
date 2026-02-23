@@ -3066,6 +3066,22 @@ document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
   draw();
 })();
 
+/* ── Feature: Hero Sub Word-by-Word ────────────────── */
+(function () {
+  var el = document.getElementById('hero-sub');
+  if (!el) return;
+  var words = el.textContent.trim().split(/\s+/);
+  el.innerHTML = '';
+  words.forEach(function (w, i) {
+    var span = document.createElement('span');
+    span.className = 'word';
+    span.textContent = w;
+    span.style.animationDelay = (1.5 + i * 0.3) + 's';
+    el.appendChild(span);
+    if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+  });
+})();
+
 /* ── Feature: Interstitials ────────────────────────── */
 (function () {
   document.querySelectorAll('.interstitial').forEach(function (el) {

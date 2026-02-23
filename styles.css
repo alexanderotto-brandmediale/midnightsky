@@ -2401,12 +2401,23 @@ html { scrollbar-width: thin; scrollbar-color: rgba(255,87,90,0.3) transparent; 
 }
 
 .hero-sub {
+  font-family: 'Tomorrow', var(--font);
   font-size: clamp(0.5rem, 0.9vw, 0.7rem);
   font-weight: 300;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
   color: rgba(255,255,255,0.2);
   margin-top: 0.8rem;
-  font-style: italic;
+  font-style: normal;
+}
+.hero-sub .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: word-in 0.6s ease forwards;
+}
+@keyframes word-in {
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 900px) {
